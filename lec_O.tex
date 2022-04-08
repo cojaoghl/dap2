@@ -1,0 +1,277 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\documentclass[aspectratio=1610, 11pt]{beamer}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usetheme{tudo}
+
+\title{Datenstrukturen, Algorithmen und Prorammierung~2}
+\author[A.~Coja-Oghlan]{Amin Coja-Oghlan}
+\institute[DAP2]{Lehrstuhl Informatik 2\\Fakult\"at f\"ur Informatik}
+
+\newcommand\dd{\mathrm d}
+\newcommand\eul{\mathrm e}
+\newcommand\nix{\,\cdot\,}
+
+\newcommand\cA{\mathcal A}
+\newcommand\cB{\mathcal B}
+\newcommand\cC{\mathcal C}
+\newcommand\cD{\mathcal D}
+\newcommand\cE{\mathcal E}
+\newcommand\cF{\mathcal F}
+\newcommand\cG{\mathcal G}
+\newcommand\cH{\mathcal H}
+\newcommand\cI{\mathcal I}
+\newcommand\cJ{\mathcal J}
+\newcommand\cK{\mathcal K}
+\newcommand\cL{\mathcal L}
+\newcommand\cM{\mathcal M}
+\newcommand\cN{\mathcal N}
+\newcommand\cO{\mathcal O}
+\newcommand\cP{\mathcal P}
+\newcommand\cQ{\mathcal Q}
+\newcommand\cR{\mathcal R}
+\newcommand\cS{\mathcal S}
+\newcommand\cT{\mathcal T}
+\newcommand\cU{\mathcal U}
+\newcommand\cV{\mathcal V}
+\newcommand\cW{\mathcal W}
+\newcommand\cX{\mathcal X}
+\newcommand\cY{\mathcal Y}
+\newcommand\cZ{\mathcal Z}
+
+\newcommand\fA{\mathfrak A}
+\newcommand\fB{\mathfrak B}
+\newcommand\fC{\mathfrak C}
+\newcommand\fD{\mathfrak D}
+\newcommand\fE{\mathfrak E}
+\newcommand\fF{\mathfrak F}
+\newcommand\fG{\mathfrak G}
+\newcommand\fH{\mathfrak H}
+\newcommand\fI{\mathfrak I}
+\newcommand\fJ{\mathfrak J}
+\newcommand\fK{\mathfrak K}
+\newcommand\fL{\mathfrak L}
+\newcommand\fM{\mathfrak M}
+\newcommand\fN{\mathfrak N}
+\newcommand\fO{\mathfrak O}
+\newcommand\fP{\mathfrak P}
+\newcommand\fQ{\mathfrak Q}
+\newcommand\fR{\mathfrak R}
+\newcommand\fS{\mathfrak S}
+\newcommand\fT{\mathfrak T}
+\newcommand\fU{\mathfrak U}
+\newcommand\fV{\mathfrak V}
+\newcommand\fW{\mathfrak W}
+\newcommand\fX{\mathfrak X}
+\newcommand\fY{\mathfrak Y}
+\newcommand\fZ{\mathfrak Z}
+
+\newcommand\fa{\mathfrak a}
+\newcommand\fb{\mathfrak b}
+\newcommand\fc{\mathfrak c}
+\newcommand\fd{\mathfrak d}
+\newcommand\fe{\mathfrak e}
+\newcommand\ff{\mathfrak f}
+\newcommand\fg{\mathfrak g}
+\newcommand\fh{\mathfrak h}
+%\newcommand\fi{\mathfrak i}
+\newcommand\fj{\mathfrak j}
+\newcommand\fk{\mathfrak k}
+\newcommand\fl{\mathfrak l}
+\newcommand\fm{\mathfrak m}
+\newcommand\fn{\mathfrak n}
+\newcommand\fo{\mathfrak o}
+\newcommand\fp{\mathfrak p}
+\newcommand\fq{\mathfrak q}
+\newcommand\fr{\mathfrak r}
+\newcommand\fs{\mathfrak s}
+\newcommand\ft{\mathfrak t}
+\newcommand\fu{\mathfrak u}
+\newcommand\fv{\mathfrak v}
+\newcommand\fw{\mathfrak w}
+\newcommand\fx{\mathfrak x}
+\newcommand\fy{\mathfrak y}
+\newcommand\fz{\mathfrak z}
+
+\newcommand\vA{\vec A}
+\newcommand\vB{\vec B}
+\newcommand\vC{\vec C}
+\newcommand\vD{\vec D}
+\newcommand\vE{\vec E}
+\newcommand\vF{\vec F}
+\newcommand\vG{\vec G}
+\newcommand\vH{\vec H}
+\newcommand\vI{\vec I}
+\newcommand\vJ{\vec J}
+\newcommand\vK{\vec K}
+\newcommand\vL{\vec L}
+\newcommand\vM{\vec M}
+\newcommand\vN{\vec N}
+\newcommand\vO{\vec O}
+\newcommand\vP{\vec P}
+\newcommand\vQ{\vec Q}
+\newcommand\vR{\vec R}
+\newcommand\vS{\vec S}
+\newcommand\vT{\vec T}
+\newcommand\vU{\vec U}
+\newcommand\vV{\vec V}
+\newcommand\vW{\vec W}
+\newcommand\vX{\vec X}
+\newcommand\vY{\vec Y}
+\newcommand\vZ{\vec Z}
+
+\newcommand\va{\vec a}
+\newcommand\vb{\vec b}
+\newcommand\vc{\vec c}
+\newcommand\vd{\vec d}
+\newcommand\ve{\vec e}
+\newcommand\vf{\vec f}
+\newcommand\vg{\vec g}
+\newcommand\vh{\vec h}
+\newcommand\vi{\vec i}
+\newcommand\vj{\vec j}
+\newcommand\vk{\vec k}
+\newcommand\vl{\vec l}
+\newcommand\vm{\vec m}
+\newcommand\vn{\vec n}
+\newcommand\vo{\vec o}
+\newcommand\vp{\vec p}
+\newcommand\vq{\vec q}
+\newcommand\vr{\vec r}
+\newcommand\vs{\vec s}
+\newcommand\vt{\vec t}
+\newcommand\vu{\vec u}
+\renewcommand\vv{\vec v}
+\newcommand\vw{\vec w}
+\newcommand\vx{\vec x}
+\newcommand\vy{\vec y}
+\newcommand\vz{\vec z}
+
+\renewcommand\AA{\mathbb A}
+\newcommand\NN{\mathbb N}
+\newcommand\ZZ{\mathbb Z}
+\newcommand\PP{\mathbb P}
+\newcommand\QQ{\mathbb Q}
+\newcommand\RR{\mathbb R}
+\newcommand\RRpos{\mathbb R_{\geq0}}
+\renewcommand\SS{\mathbb S}
+\newcommand\CC{\mathbb C}
+
+\newcommand{\ord}{\mathrm{ord}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\pr}{\mathrm{P}}
+\newcommand{\Vol}{\mathrm{vol}}
+\newcommand\norm[1]{\left\|{#1}\right\|} 
+\newcommand\sign{\mathrm{sign}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand\bc[1]{\left({#1}\right)} 
+\newcommand\cbc[1]{\left\{{#1}\right\}} 
+\newcommand\bcfr[2]{\bc{\frac{#1}{#2}}} 
+\newcommand{\bck}[1]{\left\langle{#1}\right\rangle} 
+\newcommand\brk[1]{\left\lbrack{#1}\right\rbrack} 
+\newcommand\scal[2]{\bck{{#1},{#2}}} 
+\newcommand{\vecone}{\mathbb{1}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\ggt}{\mathrm{ggT}}
+\newcommand{\kgv}{\mathrm{kgV}}
+\newcommand{\trans}{\top}
+
+\newcommand{\Karonski}{Karo\'nski}
+\newcommand{\Erdos}{Erd\H{o}s}
+\newcommand{\Renyi}{R\'enyi}
+\newcommand{\Lovasz}{Lov\'asz}
+\newcommand{\Juhasz}{Juh\'asz}
+\newcommand{\Bollobas}{Bollob\'as}
+\newcommand{\Furedi}{F\"uredi}
+\newcommand{\Komlos}{Koml\'os}
+\newcommand{\Luczak}{\L uczak}
+\newcommand{\Kucera}{Ku\v{c}era}
+\newcommand{\Szemeredi}{Szemer\'edi}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Der $O$-Kalk\"ul}
+	\begin{alertblock}{Ziel}
+		\begin{itemize}
+			\item es gilt, die Laufzeit von Algorithmen auf \emph{gro\ss en} Eingaben zu analysieren
+			\item wir interessieren uns als f\"ur ``Gr\"o\ss enordnungen''
+			\item dazu f\"uhren wir einen geeigneten Formalismus ein
+		\end{itemize}
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}{Der $O$-Kalk\"ul}
+	\begin{block}{Definition $O(\nix)$}
+		\begin{itemize}
+			\item angenommen $f:\NN\to\RR$, $g:\NN\to\RR$ sind zwei Funktionen.
+			\item wir schreiben $f(n)=O(g(n))$, falls es eine nat\"urliche Zahl $n_0\in\NN$ und eine reelle Zahl $C>0$ gibt, so da\ss
+				\begin{align*}
+					|f(n)|\leq C|g(n)|\qquad\mbox{f\"ur alle }n>n_0.
+				\end{align*}
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Der $O$-Kalk\"ul}
+	\begin{block}{Definition $\Omega(\nix)$}
+		\begin{itemize}
+			\item angenommen $f:\NN\to\RR$, $g:\NN\to\RR$ sind zwei Funktionen.
+			\item wir schreiben $f(n)=\Omega(g(n))$, falls es eine nat\"urliche Zahl $n_0>0$ und eine reelle Zahl $c>0$ gibt, so da\ss
+				\begin{align*}
+					f(n)\geq c\cdot g(n)\geq0&&\mbox{f\"ur alle }n>n_0.
+				\end{align*}
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Der $O$-Kalk\"ul}
+	\begin{block}{Definition $\Theta(\nix)$}
+		\begin{itemize}
+			\item angenommen $f:\NN\to\RR$, $g:\NN\to\RR$ sind zwei Funktionen.
+			\item wir schreiben $f(n)=\Theta(g(n))$, falls $f(n)=\Omega(g(n))$ und $g(n)=\Omega(f(n))$.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Der $O$-Kalk\"ul}
+	\begin{block}{Definition $o(\nix)$}
+		\begin{itemize}
+			\item angenommen $f:\NN\to\RR$, $g:\NN\to\RR$ sind zwei Funktionen.
+			\item wir schreiben $f(n)=o(g(n))$, falls zu jeder reellen Zahl $\eps>0$ eine nat\"urliche Zahl $n_0>0$ existiert, so da\ss\
+				\begin{align*}|f(n)|\leq\eps|g(n)|&&\mbox{f\"ur alle }n>n_0.\end{align*}
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Der $O$-Kalk\"ul}
+	\begin{exampleblock}{Idiomatische Spezialf\"alle}
+		\begin{itemize}
+			\item $O(1)$ : ein beschr\"ankter Ausdruck
+			\item $o(1)$ : ein Ausdruck, der f\"ur $n\to\infty$ gegen Null geht
+			\item $\Omega(1)$ : ein Ausdruck, der f\"ur $n\to\infty$ von der Null weg beschr\"ankt bleibt
+			\item $\Theta(1)$ : ein Ausdruck, der beschr\"ankt und von der Null weg beschr\"ankt bleibt
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Der $O$-Kalk\"ul}
+	\begin{block}{Definition $\nix\sim\nix$}
+F\"ur zwei Funktionen $f(n),g(n)$ schreiben wir $f(n)\sim g(n)$, falls $$f(n)=(1+o(1))g(n).$$
+	\end{block}
+\end{frame}
+
+\begin{frame}{Der $O$-Kalk\"ul}
+	\begin{exampleblock}{Zusammenfassung}
+		\begin{itemize}
+			\item der $O$-Kalk\"ul erm\"oglicht uns, \"uber Gr\"o\ss enordnungen zu sprechen
+			\item wir haben die verschiedenen Symbole $O(\nix),o(\nix),\Omega(\nix),\Theta(\nix),\nix\sim\nix$ kennengelernt
+			\item (\"Ubung macht den Meister)
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+\end{document}

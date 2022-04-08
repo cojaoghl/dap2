@@ -1,0 +1,399 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\documentclass[aspectratio=1610, 11pt]{beamer}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usetheme{tudo}
+
+\title{Datenstrukturen, Algorithmen und Prorammierung~2}
+\author[A.~Coja-Oghlan]{Amin Coja-Oghlan}
+\institute[DAP2]{Lehrstuhl Informatik 2\\Fakult\"at f\"ur Informatik}
+
+\newcommand\dd{\mathrm d}
+\newcommand\eul{\mathrm e}
+
+\newcommand\cA{\mathcal A}
+\newcommand\cB{\mathcal B}
+\newcommand\cC{\mathcal C}
+\newcommand\cD{\mathcal D}
+\newcommand\cE{\mathcal E}
+\newcommand\cF{\mathcal F}
+\newcommand\cG{\mathcal G}
+\newcommand\cH{\mathcal H}
+\newcommand\cI{\mathcal I}
+\newcommand\cJ{\mathcal J}
+\newcommand\cK{\mathcal K}
+\newcommand\cL{\mathcal L}
+\newcommand\cM{\mathcal M}
+\newcommand\cN{\mathcal N}
+\newcommand\cO{\mathcal O}
+\newcommand\cP{\mathcal P}
+\newcommand\cQ{\mathcal Q}
+\newcommand\cR{\mathcal R}
+\newcommand\cS{\mathcal S}
+\newcommand\cT{\mathcal T}
+\newcommand\cU{\mathcal U}
+\newcommand\cV{\mathcal V}
+\newcommand\cW{\mathcal W}
+\newcommand\cX{\mathcal X}
+\newcommand\cY{\mathcal Y}
+\newcommand\cZ{\mathcal Z}
+
+\newcommand\fA{\mathfrak A}
+\newcommand\fB{\mathfrak B}
+\newcommand\fC{\mathfrak C}
+\newcommand\fD{\mathfrak D}
+\newcommand\fE{\mathfrak E}
+\newcommand\fF{\mathfrak F}
+\newcommand\fG{\mathfrak G}
+\newcommand\fH{\mathfrak H}
+\newcommand\fI{\mathfrak I}
+\newcommand\fJ{\mathfrak J}
+\newcommand\fK{\mathfrak K}
+\newcommand\fL{\mathfrak L}
+\newcommand\fM{\mathfrak M}
+\newcommand\fN{\mathfrak N}
+\newcommand\fO{\mathfrak O}
+\newcommand\fP{\mathfrak P}
+\newcommand\fQ{\mathfrak Q}
+\newcommand\fR{\mathfrak R}
+\newcommand\fS{\mathfrak S}
+\newcommand\fT{\mathfrak T}
+\newcommand\fU{\mathfrak U}
+\newcommand\fV{\mathfrak V}
+\newcommand\fW{\mathfrak W}
+\newcommand\fX{\mathfrak X}
+\newcommand\fY{\mathfrak Y}
+\newcommand\fZ{\mathfrak Z}
+
+\newcommand\fa{\mathfrak a}
+\newcommand\fb{\mathfrak b}
+\newcommand\fc{\mathfrak c}
+\newcommand\fd{\mathfrak d}
+\newcommand\fe{\mathfrak e}
+\newcommand\ff{\mathfrak f}
+\newcommand\fg{\mathfrak g}
+\newcommand\fh{\mathfrak h}
+%\newcommand\fi{\mathfrak i}
+\newcommand\fj{\mathfrak j}
+\newcommand\fk{\mathfrak k}
+\newcommand\fl{\mathfrak l}
+\newcommand\fm{\mathfrak m}
+\newcommand\fn{\mathfrak n}
+\newcommand\fo{\mathfrak o}
+\newcommand\fp{\mathfrak p}
+\newcommand\fq{\mathfrak q}
+\newcommand\fr{\mathfrak r}
+\newcommand\fs{\mathfrak s}
+\newcommand\ft{\mathfrak t}
+\newcommand\fu{\mathfrak u}
+\newcommand\fv{\mathfrak v}
+\newcommand\fw{\mathfrak w}
+\newcommand\fx{\mathfrak x}
+\newcommand\fy{\mathfrak y}
+\newcommand\fz{\mathfrak z}
+
+\newcommand\vA{\vec A}
+\newcommand\vB{\vec B}
+\newcommand\vC{\vec C}
+\newcommand\vD{\vec D}
+\newcommand\vE{\vec E}
+\newcommand\vF{\vec F}
+\newcommand\vG{\vec G}
+\newcommand\vH{\vec H}
+\newcommand\vI{\vec I}
+\newcommand\vJ{\vec J}
+\newcommand\vK{\vec K}
+\newcommand\vL{\vec L}
+\newcommand\vM{\vec M}
+\newcommand\vN{\vec N}
+\newcommand\vO{\vec O}
+\newcommand\vP{\vec P}
+\newcommand\vQ{\vec Q}
+\newcommand\vR{\vec R}
+\newcommand\vS{\vec S}
+\newcommand\vT{\vec T}
+\newcommand\vU{\vec U}
+\newcommand\vV{\vec V}
+\newcommand\vW{\vec W}
+\newcommand\vX{\vec X}
+\newcommand\vY{\vec Y}
+\newcommand\vZ{\vec Z}
+
+\newcommand\va{\vec a}
+\newcommand\vb{\vec b}
+\newcommand\vc{\vec c}
+\newcommand\vd{\vec d}
+\newcommand\ve{\vec e}
+\newcommand\vf{\vec f}
+\newcommand\vg{\vec g}
+\newcommand\vh{\vec h}
+\newcommand\vi{\vec i}
+\newcommand\vj{\vec j}
+\newcommand\vk{\vec k}
+\newcommand\vl{\vec l}
+\newcommand\vm{\vec m}
+\newcommand\vn{\vec n}
+\newcommand\vo{\vec o}
+\newcommand\vp{\vec p}
+\newcommand\vq{\vec q}
+\newcommand\vr{\vec r}
+\newcommand\vs{\vec s}
+\newcommand\vt{\vec t}
+\newcommand\vu{\vec u}
+\renewcommand\vv{\vec v}
+\newcommand\vw{\vec w}
+\newcommand\vx{\vec x}
+\newcommand\vy{\vec y}
+\newcommand\vz{\vec z}
+
+\renewcommand\AA{\mathbb A}
+\newcommand\NN{\mathbb N}
+\newcommand\ZZ{\mathbb Z}
+\newcommand\PP{\mathbb P}
+\newcommand\QQ{\mathbb Q}
+\newcommand\RR{\mathbb R}
+\newcommand\RRpos{\mathbb R_{\geq0}}
+\renewcommand\SS{\mathbb S}
+\newcommand\CC{\mathbb C}
+
+\newcommand{\ord}{\mathrm{ord}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\pr}{\mathrm{P}}
+\newcommand{\Vol}{\mathrm{vol}}
+\newcommand\norm[1]{\left\|{#1}\right\|} 
+\newcommand\sign{\mathrm{sign}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand\bc[1]{\left({#1}\right)} 
+\newcommand\cbc[1]{\left\{{#1}\right\}} 
+\newcommand\bcfr[2]{\bc{\frac{#1}{#2}}} 
+\newcommand{\bck}[1]{\left\langle{#1}\right\rangle} 
+\newcommand\brk[1]{\left\lbrack{#1}\right\rbrack} 
+\newcommand\scal[2]{\bck{{#1},{#2}}} 
+\newcommand{\vecone}{\mathbb{1}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\ggt}{\mathrm{ggT}}
+\newcommand{\kgv}{\mathrm{kgV}}
+\newcommand{\trans}{\top}
+
+\newcommand{\Karonski}{Karo\'nski}
+\newcommand{\Erdos}{Erd\H{o}s}
+\newcommand{\Renyi}{R\'enyi}
+\newcommand{\Lovasz}{Lov\'asz}
+\newcommand{\Juhasz}{Juh\'asz}
+\newcommand{\Bollobas}{Bollob\'as}
+\newcommand{\Furedi}{F\"uredi}
+\newcommand{\Komlos}{Koml\'os}
+\newcommand{\Luczak}{\L uczak}
+\newcommand{\Kucera}{Ku\v{c}era}
+\newcommand{\Szemeredi}{Szemer\'edi}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Kurze Vorstellung}
+	\begin{overprint}
+		\onslide<1>
+		\begin{exampleblock}{Amin Coja-Oghlan}
+		\begin{itemize}
+			\item Professor f\"ur effiziente Algorithmen und Komplexit\"atstheorie seit 2021
+			\item Lehrstuhl Informatik 2
+			\item Vorlesung
+		\end{itemize}
+	\end{exampleblock}
+		\onslide<2>
+	\begin{exampleblock}{Lena Krieg, Joon Lee, Jean Bernoulli Ravelomanana und Maurice Rolvien}
+		\begin{itemize}
+			\item Mitarbeiter am Lehrstuhl Informatik 2
+			\item Zust\"andig f\"ur die Organisation der \"Ubungen
+		\end{itemize}
+	\end{exampleblock}
+		\onslide<3>
+	\begin{exampleblock}{Jonas Ellert und Mart Hagedoorn}
+		\begin{itemize}
+			\item Mitarbeiter am Lehrstuhl Informatik 11
+			\item Zust\"andig f\"ur die Organisation des Praktikums (Informatik)
+		\end{itemize}
+	\end{exampleblock}
+		\onslide<4>
+	\begin{exampleblock}{Wolfgang Endemann}
+		\begin{itemize}
+			\item Wissenschaftlicher Mitarbeiter
+			\item Fakult\"at für Elektrotechnik und Informationstechnik, Lehrstuhl für Kommunikationstechnik
+			\item Zust\"andig f\"ur die Organisation des Praktikums (IKT und ETIT)
+		\end{itemize}
+	\end{exampleblock}
+		\onslide<5>
+	\begin{exampleblock}{Ulrike Spear}
+		\begin{itemize}
+			\item Sekretariat Lehrstuhl Informatik 2
+			\item Zust\"andig f\"ur allgemeine organisatorische Fragen und email-Anfragen
+		\end{itemize}
+	\end{exampleblock}
+	\end{overprint}
+\end{frame}
+
+\begin{frame}{Vorlesungsseite und Kontakt}
+	\begin{exampleblock}{}
+		\begin{itemize}
+			\item Anfragen richten Sie ausschlie\ss lich per email an
+				\begin{quote}
+\tt dap2.eac.fk04@tu-dortmund.de
+				\end{quote}
+			\item Vorlesungshomepage auf
+				\begin{quote}
+\tt https://ls2-web.cs.tu-dortmund.de/$\sim$mamicoja/dap2.pdf
+				\end{quote}
+			\item auf der Seite sind Lehrmaterialien (Folien, Skript etc.) zu finden
+			\item registerien Sie sich \alert{unbedingt} \"uber LSF!
+			\item Sie werden dann \emph{automatisch} in \alert{Moodle} eingeschrieben
+			\item wichtige Nachrichten erhalten Sie per email \"uber Moodle
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Termine}
+	\begin{exampleblock}{Klausur}
+		\begin{itemize}
+			\item 28.7.2022, Zeitraum 13:00--16:15, 90-min.\ Bearbeitungszeit (keine Hilfsmittel)
+			\item 21.9.2022, Zeitraum 11:30--14:45, 90-min.\ Bearbeitungszeit (keine Hilfsmittel)
+			\item \emph{erfolgreiche Teilnahme an den \"Ubungen ist Zulassungsvoraussetzung!}
+			\item wenn Ihnen ein Nachteilsausgleich zusteht, melden Sie uns dies so fr\"uh wie m\"oglich, mindestens aber zwei Wochen vor dem Klausurtermin!
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Termine}
+	\begin{exampleblock}{Vorlesung}
+		\begin{itemize}
+			\item Di.\ 12:15--13:45, H.001
+			\item Do.\ 14:15--15:45, H.001
+			\item die Vorlesung findet in Pr\"asenz statt
+			\item es gibt keine Vorlesungsaufzeichungen
+			\item es gibt keine Videovorlesungen/Webinar
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+%Uebungsgruppenanmeldung:
+%
+%Wo: ASSESS https://ess.cs.tu-dortmund.de/ASSESS/
+%Wie: Prioritaetenbasiert
+%Wann: Jetzt - Donnerstags 23:59
+%
+%Onlineuebungen(Ausgezeichnet in der Spalte "Name"):
+%Mittwochs 8-14,
+%Donnerstags 8-10
+%
+%Ausschliesslich Englische Uebung (Ausgezeichnet in der Spalte "Name"):
+%Montags 08-10,
+%Donnertsags 8-10
+%Mittwochs 8-14,
+%Donnerstags 8-10
+
+\begin{frame}{Termine}
+	\begin{exampleblock}{\"Ubungen}
+		\begin{itemize}
+			\item die Einteilung der \"Ubungsgruppen erfolgt \"uber Assess (priorit\"atenbasiert) unter
+				\begin{quote}
+\tt https://ess.cs.tu-dortmund.de/ASSESS/
+				\end{quote}
+			\item \emph{Registerierungsdeadline Do 7.~April 23:59.}
+			\item die meisten \"Ubungsgruppen finden w\"ochentlich \alert{in Pr\"asenz} statt
+			\item es gibt zus\"atzlich mehrere \alert{Online-\"Ubungsgruppen} (Mi 8--14, Do 8--10)
+			\item einige \"Ubungsgruppen, insbesondere alle Online-\"Ubungsgruppen, sind in \alert{Englischer Sprache} (Mo 8--10, Mi 8--14, Do 8--10); dort sind die L\"osungen auch in Englisch abzugeben (Tutoren sprechen kein Deutsch)!
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Termine}
+	\begin{exampleblock}{\"Ubungen}
+		\begin{itemize}
+			\item die \"Ubungsaufgaben werden w\"ochtentlich \emph{Montags 8:00} in Moodle eingestellt
+			\item die Aufgaben sind bis \emph{Sonntags 23:59} zu bearbeiten und elektronisch \"uber Moodle abzugeben
+			\item die Aufgaben werden von den \"Ubungsleitern bewertet
+			\item die Bewertungen werden in Moodle gestellt
+			\item je Aufgaben k\"onnen 4 Punkte erreicht werden
+			\item je \"Ubungsblatt gibt es 4 Aufgaben
+			\item Voraussetzung f\"ur eine erfolgreiche Teilnahme ist das Erreichen von \alert{80 \"Ubungspunkten!}
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Termine}
+	\begin{exampleblock}{\"Ubungen}
+		\begin{itemize}
+			\item Gruppenabgaben sind bis zu 3-er Gruppen \emph{aus der gleichen \"Ubungsgruppe erlaubt}; alle Gruppenmitglieder laden die Abgabe in Moodle hoch!
+			\item geben Sie auf jeder Abgabe \emph{Namen und Matrikelnummern} an!
+			\item \emph{das erste \"Ubungsblatt kommt am 11.~April}
+			\item \emph{die \"Ubungsgruppen starten am 18.~April}
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Termine}
+	\begin{exampleblock}{Praktikum --- Informatik}
+		\begin{itemize}
+			\item Programmiersprache Java
+			\item das Praktikum findet in Pr\"asenz statt in mehreren Gruppen statt
+			\item Einteilung \"uber Assess
+			\item Organisatoren des Praktikums sind Jonas Ellert und Mart Hagedoorn
+			\item erfolgreiches Absolvieren des Praktikums ist Voraussetzung f\"ur den Modulabschlu\ss
+			\item \emph{das Informatik-Praktikum ist nicht zul\"assig f\"ur ETIT und IKT-Studis}
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Termine}
+		\hfill\includegraphics[height=30mm]{./images/DAP2_CPP_LSF.png}
+	\begin{exampleblock}{Praktikum --- ETIT und IKT}
+		\begin{itemize}
+			\item Programmiersprache C$++$
+			\item Registerierung \"uber LSF mit obigem QR-Code
+			\item die Platzvergabe erfolgt am 11.4.2022 ab 14:00 im Raum P1-01-108
+			\item ohne Anwesenheit an diesem Tag keine Platzvergabe
+			\item \emph{das ETIT und IKT-Praktikum ist nicht zul\"assig f\"ur Informatik-Studis}
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Inhalte}
+	\begin{exampleblock}{Algorithmen und Datenstrukturen}
+		\begin{itemize}
+			\item ``Programmieren im Kleinen''
+			\item Schwerpunkt auf Analyse von Algorithmen in Bezug auf Korrektheit und Resourcenbedarf
+			\item mathematische Beweise
+			\item Grundlagen aus der Kombinatorik
+			\item \emph{die Schwerpunkte und Vorlesungsinhalte sind anders als in den vergangenen Jahren}
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Inhalte}
+	\begin{exampleblock}{Programmier- und IT-F\"ahigkeiten}
+		\begin{itemize}
+			\item wir werden in der Vorlesung ein wenig ``Unix-Style'' prorgrammieren
+			\item (was das genau bedeutet, sehen Sie in den n\"achsten Wochen)
+			\item die Unix-Philosophie passt besonders gut mit der Algorithmik zusammen
+			\item wir lernen, Algorithmen mit den gew\"unschten Laufzeiten und Speicherbedarfen zu implementieren
+			\item au\ss erdem lernen wir einige Tools kennen
+			\item dabei wird uns die FOSS-AG der Fachschaft ein wenig unterst\"utzen
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Kontaktaufnahme}
+	\begin{exampleblock}{Fragen?}
+		\begin{itemize}
+		\item wenden Sie sich jederzeit an {\tt dap2.eac.fk04@tu-dortmund.de}
+			\item bei Fragen zu Ihrer konkreten \"Ubungs- oder Praktikumsgruppe, wenden Sie sich per Moodle an Ihren \"Ubungs-/Praktikumsleiter
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\end{document}

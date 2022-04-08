@@ -1,0 +1,291 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\documentclass[aspectratio=1610, 11pt]{beamer}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usetheme{tudo}
+
+\title{Datenstrukturen, Algorithmen und Prorammierung~2}
+\author[A.~Coja-Oghlan]{Amin Coja-Oghlan}
+\institute[DAP2]{Lehrstuhl Informatik 2\\Fakult\"at f\"ur Informatik}
+
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand\dd{\mathrm d}
+\newcommand\eul{\mathrm e}
+\newcommand\cA{\mathcal A}
+\newcommand\cB{\mathcal B}
+\newcommand\cC{\mathcal C}
+\newcommand\cD{\mathcal D}
+\newcommand\cE{\mathcal E}
+\newcommand\cF{\mathcal F}
+\newcommand\cG{\mathcal G}
+\newcommand\cH{\mathcal H}
+\newcommand\cI{\mathcal I}
+\newcommand\cJ{\mathcal J}
+\newcommand\cK{\mathcal K}
+\newcommand\cL{\mathcal L}
+\newcommand\cM{\mathcal M}
+\newcommand\cN{\mathcal N}
+\newcommand\cO{\mathcal O}
+\newcommand\cP{\mathcal P}
+\newcommand\cQ{\mathcal Q}
+\newcommand\cR{\mathcal R}
+\newcommand\cS{\mathcal S}
+\newcommand\cT{\mathcal T}
+\newcommand\cU{\mathcal U}
+\newcommand\cV{\mathcal V}
+\newcommand\cW{\mathcal W}
+\newcommand\cX{\mathcal X}
+\newcommand\cY{\mathcal Y}
+\newcommand\cZ{\mathcal Z}
+\newcommand\fA{\mathfrak A}
+\newcommand\fB{\mathfrak B}
+\newcommand\fC{\mathfrak C}
+\newcommand\fD{\mathfrak D}
+\newcommand\fE{\mathfrak E}
+\newcommand\fF{\mathfrak F}
+\newcommand\fG{\mathfrak G}
+\newcommand\fH{\mathfrak H}
+\newcommand\fI{\mathfrak I}
+\newcommand\fJ{\mathfrak J}
+\newcommand\fK{\mathfrak K}
+\newcommand\fL{\mathfrak L}
+\newcommand\fM{\mathfrak M}
+\newcommand\fN{\mathfrak N}
+\newcommand\fO{\mathfrak O}
+\newcommand\fP{\mathfrak P}
+\newcommand\fQ{\mathfrak Q}
+\newcommand\fR{\mathfrak R}
+\newcommand\fS{\mathfrak S}
+\newcommand\fT{\mathfrak T}
+\newcommand\fU{\mathfrak U}
+\newcommand\fV{\mathfrak V}
+\newcommand\fW{\mathfrak W}
+\newcommand\fX{\mathfrak X}
+\newcommand\fY{\mathfrak Y}
+\newcommand\fZ{\mathfrak Z}
+\newcommand\fa{\mathfrak a}
+\newcommand\fb{\mathfrak b}
+\newcommand\fc{\mathfrak c}
+\newcommand\fd{\mathfrak d}
+\newcommand\fe{\mathfrak e}
+\newcommand\ff{\mathfrak f}
+\newcommand\fg{\mathfrak g}
+\newcommand\fh{\mathfrak h}
+%\newcommand\fi{\mathfrak i}
+\newcommand\fj{\mathfrak j}
+\newcommand\fk{\mathfrak k}
+\newcommand\fl{\mathfrak l}
+\newcommand\fm{\mathfrak m}
+\newcommand\fn{\mathfrak n}
+\newcommand\fo{\mathfrak o}
+\newcommand\fp{\mathfrak p}
+\newcommand\fq{\mathfrak q}
+\newcommand\fr{\mathfrak r}
+\newcommand\fs{\mathfrak s}
+\newcommand\ft{\mathfrak t}
+\newcommand\fu{\mathfrak u}
+\newcommand\fv{\mathfrak v}
+\newcommand\fw{\mathfrak w}
+\newcommand\fx{\mathfrak x}
+\newcommand\fy{\mathfrak y}
+\newcommand\fz{\mathfrak z}
+\newcommand\vA{\vec A}
+\newcommand\vB{\vec B}
+\newcommand\vC{\vec C}
+\newcommand\vD{\vec D}
+\newcommand\vE{\vec E}
+\newcommand\vF{\vec F}
+\newcommand\vG{\vec G}
+\newcommand\vH{\vec H}
+\newcommand\vI{\vec I}
+\newcommand\vJ{\vec J}
+\newcommand\vK{\vec K}
+\newcommand\vL{\vec L}
+\newcommand\vM{\vec M}
+\newcommand\vN{\vec N}
+\newcommand\vO{\vec O}
+\newcommand\vP{\vec P}
+\newcommand\vQ{\vec Q}
+\newcommand\vR{\vec R}
+\newcommand\vS{\vec S}
+\newcommand\vT{\vec T}
+\newcommand\vU{\vec U}
+\newcommand\vV{\vec V}
+\newcommand\vW{\vec W}
+\newcommand\vX{\vec X}
+\newcommand\vY{\vec Y}
+\newcommand\vZ{\vec Z}
+\newcommand\va{\vec a}
+\newcommand\vb{\vec b}
+\newcommand\vc{\vec c}
+\newcommand\vd{\vec d}
+\newcommand\ve{\vec e}
+\newcommand\vf{\vec f}
+\newcommand\vg{\vec g}
+\newcommand\vh{\vec h}
+\newcommand\vi{\vec i}
+\newcommand\vj{\vec j}
+\newcommand\vk{\vec k}
+\newcommand\vl{\vec l}
+\newcommand\vm{\vec m}
+\newcommand\vn{\vec n}
+\newcommand\vo{\vec o}
+\newcommand\vp{\vec p}
+\newcommand\vq{\vec q}
+\newcommand\vr{\vec r}
+\newcommand\vs{\vec s}
+\newcommand\vt{\vec t}
+\newcommand\vu{\vec u}
+\renewcommand\vv{\vec v}
+\newcommand\vw{\vec w}
+\newcommand\vx{\vec x}
+\newcommand\vy{\vec y}
+\newcommand\vz{\vec z}
+\renewcommand\AA{\mathbb A}
+\newcommand\NN{\mathbb N}
+\newcommand\ZZ{\mathbb Z}
+\newcommand\PP{\mathbb P}
+\newcommand\QQ{\mathbb Q}
+\newcommand\RR{\mathbb R}
+\newcommand\RRpos{\mathbb R_{\geq0}}
+\renewcommand\SS{\mathbb S}
+\newcommand\CC{\mathbb C}
+\newcommand{\ord}{\mathrm{ord}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\pr}{\mathrm{P}}
+\newcommand{\Vol}{\mathrm{vol}}
+\newcommand\norm[1]{\left\|{#1}\right\|} 
+\newcommand\sign{\mathrm{sign}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand\bc[1]{\left({#1}\right)} 
+\newcommand\cbc[1]{\left\{{#1}\right\}} 
+\newcommand\bcfr[2]{\bc{\frac{#1}{#2}}} 
+\newcommand{\bck}[1]{\left\langle{#1}\right\rangle} 
+\newcommand\brk[1]{\left\lbrack{#1}\right\rbrack} 
+\newcommand\scal[2]{\bck{{#1},{#2}}} 
+\newcommand{\vecone}{\mathbb{1}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\ggt}{\mathrm{ggT}}
+\newcommand{\kgv}{\mathrm{kgV}}
+\newcommand{\trans}{\top}
+\newcommand{\Karonski}{Karo\'nski}
+\newcommand{\Erdos}{Erd\H{o}s}
+\newcommand{\Renyi}{R\'enyi}
+\newcommand{\Lovasz}{Lov\'asz}
+\newcommand{\Juhasz}{Juh\'asz}
+\newcommand{\Bollobas}{Bollob\'as}
+\newcommand{\Furedi}{F\"uredi}
+\newcommand{\Komlos}{Koml\'os}
+\newcommand{\Luczak}{\L uczak}
+\newcommand{\Kucera}{Ku\v{c}era}
+\newcommand{\Szemeredi}{Szemer\'edi}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Randomisiertes Quicksort}
+	\begin{block}{Ziel}
+			Eine Liste $L=(\ell_1,\ldots,\ell_n)$ \alert{vergleichbarer} Elemente aufsteigend sortieren.
+	\end{block}
+\begin{exampleblock}{Vergleichbarkeit}
+	\begin{itemize}
+		\item f\"ur je zwei Element $\ell_i,\ell_j$ gilt entweder $\ell_i<\ell_j$, $\ell_i=\ell_j$ oder $\ell_i>\ell_j$
+		\item die Ordnung ist \alert{transitiv}: $\ell_h\leq\ell_i$ und $\ell_i\leq\ell_j$ $\Rightarrow$ $\ell_h\leq\ell_j$
+	\item die Ordnung ist \alert{antisymmetrisch}: $\ell_i\leq\ell_j$ und $\ell_j\leq\ell_i$ $\Rightarrow$ $\ell_i=\ell_j$
+	\item wir haben Zugriff auf eine Funktion, die zwei Element $\ell_i,\ell_j$ vergleicht
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Randomisiertes Quicksort}
+\begin{exampleblock}{Algorithmus \tt Quicksort}
+	\begin{enumerate}
+		\item F\"ur $i=1,\ldots,n$
+		\item $\quad$falls $\ell_i<\ell_1$, f\"uge $\ell_i$ der Liste $K$ hinzu.
+		\item $\quad$falls $\ell_i>\ell_1$, f\"uge $\ell_i$ der Liste $G$ hinzu.
+		\item $\quad$falls $\ell_i=\ell_1$, f\"uge $\ell_i$ der Liste $M$ hinzu.
+		\item Wende {\tt Quicksort} rekursiv an, um $K$ und $G$ zu sortieren.
+		\item Gib $K,M,G$ aus.
+	\end{enumerate}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Randomisiertes Quicksort}
+\begin{exampleblock}{Laufzeit nochmal}
+	\begin{itemize}
+		\item auf einer \emph{sortierten} Eingabe hat Quicksort Laufzeit $\Theta(n^2)$
+		\item dennoch ist Quicksort ``in der Praxis'' beliebt
+		\item um das ``reale'' Verhalten von Quicksort besser zu verstehen, analysieren wir den Algorithmus auf \emph{zuf\"alligen} Permutationen
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Randomisiertes Quicksort}
+\begin{exampleblock}{Permutationen}
+	\begin{itemize}
+		\item eine $n$-\alert{Permutation} ist eine bijektive Abbildung $$\{1,\ldots,n\}\to\{1,\ldots,n\}$$
+		\item wir schreiben $[n]=\{1,\ldots,n\}$
+		\item die Menge aller $n$-Permutationen wird mit $\SS_n$ bezeichnet
+		\item insgeamt gibt es
+			\begin{align*}
+				|\SS_n|=n!=\prod_{i=1}^ni
+			\end{align*}
+			$n$-Permutationen
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Randomisiertes Quicksort}
+\begin{exampleblock}{Permutationen}
+	\begin{itemize}
+		\item mit $\vec\sigma\in\SS_n$ wird eine \alert{zuf\"allige} Permutation bezeichnet
+		\item wir interessieren uns f\"ur die \emph{erwartete} oder \emph{durchschnittliche} Laufzeit 
+		\item dazu f\"uhren wir die \alert{$n$-te harmonische Zahl} ein:
+			$$H_n=\sum_{i=1}^n\frac1i$$
+		\item wir erinnern uns auch an die Definition des \alert{nat\"urlichen Logarithmus'}:
+			$$\log(x)=\int_1^x\frac1z\dd z$$
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Randomisiertes Quicksort}
+\begin{block}{Satz}
+	Angewandt auf die zuf\"allige Permutation $\vec\sigma$ hat Quicksort eine erwartete Laufzeit von $\leq2(n+1)H_n$ Vergleichen.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Randomisiertes Quicksort}
+	\begin{alertblock}{Die Euler-Mascheroni-Zahl}
+		Ein wenig Analysis zeigt, da\ss\ 
+	\begin{align*}
+		\lim_{n\to\infty}H_n-\log n=\gamma\approx0.57721\dots
+		\end{align*}
+		Aus dem Satz folgt also, da\ss\ Quicksort auf Eingabe $\vec\sigma$ nur $O(n\log n)$ Vergleiche in Erwartung ben\"otigt
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}{Randomisiertes Quicksort}
+	\begin{exampleblock}{Zuf\"allige Wahl des Pivots}
+		\begin{itemize}
+			\item die Analyse von Quicksort auf zuf\"alligen Permutationen hat \emph{nur} verwendet, da\ss\ das Pivot zuf\"allig ist
+			\item wenn wir statt des ersten Elements also ein \alert{zuf\"alliges} Element als Pivot verwenden, erzielen wir auf \emph{jeder} Eingabe eine Laufzeit von $O(n\log n)$
+			\item man spricht von einem \alert{Las Vegas-Algorithmus}
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Randomisiertes Quicksort}
+\begin{exampleblock}{Zusammenfassung}
+	\begin{itemize}
+		\item wir haben Quicksort auf \emph{zuf\"alligen} Permutationen analysiert
+		\item die Laufzeit hat sich dabei auf $O(n\log n)$ (erwartet) verbessert
+		\item die Analyse zeigt, da\ss\ eine \emph{randomisierte} Version dieselbe erwartete Laufzeit auf \emph{beliebigen} Eingaben hat
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\end{document}

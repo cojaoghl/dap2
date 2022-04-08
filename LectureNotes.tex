@@ -1,0 +1,1661 @@
+\NeedsTeXFormat{LaTeX2e}
+
+\documentclass[10pt,reqno]{amsart}
+
+\usepackage[german]{babel}
+\usepackage{latexsym,amsmath}
+\usepackage{times}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+\usepackage{bbm}
+\usepackage{color}
+\usepackage{a4wide}
+
+\numberwithin{equation}{section}
+
+\newcommand{\ggt}{\mathrm{ggT}}
+\newcommand\Ae{\"A}
+\newcommand\Oe{\"O}
+\newcommand\Ue{\"U}
+\renewcommand\subset{\subseteq}
+\renewcommand\ae{\"a}
+\renewcommand\oe{\"o}
+\newcommand\ue{\"u}
+\newcommand\KL[2]{D\bc{{{#1}\|{#2}}}}
+\newcommand\nix{\,\cdot\,}
+\newcommand\ndiv{\nmid}
+\newcommand\ggT{\mathrm{ggT}}
+\newcommand\kgV{\mathrm{kgV}}
+\newcommand\Start{\rhd}
+\newcommand\Blank{\sqcup}
+\newcommand\cA{\mathcal A}
+\newcommand\cB{\mathcal B}
+\newcommand\cC{\mathcal C}
+\newcommand\cD{\mathcal D}
+\newcommand\cE{\mathcal E}
+\newcommand\cF{\mathcal F}
+\newcommand\cG{\mathcal G}
+\newcommand\cH{\mathcal H}
+\newcommand\cI{\mathcal I}
+\newcommand\cJ{\mathcal J}
+\newcommand\cK{\mathcal K}
+\newcommand\cL{\mathcal L}
+\newcommand\cM{\mathcal M}
+\newcommand\cN{\mathcal N}
+\newcommand\cO{\mathcal O}
+\newcommand\cP{\mathcal P}
+\newcommand\cQ{\mathcal Q}
+\newcommand\cR{\mathcal R}
+\newcommand\cS{\mathcal S}
+\newcommand\cT{\mathcal T}
+\newcommand\cU{\mathcal U}
+\newcommand\cV{\mathcal V}
+\newcommand\cW{\mathcal W}
+\newcommand\cX{\mathcal X}
+\newcommand\cY{\mathcal Y}
+\newcommand\cZ{\mathcal Z}
+\newcommand\fA{\mathfrak A}
+\newcommand\fB{\mathfrak B}
+\newcommand\fC{\mathfrak C}
+\newcommand\fD{\mathfrak D}
+\newcommand\fE{\mathfrak E}
+\newcommand\fF{\mathfrak F}
+\newcommand\fG{\mathfrak G}
+\newcommand\fH{\mathfrak H}
+\newcommand\fI{\mathfrak I}
+\newcommand\fJ{\mathfrak J}
+\newcommand\fK{\mathfrak K}
+\newcommand\fL{\mathfrak L}
+\newcommand\fM{\mathfrak M}
+\newcommand\fN{\mathfrak N}
+\newcommand\fO{\mathfrak O}
+\newcommand\fP{\mathfrak P}
+\newcommand\fQ{\mathfrak Q}
+\newcommand\fR{\mathfrak R}
+\newcommand\fS{\mathfrak S}
+\newcommand\fT{\mathfrak T}
+\newcommand\fU{\mathfrak U}
+\newcommand\fV{\mathfrak V}
+\newcommand\fW{\mathfrak W}
+\newcommand\fX{\mathfrak X}
+\newcommand\fY{\mathfrak Y}
+\newcommand\fZ{\mathfrak Z}
+\newcommand\fa{\mathfrak a}
+\newcommand\fb{\mathfrak b}
+\newcommand\fc{\mathfrak c}
+\newcommand\fd{\mathfrak d}
+\newcommand\fe{\mathfrak e}
+\newcommand\ff{\mathfrak f}
+\newcommand\fg{\mathfrak g}
+\newcommand\fh{\mathfrak h}
+%\newcommand\fi{\mathfrak i}
+\newcommand\fj{\mathfrak j}
+\newcommand\fk{\mathfrak k}
+\newcommand\fl{\mathfrak l}
+\newcommand\fm{\mathfrak m}
+\newcommand\fn{\mathfrak n}
+\newcommand\fo{\mathfrak o}
+\newcommand\fp{\mathfrak p}
+\newcommand\fq{\mathfrak q}
+\newcommand\fr{\mathfrak r}
+\newcommand\fs{\mathfrak s}
+\newcommand\ft{\mathfrak t}
+\newcommand\fu{\mathfrak u}
+\newcommand\fv{\mathfrak v}
+\newcommand\fw{\mathfrak w}
+\newcommand\fx{\mathfrak x}
+\newcommand\fy{\mathfrak y}
+\newcommand\fz{\mathfrak z}
+\newcommand\vA{\vec A}
+\newcommand\vB{\vec B}
+\newcommand\vC{\vec C}
+\newcommand\vD{\vec D}
+\newcommand\vE{\vec E}
+\newcommand\vF{\vec F}
+\newcommand\vG{\vec G}
+\newcommand\vH{\vec H}
+\newcommand\vI{\vec I}
+\newcommand\vJ{\vec J}
+\newcommand\vK{\vec K}
+\newcommand\vL{\vec L}
+\newcommand\vM{\vec M}
+\newcommand\vN{\vec N}
+\newcommand\vO{\vec O}
+\newcommand\vP{\vec P}
+\newcommand\vQ{\vec Q}
+\newcommand\vR{\vec R}
+\newcommand\vS{\vec S}
+\newcommand\vT{\vec T}
+\newcommand\vU{\vec U}
+\newcommand\vV{\vec V}
+\newcommand\vW{\vec W}
+\newcommand\vX{\vec X}
+\newcommand\vY{\vec Y}
+\newcommand\vZ{\vec Z}
+\newcommand\va{\vec a}
+\newcommand\vb{\vec b}
+\newcommand\vc{\vec c}
+\newcommand\vd{\vec d}
+\newcommand\ve{\vec e}
+\newcommand\vf{\vec f}
+\newcommand\vg{\vec g}
+\newcommand\vh{\vec h}
+\newcommand\vi{\vec i}
+\newcommand\vj{\vec j}
+\newcommand\vk{\vec k}
+\newcommand\vl{\vec l}
+\newcommand\vm{\vec m}
+\newcommand\vn{\vec n}
+\newcommand\vo{\vec o}
+\newcommand\vp{\vec p}
+\newcommand\vq{\vec q}
+\newcommand\vr{\vec r}
+\newcommand\vs{\vec s}
+\newcommand\vt{\vec t}
+\newcommand\vu{\vec u}
+\newcommand\vv{\vec v}
+\newcommand\vw{\vec w}
+\newcommand\vx{\vec x}
+\newcommand\vy{\vec y}
+\newcommand\vz{\vec z}
+\renewcommand\AA{\mathbb A}
+\newcommand\NN{\mathbb N}
+\newcommand\ZZ{\mathbb Z}
+\newcommand\PP{\mathbb P}
+\newcommand\QQ{\mathbb Q}
+\newcommand\RR{\mathbb R}
+\newcommand\RRpos{\mathbb R_{\geq0}}
+\renewcommand\SS{\mathbb S}
+\newcommand\CC{\mathbb C}
+\def\rddots#1{\cdot^{\cdot^{\cdot^{#1}}}}
+\newcommand\contig{\triangleleft}
+\newcommand\atom{\delta}
+\newcommand\thet{\vartheta}
+\newcommand\dd{{\mathrm d}}
+\newcommand\ism{\cong}
+\newcommand\ul[1]{\underline{#1}}
+\newcommand\bemph[1]{{\bf\em #1}}
+\def\vec#1{\mathchoice{\mbox{\boldmath$\displaystyle#1$}}
+{\mbox{\boldmath$\textstyle#1$}}
+{\mbox{\boldmath$\scriptstyle#1$}}
+{\mbox{\boldmath$\scriptscriptstyle#1$}}}
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\ex}{\mathbb E}
+\DeclareMathOperator{\pr}{\mathbb P}
+\newcommand\aco[1]{\textcolor{red}{#1}}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{claim}[definition]{Behauptung}
+\newtheorem{example}[definition]{Beispiel}
+\newtheorem{remark}[definition]{Bemerkung}
+\newtheorem{theorem}[definition]{Satz}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{corollary}[definition]{Korollar}
+\newtheorem{algorithm}[definition]{Algorithmus}
+\newtheorem{fact}[definition]{Fakt}
+\newtheorem{hypothesis}[definition]{Hypothese}
+\newtheorem{experiment}[definition]{Experiment}
+\newtheorem{conjecture}[definition]{Vermutung}
+\newcommand\sign{\mathrm{sign}}
+\newcommand\Aut{\mathrm{Aut}}
+\newcommand\End{\mathrm{End}}
+\newcommand\Hom{\mathrm{Hom}}
+\newcommand\inv{\mathrm{inv}}
+\newcommand\core{\mathrm{core}}
+\newcommand\id{\mathrm{id}}
+\newcommand\BP{\mathrm{BP}}
+\newcommand\true{\mbox{true}}
+\newcommand\false{\mbox{false}}
+\newcommand\dist{\mathrm{dist}}
+\newcommand\eul{\mathrm{e}}
+\newcommand\eps{\varepsilon}
+\newcommand\ZZpos{\mathbb{Z}_{\geq0}}
+\newcommand\Var{\mathrm{Var}}
+\newcommand{\vecone}{\mathbb{1}}
+\newcommand{\Vol}{\mathrm{Vol}}
+\newcommand{\Po}{{\rm Po}}
+\newcommand{\Bin}{{\rm Bin}}
+\newcommand{\Be}{{\rm Be}}
+\newcommand\TV[1]{\left\|{#1}\right\|_{TV}}
+\newcommand\bc[1]{\left({#1}\right)}
+\newcommand\cbc[1]{\left\{{#1}\right\}}
+\newcommand\bcfr[2]{\bc{\frac{#1}{#2}}}
+\newcommand{\bck}[1]{\left\langle{#1}\right\rangle}
+\newcommand\brk[1]{\left\lbrack{#1}\right\rbrack}
+\newcommand\scal[2]{\bck{{#1},{#2}}}
+\newcommand\norm[1]{\left\|{#1}\right\|}
+\newcommand\abs[1]{\left|{#1}\right|}
+\newcommand\uppergauss[1]{\left\lceil{#1}\right\rceil}
+\newcommand\lowergauss[1]{\left\lfloor{#1}\right\rfloor}
+\newcommand\ug[1]{\left\lceil{#1}\right\rceil}
+\newcommand\FF{\Phi}
+\newcommand{\Whp}{W.h.p.}
+\newcommand{\whp}{w.h.p.}
+\newcommand{\wupp}{w.u.p.p.}
+\newcommand{\stacksign}[2]{{\stackrel{\mbox{\scriptsize #1}}{#2}}}
+\newcommand{\tensor}{\otimes}
+%\newcommand\dTV[2]{d_{\mathrm{TV}}\bc{{#1},{#2})}}
+\newcommand\dTV[2]{\norm{{#1}-{#2})}_{\mathrm{TV}}}
+\newcommand{\Karonski}{Karo\'nski}
+\newcommand{\Erdos}{Erd\H{o}s}
+\newcommand{\Renyi}{R\'enyi}
+\newcommand{\Lovasz}{Lov\'asz}
+\newcommand{\Juhasz}{Juh\'asz}
+\newcommand{\Bollobas}{Bollob\'as}
+\newcommand{\Furedi}{F\"uredi}
+\newcommand{\Komlos}{Koml\'os}
+\newcommand{\Luczak}{\L uczak}
+\newcommand{\Kucera}{Ku\v{c}era}
+\newcommand{\Szemeredi}{Szemer\'edi}
+\newcommand\Lem{Lemma}
+\newcommand\Prop{Proposition}
+\newcommand\Thm{Satz}
+\newcommand\Cor{Korollar}
+\newcommand\Sec{Abschnitt}
+\newcommand\Chap{Kapitel}
+\newcommand\Rem{Bemerkung}
+\newcommand\algstyle{} %\small\sffamily}
+
+\begin{document}
+
+\title{Datenstrukturen, Algorithmen und Programmierung~2}
+
+\author{Amin Coja-Oghlan}
+\date{\today} 
+
+\address{Amin Coja-Oghlan, {\tt  dap2.eac.fk04@tu-dortmund.de}, TU Dortmund, Fakult\"at~4, Lehrstuhl Informatik 2, Otto Hahn Str.~12, 44227 Dortmund}
+
+\maketitle
+
+%\begin{abstract} \noindent bla bla \end{abstract}
+
+%\tableofcontents
+
+\section{Einleitung}
+Thema dieser Vorlesung sind effiziente Algorithmen sowie die Datenstrukturen, die diese Algorithmen erm\"oglichen.
+Die Vorlesung baut auf der Veranstaltung DAP1 auf.
+Ein wichtiges Element der Veranstaltung ist die Analyse von Algorithmen und Datenstrukturen in Hinblick auf Effizienz, insbesondere Rechenzeit und Speicherbedarf.
+Dazu werden die notwendigen mathematischen Analysewerkzeuge bereitgestellt.
+Wir werden verschiedene algorithmische Paradigma kennenlernen, wie beispielsweise {\em divide and conquer}, {\em greedy} und {\em dynamische Programmierung}.
+Die Vorlesung beruht auf der grundlegenden Literatur zum Thema Algorithmik, insbesondere~\cite{Cormen}.
+
+Dieses Skript dient als Erg\"anzung zur Vorlesung, soll aber die Vorlesungsteilnahme nicht ersetzen und ist nicht zum Selbststudium gedacht.
+Einige Inhalte sind sowohl auf den Folien als auch im Skript zu finden.
+Einige weitere Inhalte werden in der Vorlesung an der Tafel erkl\"art.
+
+\subsubsection*{Vorbemerkungen}
+Mit $\NN=\{1,2,3,\ldots\}$ bezeichnen wir die Menge der nat\"urlichen Zahlen, $\NN_0=\NN\cup\cbc0$ und $\ZZ=\{0,\pm1,\pm2,\pm3,\ldots\}$ ist die Menge der ganzen Zahlen. 
+Die rationalen Zahlen werden mit $\QQ$ bezeichnet, die reellen mit $\RR$ und die komplexen Zahlen mit $\CC$.
+F\"ur $x\in\RR$ verwenden wir die Schreibweise $\lfloor x\rfloor$ f\"ur die gr\"o\ss te Zahl $z\in\ZZ$ mit $z\leq x$.
+Analog ist $\lceil x\rceil$ die kleinste Zahl $z\in\ZZ$ mit $z\geq x$ gemeint.
+
+\section{Quicksort}\label{sec_qs}
+Wir beginnen mit einem einf\"uhrenden Beispiel, dem Quicksort-Algorithmus.
+Quicksort ist einer der am h\"aufigtsten verwendeten Sortieralgorithmen.
+Unser Ziel wird sein, die Laufzeit dieses Algorithmus' zu analysieren.
+
+\subsection{Der Algorithmus}\label{sec_qs_alg}
+Die Aufgabe ist, eine Liste $L=(\ell_1,\ldots,\ell_n)$ aus {\em vergleichbaren} Elementen $\ell_i$ aufsteigend zu sortieren.
+``Vergleichbar'' bedeutet, da\ss\ wir f\"ur je zwei Elementen $\ell_i,\ell_j$ eine Anfrage stellen k\"onnen, deren Ergebnis $0$ ist, wenn $\ell_i=\ell_j$, $-1$, wenn $\ell_i<\ell_j$, und $1$, wenn $\ell_j<\ell_i$.
+Insbesondere stehen je zwei Elemente der Liste in einer der Bezieungen $<$, $=$ oder $>$.
+Ein offensichtliches Beispiel w\"are eine Liste ganzer Zahlen.
+Ein anderes Beispiel sind alphabetisch geordnete Zeichenketten.
+Viele andere Beispiele begegnen in der Praxis, weshalb Sortieralgorithmen h\"aufig als Unterroutinen anderer Algorithmen auftreten.
+
+Quicksort ist ein Sortieralgorithmus, der auf allgemeine Listen vergleichbarer Elemente anwendbar ist.
+Der Algorithmus beruht auf dem {\em divide and conquer}-Ansatz.
+Die Idee dabei ist, die urspr\"ungliche Sortieraufgabe in kleinere Teilaufgaben zu zerlegen und diese rekursiv wieder mit Quicksort zu l\"osen, bis nur noch Listen zu sortieren sind, die aus aus einem einzigen Element bestehen.
+Anschlie\ss end wird die L\"osung des Gesamtproblems aus den L\"osungen der Teilprobleme zusammengesetzt.
+
+Genauer geht der Quicksort-Algorithmus folgenderma\ss en vor.
+Das erste Element $\ell_1$ der Liste dient als {\em Pivot}.
+Mit diesem Element werden alle anderen Listenelemente verglichen.
+Das erste Teilproblem besteht nun darin, alle Elemente zu sortieren, die kleiner sind als $\ell_1$.
+Das zweite Teilproblem lautet, alle Elemente zu sortieren, die gr\"o\ss er als $\ell_1$ sind.
+Aus den L\"osungen dieser Teilprobleme kann die sortierte Gesamtliste zusammengesetzt werden.
+
+\begin{algorithm}\upshape {\tt Quicksort}. {\em Eingabe:} eine Liste $L=(\ell_1,\ldots,\ell_n)$ vergleichbarer Elemente.\label{alg_qs}
+	{\em Ausgabe:} die Elemente in aufsteigender Reihenfolge.
+	\begin{enumerate}
+		\item F\"ur $i=1,\ldots,n$
+		\item $\quad$falls $\ell_i<\ell_1$, f\"uge $\ell_i$ der Liste $K$ hinzu.
+		\item $\quad$falls $\ell_i>\ell_1$, f\"uge $\ell_i$ der Liste $G$ hinzu.
+		\item $\quad$falls $\ell_i=\ell_1$, f\"uge $\ell_i$ der Liste $M$ hinzu.
+		\item Wende {\tt Quicksort} rekursiv an, um $K$ und $G$ zu sortieren.
+		\item Gib $K,M,G$ aus.
+	\end{enumerate}
+\end{algorithm}
+
+Es steht au\ss er Frage, da\ss\ die Ausgabe jedenfalls aufsteigend sortiert ist.
+Weniger offensichtlich ist allerdings, welche Laufzeit Quicksort in Anspruch nimmt.
+Nat\"urlich m\"u\ss ten wir erst einmal kl\"aren, wie die Laufzeit zu bemessen ist.
+Bei vergleichsbasierten Sortieralgorithmen wie {\tt Quicksort} ist es \"ublich, die Laufzeit als die Anzahl der durchgef\"uhrten Vergleichsoperationen zu definieren.
+Der Grund ist, da\ss\ insbesondere bei komplexeren Daten (beispielsweise Zeichenketten) die Vergleichsoperationen relativ ``teuer'' sein k\"onnen.
+
+Wieviele Vergleiche f\"uhrt Quicksort also durch?
+Nehmen wir beispielsweise an, da\ss\ die Eingabe $L=(1,\ldots,n)$ eine Liste bereits sortierter ganzer Zahlen ist.
+In diesem Fall ist die Liste $K$ in jedem Rekursionsschritt stets leer, w\"ahrend die Liste $M$ aus genau einem Element besteht.
+Die Anzahl der Vergleichsoperationen betr\"agt also genau
+\begin{align}\label{eqsum}
+	\sum_{i=1}^n i=\frac{n(n+1)}2.
+\end{align}
+Die Anzahl der Vergleiche skaliert also quadratisch in der Zahl $n$ der eingegebenen Elemente.
+Wie wir sehen werden, ist das f\"ur einen Sortieralgorithmus nicht gerade gut.
+
+Die gro\ss e Beliebtheit von Quicksort erkl\"art sich dadurch, da\ss\ der Algorithmus ``in der Praxis'' h\"aufig viel schneller ist.
+Wie wir sehen werden, skaliert die Zahl der Vergleiche n\"amlich ``typischerweise'' eher wie $n\cdot\log n$.
+Diese Funktion ``w\"achst'' deutlich langsamer als $n^2$.
+Um diese Einsicht zu pr\"azisieren, befassen wir uns als n\"achstes mit Asymptotik.
+
+\subsection{Der $O(\nix)$-Kalk\"ul}\label{sec_asym}
+Die Formel \eqref{eqsum} gibt die Anzahl der Vergleiche genau an.
+H\"aufig ist es jedoch nicht leicht, die Gr\"o\ss enordnung solcher exakten Ausdr\"ucken zu erkennen. 
+
+In der Algorithmik besch\"aftigen wir uns in der Regel mit {\em gro\ss en} Eingaben.
+Genauer gesagt befassen wir uns mit dem Grenzverhalten von Algorithmen, wenn die Gr\"o\ss e der Eingabe ``gegen unendlich geht''.
+Auf den ersten Blick scheint das fragw\"urdig, denn reale Instanzen sind h\"aufig von ``moderater'' Gr\"o\ss e.
+Jedoch hat sich die asymptotische Sichweise bew\"ahrt.
+Die Erfahrung zeigt, da\ss\ Algorithmen, die ein gutes asymptotisches Verhalten haben, auch in der Praxis gut abschneiden; nat\"urlich gibt es aber einige Ausnahmen.%
+\footnote{Die vielleicht bekannteste Ausnahme d\"urfte die Ellipsoidmethode zum L\"osen linearer Optimierungsprobleme sein.}
+
+Wir m\"ussen uns daher mit dem ``Wachstumsverhalten'' von Funktionen $f(n)$ im Grenzwert $n\to\infty$ befassen.
+Zu diesem Zweck f\"uhren wir die sogenannten {\em Landau-Symbole} $O(\nix),\Omega(\nix),\Theta(\nix),o(\nix)$ ein.
+Wir erinnern an den {\em Betrag} einer reellen Zahl $z\in\RR$:
+	\begin{align*}
+		|z|&=\begin{cases}z&\mbox{ falls }z>0,\\-z&\mbox{ sonst.}\end{cases}
+	\end{align*}
+
+\begin{definition}\label{def_O}
+	Angenommen $f:\NN\to\RR$, $g:\NN\to\RR$ sind zwei Funktionen.
+	Wir schreiben $f(n)=O(g(n))$, falls es eine Zahl $n_0\in\NN$ und eine reelle Zahl $C>0$ gibt, so da\ss
+	\begin{align*}
+		|f(n)|\leq C|g(n)|\qquad\mbox{f\"ur alle }n>n_0.
+	\end{align*}
+\end{definition}
+
+Die Schreibweise $f(n)=O(g(n))$ ist mit Vorsicht zu genie\ss en.
+Das Gleichheitszeichen wird hier genaugenommen mi\ss br\"auchlich verwendet.
+Jedoch hat sich die Schreibweise so weitgehend eingeb\"urgert, da\ss\ es keinen Sinn hat, im Interesse der mathematischen Strenge davon abzuweichen.
+
+\begin{example}\upshape
+Angenommen $f(n)=1000n$ und $g(n)=n^2$.
+Dann ist $f(n)$ f\"ur kleine Werte von $n$ zwar gr\"o\ss er als $g(n)$; beispielsweise erhalten wir $f(10)=10000$ und $g(10)=100$.
+F\"ur gro\ss e $n$ ist allerdings $g(n)$ stets gr\"o\ss er.
+Insbesondere zeigen wir f\"ur $n>n_0=1000$ nach $n$ leicht, da\ss\ $g(n)>f(n)$.
+Dazu berechnen wir zun\"achst $g(1000)=10^6=f(n)$.
+Ferner bestimmen wir die Ableitungen der Funktionen:
+\begin{align*}
+	f'(x)&=1000,&g'(x)=2x.
+\end{align*}
+Folglich gilt f\"ur $x\geq1000$, da\ss\ $g'(x)>f'(x)$.
+Die Funktion $g(x)$ w\"achst also f\"ur $x\geq1000$ schneller als $f(x)$, so da\ss\ $g(n)>f(n)$ 
+\end{example}
+
+\begin{example}\upshape
+Angenommen $f(n)=10n^2+1000n$ und $g(n)=-3n^2$.
+Dann erhalten wir
+\begin{align*}
+	\lim_{n\to\infty}\frac{f(n)}{g(n)}=\lim_{n\to\infty}\frac{10n^2+1000n}{-3n^2}=\lim_{n\to\infty}-\frac{10}3-\frac{1000}{n}=-\frac{10}3.
+\end{align*}
+Der Quotient $f(n)/g(n)$ konvergiert also gegen eine reelle Zahl f\"ur $n\to\infty$.
+In diesem Fall gilt stets $f(n)=O(g(n))$.
+Allgemeiner gilt $f(n)=O(g(n))$, wenn der ``obere H\"aufungspunkt'' $\limsup_{n\to\infty}|f(n)/g(n)|$ existiert (und eine endliche reelle Zahl ist).
+\end{example}
+
+\begin{definition}\label{def_Omega}
+	Angenommen $f:\NN\to\RR$, $g:\NN\to\RR$ sind zwei Funktionen.
+	Wir schreiben $f(n)=\Omega(g(n))$, falls es eine nat\"urliche Zahl $n_0>0$ und eine reelle Zahl $c>0$ gibt, so da\ss
+	\begin{align*}
+		f(n)\geq c\cdot g(n)\geq0&&\mbox{f\"ur alle }n>n_0.
+	\end{align*}
+\end{definition}
+
+\begin{example}\upshape
+Angenommen $f(n)=n^4-10n^3$ und $g(n)=n^3$.
+Dann erhalten wir
+\begin{align*}
+	\lim_{n\to\infty}\frac{g(n)}{f(n)}=\lim_{n\to\infty}\frac{n^4-10n^3}{n^3}=\lim_{n\to\infty}n-10{n}=\infty.
+\end{align*}
+Der Quotient $f(n)/g(n)$ divergiert also gegen $+\infty$.
+In diesem Fall gilt $f(n)=\Omega(g(n))$.
+Allgemeiner gilt $f(n)=\Omega(g(n))$, wenn der ``untere H\"aufungspunkt'' $\liminf_{n\to\infty}f(n)/g(n)$ eine positive reelle Zahl oder $+\infty$ ist.
+\end{example}
+
+\begin{definition}\label{def_Theta}
+	Angenommen $f:\NN\to\RR$, $g:\NN\to\RR$ sind zwei Funktionen.
+	Wir schreiben $f(n)=\Theta(g(n))$, falls $f(n)=\Omega(g(n))$ und $g(n)=\Omega(f(n))$.
+\end{definition}
+
+\begin{example}\upshape
+	Angenommen $f(n)=\sqrt n-7\sqrt[4]n$ und $g(n)=10\sqrt n$.
+Dann erhalten wir
+\begin{align*}
+	\lim_{n\to\infty}\frac{f(n)}{g(n)}=\lim_{n\to\infty}\frac{\sqrt n-7\sqrt[4]n}{10\sqrt n}=\lim_{n\to\infty}\frac1{10}-\frac7{\sqrt[4]n}=\frac1{10}.
+\end{align*}
+Der Quotient $f(n)/g(n)$ konvergiert also gegen eine reelle Zahl.
+In diesem Fall gilt $f(n)=\Theta(g(n))$.
+Allgemeiner gilt $f(n)=\Theta(g(n))$, wenn sowohl der ``untere H\"aufungspunkt'' $\liminf_{n\to\infty}f(n)/g(n)$ als auch der ``obere H\"aufungspunkt'' $\limsup_{n\to\infty}f(n)/g(n)$ existieren (und endlich sind).
+\end{example}
+
+\begin{definition}\label{def_o}
+	Angenommen $f:\NN\to\RR$, $g:\NN\to\RR$ sind zwei Funktionen.
+	Wir schreiben $f(n)=o(g(n))$, falls zu jeder reellen Zahl $\eps>0$ eine nat\"urliche Zahl $n_0>0$ existiert, so da\ss\
+	\begin{align*}|f(n)|\leq\eps|g(n)|&&\mbox{f\"ur alle }n>n_0.\end{align*}
+\end{definition}
+
+\begin{example}\upshape
+	Angenommen $f(n)=\sin(n)$ und $g(n)=n$.
+	Dann gilt
+	\begin{align*}
+		\limsup_{n\to\infty}\frac{|f(n)|}{|g(n)|}&=\limsup_{n\to\infty}\frac{|\sin(n)|}{n}\leq\limsup_{n\to\infty}\frac1n=0,
+	\end{align*}
+	woraus $f(n)=o(g(n))$ folgt.
+	Allgemein folgt aus $\limsup_{n\to\infty}|f(n)|/|g(n)|=0$ stets $f(n)=o(g(n))$.
+\end{example}
+
+Zur Erinnerung: f\"ur eine nat\"urliche Zahl $k>0$ ist $k!$ (``$k$-Fakult\"at'') definiert als
+\begin{align*}
+	k!=\prod_{i=1}^ki.
+\end{align*}
+In Worten: $k!$ ist das Produkt der Zahlen von $1$ bis $k$.
+Wir definieren ferner $0!=1$.
+Wir erinnern uns ferner an die {\em Exponentialreihe}:
+\begin{align*}
+	\eul^x=\exp(x)&=\sum_{k=0}^\infty\frac{x^k}{k!}.
+\end{align*}
+
+\begin{example}\upshape\label{ex_exp}
+	Angenommen $f(n)=n^\ell$ f\"ur eine feste Zahl $\ell>0$ und $g(n)=\exp(n)$.
+	Dann gilt
+	\begin{align*}
+		\limsup_{n\to\infty}\frac{f(n)}{g(n)}&=\limsup_{n\to\infty}\frac{n^\ell}{\exp(n)}=\limsup_{n\to\infty}\frac{n^\ell}{\sum_{k=0}^\infty\frac{n^k}{k!}}\leq\limsup_{n\to\infty}\frac{n^\ell}{n^{\ell+1}/(\ell+1)!}=\limsup_{n\to\infty}\frac{(\ell+1)!}n=0.
+	\end{align*}
+	Also $f(n)=o(g(n))$.
+\end{example}
+
+Indem wir in Beispiel~\ref{ex_exp} den Logarithmus bilden, erhalten wir die wichtige Aussage
+\begin{align*}
+	\log n=o(n^\alpha)\qquad\mbox{f\"ur jedes reelle }\alpha>0.
+\end{align*}
+Hier und in der gesamten Vorlesung bezeichnet $\log(\nix)$ den nat\"urlichen Logarithmus, d.h.\ den Logarithmus zur Basis $\eul\approx2,718$.
+
+Asymptotische Ausdr\"ucke treten regelm\"a\ss ig als Platzhalter in Ausdr\"ucken auf.
+Beispielsweise ist $2^{O(n)}$ eine Kurzschreibweise f\"ur
+	\begin{align*}
+		2^{f(n)}\qquad\mbox{ wobei }\qquad f(n)=O(n).
+	\end{align*}
+In der Regel wird die $O(\nix)$-Notation verwendet, um Rechnugen und Herleitungen zu vereinfachen, denn sie erlaubt es uns, Terme auf ``das Wesentliche'' zu reduzieren.
+
+Schlie\ss lich begenen h\"aufig gewisse mnemonische Anwendungen der $O(\nix)$-Notation.
+Beispielsweise bezeichnet $O(1)$ einen Ausdruck, der beschr\"ankt ist f\"ur $n\to\infty$.
+Entsprechend ist $o(1)$ ein Term, der f\"ur $n\to\infty$ gegen Null geht.
+Weiterhin ist $\Omega(1)$ ein Term, der f\"ur $n\to\infty$ positive und von der Null weg besch\"ankt ist, also gerade nicht gegen Null geht.
+Schlie\ss lich ist $\Theta(1)$ eine Kurzschreibweise f\"ur einen positiven Term, der beschr\"ankt ist, aber nicht gegen Null geht.
+
+Zu guter letzt f\"uhren wir noch eine Schreibweise f\"ur asymptotische Gleichheit ein.
+F\"ur zwei Funktionen $f(n),g(n)$ schreiben wir $f(n)\sim g(n)$, falls $f(n)=(1+o(1))g(n)$.
+
+Die sichere Verwendung des $O(\nix)$-Kalk\"uls ist \"Ubungssache.
+Versuchen Sie sich daher an den \"Ubungsaufgaben zu dem Thema.
+
+\subsection{Quicksort auf zuf\"alligen Permutationen}\label{sec_random_qs}
+Um einer analytischen Erkl\"arung f\"ur die gute Performanz von Quicksort ``in der Praxis'' n\"aherzukommen, untersuchen wir den Algorithmus nun auf {\em zuf\"alligen} Permutationen.
+Eine {\em Permutation} einer Menge $S$ ist eine bijektive Abbildung $\sigma:S\to S$.
+Das bedeutet, da\ss\ f\"ur jedes Element $t\in S$ genau ein $s\in S$ existiert, so da\ss\ $\sigma(s)=t$.
+Zu jeder Permutation $\sigma$ gibt es eine {\em inverse Permutation} $\sigma^{-1}$, so da\ss\ $\sigma^{-1}(\sigma(s))=s$ und $\sigma(\sigma^{-1}(s))=s$ f\"ur alle $s\in S$.
+Eine {\em $n$-Permutation} ist ferner eine Permutation der Menge
+	$$[n]=\{1,\ldots,n\}.$$
+Mit $\SS_n$ bezeichnen wir die Menge aller $n$-Permutationen.
+Folgende Aussage sollte bekannt sein; der Beweis erfolgt durch eine einfache Induktion.
+
+\begin{lemma}\label{lem_perm}
+Es gibt genau $n!$ verschiedene $n$-Permutationen.
+\end{lemma}
+
+Wir bezeichnen mit $\vec\sigma$ eine {\em zuf\"allige} $n$-Permutation; d.h.\ $\vec\sigma$ wird uniform aus der Menge $\SS_n$ ausgew\"ahlt.
+Mit
+\begin{align*}
+	H_n&=\sum_{i=1}^n\frac1i
+\end{align*}
+bezeichnen wir ferner die {\em $n$-te harmonische Zahl}.
+
+\begin{theorem}\label{thm_qs}
+	Die erwartete Anzahl von Vergleichen, die Quicksort angewandt auf eine zuf\"allige Permutation $\vec\sigma$ durchf\"uhrt, ist kleiner oder gleich $2(n+1)H_n$.
+\end{theorem}
+\begin{proof}
+	Sei $X_n$ die erwartete Zahl der Vergleiche, die Quicksort auf einer zuf\"alligen Permutation durchf\"uhrt.
+	Weil $\vec\sigma$ eine zuf\"allige Permutation ist, ist das Pivot einfach eine zuf\"allige Zahl zwischen $1$ und $n$.
+	Daher erhalten wir die Gleichung
+	\begin{align}\label{eqthm_qs1}
+		X_n&=n+\frac1n\sum_{k=1}^n\bc{X_{k-1}+X_{n-k}},&X_0&=0,&X_1&=1.
+	\end{align}
+	Denn es gibt $k-1$ Zahlen, die kleiner als das Pivot $k$ sind, und $n-k$, die gr\"o\ss er sind.
+	Wir vereinfachen \eqref{eqthm_qs1} zu
+	\begin{align}\label{eqthm_qs2}
+		nX_n&=n^2+2\sum_{k=0}^{n-1}X_{k},&X_0&=0,&X_1&=1.
+	\end{align}
+	Entsprechend erhalten wir f\"ur $n+1$ die Gleichung
+	\begin{align}\label{eqthm_qs3}
+		(n+1)X_{n+1}&=(n+1)^2+2\sum_{k=0}^{n}X_{k}.
+	\end{align}
+	Subtrahieren wir nun \eqref{eqthm_qs2} von \eqref{eqthm_qs3}, so erhalten wir
+	\begin{align}\label{eqthm_qs4}
+		(n+1)X_{n+1}-nX_n&=(n+1)^2-n^2+2\sum_{k=0}^{n}X_{k}-2\sum_{k=0}^{n-1}X_k=2n+1+2X_n.
+	\end{align}
+	Umstellen der Gleichung \eqref{eqthm_qs4} ergibt
+	\begin{align}\label{eqthm_qs5}
+		(n+1)X_{n+1}&=(n+2)X_n+2n+1.
+	\end{align}
+	Wir erhalten also
+	\begin{align}\label{eqthm_qs6}
+		\frac{X_{n+1}}{n+2}&=\frac{X_n}{n+1}+\frac{2n+1}{(n+1)(n+2)}\leq\frac{X_n}{n+1}+\frac{2}{n+2}.
+	\end{align}
+	Diese Gleichung gilt f\"ur all $n$.
+	Wiederholtes Anwenden von \eqref{eqthm_qs6} ergibt
+	\begin{align*}
+		\frac{X_{n+1}}{n+2}&\leq\sum_{k=0}^{n+1}\frac2{k+1}.
+	\end{align*}
+	Wir schlie\ss en also $X_{n+1}\leq2(n+2)H_{n+1}$, woraus die Behauptung folgt.
+%	Der Beweis folgt \cite[\Sec~7.4.2]{Cormen}.
+%	Sei $\vX$ die Zahl der Vergleiche, die Quicksort durchf\"uhrt.
+%	F\"ur $1\leq i,j\leq n$ sei ferner $\vX_{ij}=1$, falls die Zahlen $i$ und $j$ miteinander verglichen werden, und $\vX_{ij}=0$, falls nicht.
+%	Wir bemerken, da\ss\ zwei Zahlen $i,j$ h\"ochstens einmal miteinander verglichen werden.
+%	Daher erhalten wir
+%	\begin{align}\label{eqthm_qs1}
+%		\vX&=\sum_{i=1}^n\sum_{j=i}^n\vX_{ij}.
+%	\end{align}
+%	Aus \eqref{eqthm_qs1} folgt, da\ss\
+%	\begin{align}\label{eqthm_qs2}
+%		\ex[\vX]&=\sum_{i=1}^n\sum_{j=i}^n\ex[\vX_{ij}]=\sum_{i=1}^n\sum_{j=i}^n\pr[\mbox{$i,j$ werden miteinander verglichen}].
+%	\end{align}
+%
+%	Wenn $i,j$ miteinander verglichen werden, dann kommt keine der Zahlen $k\in\{i+1,\ldots,j-1\}$ vor $i$ oder $j$ als Pivot an die Reihe.
+%	Bevor eine der $j-i+1$ Zahlen $i,i+1,\ldots,j$ als Pivot ausgew\"ahlt wird, landen diese Zahlen immer in derselben Teilliste.
+%	Die Wahrscheinlichkeit, da\ss\ zu dem Zeitpunkt, wo zuerst ein Pivot aus dieser Menge ausgew\"ahlt wird, ausgerechnet $i$ oder $j$ gew\"ahlt wird, ist daher kleiner oder gleich $\frac2{i-j+1}$, weil wir eine zuf\"allige Permutation $\vec\sigma$ sortieren.
+\end{proof}
+
+Die Formel aus \Thm~\ref{thm_qs} ist recht genau, aber die Gr\"o\ss enordnung der Zahl der Vergleiche ist daraus nicht ganz leicht abzulesen.
+Wir m\"ussen uns also mit dem asymptotischen Verhalten der harmonischen Zahl befassen.
+Dazu erinnern wir uns an die Formel
+\begin{align}\label{eqlog}
+	\log x&=\int_1^x\frac1z\dd z&&(x>0).
+\end{align}
+Weil die Funktion $z\mapsto 1/z$ f\"ur $z>0$ monoton f\"allt, sehen wir, da\ss
+\begin{align}\label{eqharm}
+	\log n=\int_1^n\frac{\dd z}z\leq H_n&\leq1+\int_1^n\frac{\dd z}z=1+\log n.
+\end{align}
+Die Ungleichungen \eqref{eqharm} zeigen also, da\ss\ $H_n=O(1)+\log n$.
+Aus \Thm~\ref{thm_qs} folgt also, da\ss\ Quicksort auf einer zuf\"alligen Permutation in Erwartung $O(n\log n)$ Vergleiche ausf\"uhrt.
+Genauer zeigt der Beweis sogar, da\ss\ die erwartete Zahl der Vergleiche $(2+o(1))n\log n$ betr\"agt.
+Die Folge der Differenzen
+	\begin{align*}
+		\lim_{n\to\infty}H_n-\log n
+	\end{align*}
+konvergiert \"ubrigens.
+Der Grenzwert wird {\em Euler-Mascheroni-Konstante} genannt.
+
+\subsection{Randomisiertes Quicksort}\label{sec_randomised_qs}
+Die Analyse von Quicksort auf zuf\"alligen Permutationen f\"uhrt uns zu einer Modifikation des Algorithmus'.
+Anstatt stets das erste Element als Pivot zu verwenden, zieht diese Modifikation ein zuf\"alliges Pivot-Element.
+
+\begin{algorithm}\upshape {\tt RQuicksort}. {\em Eingabe:} eine Liste $L=(\ell_1,\ldots,\ell_n)$ vergleichbarer Elemente.\label{alg_rqs}
+	{\em Ausgabe:} die Elemente in aufsteigender Reihenfolge.
+	\begin{enumerate}
+		\item Vertausche $\ell_1$ mit einem zuf\"alligen Element $\ell_i$, $i=1,\ldots,n$.
+		\item F\"ur $i=1,\ldots,n$
+		\item $\quad$falls $\ell_i<\ell_1$, f\"uge $\ell_i$ der Liste $K$ hinzu.
+		\item $\quad$falls $\ell_i>\ell_1$, f\"uge $\ell_i$ der Liste $G$ hinzu.
+		\item $\quad$falls $\ell_i=\ell_1$, f\"uge $\ell_i$ der Liste $M$ hinzu.
+		\item Wende {\tt Quicksort} rekursiv an, um $K$ und $G$ zu sortieren.
+		\item Gib $K,M,G$ aus.
+	\end{enumerate}
+\end{algorithm}
+
+Bis auf den ersten Schritt ist also alles beim alten geblieben.
+Ein Blick auf den Beweis von \Thm~\ref{thm_qs} zeigt, da\ss\ wir lediglich verwendet haben, da\ss\ das Pivotelement zuf\"allig ist.
+Dies ist automatisch der Fall, wenn wir Algorithmus~\ref{alg_qs} auf eine zuf\"allige Permutationen anwenden, w\"ahrend Algorithmus~\ref{alg_rqs} die Zuf\"alligkeit des Pivots ausdr\"ucklich herstellt.
+Dieselbe Analyse ist also auf beide Algorithmen anwendbar, so da\ss\ wir folgendes Ergebnis erhalten.
+
+\begin{corollary}\label{cor_qs}
+	F\"ur eine beliebige Liste $L$ ist die erwartete Zahl von Vergleichen, die RQuicksort durchf\"uhrt, von der Ordnung $O(n\log n)$.
+\end{corollary}
+
+Statt den Algorithmus auf einer zuf\"alligen Eingabe zu analysieren, haben wir also den Zufall in den Algorithmus selbst eingebaut.
+Einen Algorithmus, der den Zufall als Hilfsmittel heranzieht, nennt man {\em randomisiert}.
+
+Die wenigsten realen Computer verf\"ugen \"uber einen ``echten'' Zufallsgenerator, der gro\ss e Mengen von Zufallszahlen produzieren kann.
+In der Praxis werden randomisierte Algorithmen daher in der Regel unter Verwendung eines Pseudozufallsgenerators implementiert.
+Dabei sollte man sich der Begrenzungen eines solchen Pseudozufallsgenerators bewu\ss t sein.
+
+\subsection{Die informationstheoretische Schranke}\label{sec_inf}
+Au\ss er dem randomisierten Quicksort-Algorithmus gibt es verschiedene weitere (deterministische) Sortieralgorithmen, die f\"ur Listen beliebiger vergleichbarer Elemente eine Laufzeit (Zahl von Vergleichen) von $O(n\log n)$ erreichen.
+Ein Beispiel, das Sie aus DAP1 kennen, ist Mergesort.
+Jedoch gibt es keinen ``vergleichenden'' Algorithmus, der eine asymptotisch bessere Laufzeit, also $o(n\log n)$ Vergleiche, erzielt.
+Es stellt sich heraus, da\ss\ das kein Zufall ist.
+Denn es gibt eine informationstheoretische untere Schranke f\"ur vergleichsbasierte Algorithmen von $\Omega(n\log n)$.
+In diesem Abschnitt leiten diesen Schranke f\"ur deterministische Sortieralgorithmen her.
+Sie gilt aber ebenso f\"ur randomisierte Algorithmen.
+
+Genau gesagt ist ein {\em vergleichsbasierter Sortieralgorithmus} ein Sortieralgorithmus, der auf seine Eingabe nur durch Vergleichsanfragen $(\ell_i,\ell_j)$ zugreift.
+Das Ergebnis einer solchen Vergleichsanfrage ist entweder ``kleiner'', ``gleich'' oder ``gr\"o\ss er''.
+Wir repr\"asentieren diese drei Werte durch $-1,0,1$.
+Aufgrund der Antworten auf diese Vergleichsanfragen entscheidet der Algorithmus dann \"uber die Reihenfolge der Elemente in der Ausgabe.
+Wir analysieren solche Algorithmen jetzt bei Eingabe zuf\"alliger Permutationen und werden zeigen, da\ss\ die erwartete Zahl der Vergleichsanfragen mindestens von der Ordnung $\Omega(n\log n)$ ist.
+Wir beginnen mir dem Beweis des folgenden Satzes.
+
+\begin{theorem}\label{thm_inf}
+	Angenommen $\cA$ ist ein deterministischer vergleichsbasierter Sortieralgorithmus.
+	Sei $X_n(\cA)$ die erwartete Zahl von Vergleichen, die $\cA$ zum Sortieren einer zuf\"alligen $n$-Permutation $\vec\sigma$ durchf\"uhrt.
+	Dann gilt $$X_n(\cA)=\Omega(\log(n!)).$$
+\end{theorem}
+\begin{proof}
+	Sei $N(\sigma)$ die Zahl der Vergleiche, die der Algorithmus auf Eingabe $\sigma$ durchf\"uhrt.
+	Wir wenden den Sortieralgorithmus an auf eine ``Tabelle'', deren erste Spalte aus der Permutation $\vec\sigma$ besteht und deren zweite Spalten einfach die geordneten Zahlen $1,\ldots,n$ enth\"alt:
+	\begin{align*}
+		\begin{array}{|c|c|}\hline\vec\sigma(1)&1\\\hline\vec\sigma(2)&2\\\hline\vdots&\vdots\\\hline\vec\sigma(n)&n\\\hline\end{array}
+	\end{align*}
+	Die Vergleichsoperation auf den Zeilen der Tabelle ist einfach dadurch definiert, da\ss\ die Zahlen in der ersten Spalte verglichen werden.
+	Die zweite Spalte wird vom Algorithmus nur ``mitgef\"uhrt''.
+	Die Ausgabe des Algorithmus' ist dann die sortierte Liste
+	\begin{align}\label{eqthm_inf1}
+		\begin{array}{|c|c|}\hline1&\vec\sigma^{-1}(1)\\\hline2&\vec\sigma^{-1}(2)\\\hline\vdots&\vdots\\\hline n&\vec\sigma^{-1}(n)\\\hline\end{array}
+	\end{align}
+	Die zweite Spalte der sortierten Tabelle enth\"alt also die inverse Permutation $\vec\sigma^{-1}$.
+	Weil die Abbildung $\sigma\in\SS_n\mapsto\sigma^{-1}$ bijektiv ist, kann die Permutation $\vec\sigma$ aus der zweiten Spalte rekonstruiert werden.
+(Dazu k\"onnten wir beispielsweise die beiden Spalten vertauschen und anschlie\ss end nochmal sortieren, denn $(\sigma^{-1})^{-1}=\sigma$.)
+Beim Sortiervorgang geht also keine Information ``verloren''.
+
+	Weil der Sortieralgorithmus deterministisch ist, sind seine Schritte vollst\"andig durch die Antworten auf die Vergleichsanfragen, die der Algorithmus stellt, bestimmt.
+	Diese Antworten k\"onnen wir in einem Vektor $\va(\vec\sigma)=(a_1(\vec\sigma),\ldots,a_{N(\vec\sigma)}(\vec\sigma))\in\{0,\pm1\}^{N(\vec\sigma)}$ zusammenfassen.
+	Weil bei dem Sortiervorgang keine Information verlorengeht (s.~\eqref{eqthm_inf1}), ist die Abbildung $\sigma\mapsto\va(\sigma)$ also eine Bijektion.
+
+	Nehmen wir nun an, die erwartete Zahl $X_n(\cA)=\ex[N(\vec\sigma)]$ von Vergleichsanfragen, die der Algorithmus stellt, w\"are kleiner als $\eps n\log n$ f\"ur eine kleine Zahl $\eps>0$.
+	Dann erhalten wir
+	\begin{align}\label{eqthm_inf2}
+		\pr\brk{N(\vec\sigma)\leq2\eps n\log n}\geq\frac12.
+	\end{align}
+	Sei also $S\subset\SS_n$ die Teilmenge aller Permutation $\sigma\in\SS_n$ mit $N(\sigma)\leq h=\lceil 2\eps n\log n\rceil$.
+	Dann zeigt \eqref{eqthm_inf2}, da\ss\ $|S|\geq n!/2$.
+	Ferner gibt es insgesamt nur 
+	\begin{align*}
+		\sum_{i=0}^h3^i\leq 3^{h+1}
+	\end{align*}
+	m\"ogliche Sequenzen $a(\sigma)$ der L\"ange kleiner oder gleich $h$.
+	Also schlie\ss en wir
+	\begin{align*}
+		\frac{n!}2\geq 3^{h+1}.
+	\end{align*}
+	Umstellen nach $h$ liefert die Behauptung.
+\end{proof}
+
+\subsection{Die Stirling-Formel}\label{sec_stirling}
+Wiederum ist es auf den ersten Blick nicht ganz offensichtlich, wie die Gr\"o\ss enordnung des Terms $\log(n!)$ aus \Thm~\ref{thm_inf} einzusch\"atzen ist.
+Wir ben\"otigen dazu eine Absch\"atzung von $n!$.
+Die Stirlingformel liefert diese Absch\"atzung.
+
+\begin{theorem}\label{thm_stirling}
+	Es gilt $n!\sim\sqrt{2\pi n}\bcfr n\eul^n$.
+\end{theorem}
+
+Zusammen mit \Thm~\ref{thm_inf} zeigt \Thm~\ref{thm_stirling}, da\ss\ vergleichsbasierte Sortieralgorithmen auf zuf\"alligen Permutation $\Omega(n\log n)$ Vergleiche ben\"otigen.
+Quicksort ist also, zumindest was die Gr\"o\ss enordnung angeht, bestm\"oglich.
+
+Wir fahren fort mit dem Beweis von \Thm~\ref{thm_stirling}, wobei wir~\cite{Lang} folgen.
+Wir werden sogar die genauere Formel
+\begin{align*}
+	n!&=(1+O(1/n))\sqrt{2\pi n}\bcfr n\eul^n
+\end{align*}
+herleiten.
+Dazu beginnen wir mit dem {\em Wallisschen Produkt}.
+
+\begin{lemma}\label{lem_wallis}
+	Es gilt
+	\begin{align*}
+		\frac{\pi}2&=\lim_{n\to\infty}\frac{4n^2}{4n^2-1}.
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Partielle Integration zeigt, da\ss\ f\"ur $n\geq2$,
+	\begin{align*}
+		\int\sin^n(x)\dd x&=-\frac{\cos(x)\sin^{n-1}(x)}n+\frac{n-1}n\int\sin^{n-2}(x)\dd x. %,\\
+%		\int\cos^n(x)\dd x&=-\frac{\sin(x)\cos^{n-1}(x)}n+\frac{n-1}n\int\cos^{n-2}(x)\dd x.
+	\end{align*}
+	Weil $\sin(0)=\cos(\pi/2)=0$, folgt daraus mit Induktion nach $n$, da\ss
+	\begin{align}\label{eqlem_wallis1}
+		\int_0^{\pi/2}\sin^{2n}(x)\dd x&=\frac\pi2\prod_{i=1}^n\frac{2i-1}{2i},&
+		\int_0^{\pi/2}\sin^{2n+1}(x)\dd x&=\prod_{i=1}^n\frac{2i}{2i+1}.
+	\end{align}
+	Ferner gilt
+	\begin{align*}
+		\frac{2n}{2n+1}\leq\frac{\int_0^{\pi/2}\sin^{2n+1}(x)\dd x}{\int_0^{\pi/2}\sin^{2n}(x)\dd x}\leq1;
+	\end{align*}
+	die untere Schranke folgt aus der rechten Formel aus \eqref{eqlem_wallis1}.
+	Die obere Schranke folgt daraus, da\ss\ $0\leq \sin^{2n+1}(x)\leq\sin^{2n}(x)$ f\"ur alle $x$.
+	Indem wir nun den Quotienten der Integrale aus \eqref{eqlem_wallis1} bilden, erhalten wir
+	\begin{align*}
+		\frac\pi2&=\frac{\int_0^{\pi/2}\sin^{2n}(x)\dd x}{\int_0^{\pi/2}\sin^{2n+1}(x)\dd x}=\prod_{i=1}^n\frac{(2i-1)(2i+1)}{(2i)^2}=\lim_{n\to\infty}\frac{4n^2}{4n^2-1},
+	\end{align*}
+	wie behauptet.
+\end{proof}
+
+\begin{corollary}\label{cor_wallis}
+Es gilt
+\begin{align*}
+	\frac{(n!)^22^{2n}}{(2n)!\sqrt n}=\sqrt\pi.
+\end{align*}
+\end{corollary}
+\begin{proof}
+	Wir schreiben das Wallissche Produkt als
+	\begin{align*}
+		\frac\pi2&=\lim_{n\to\infty}\frac1{2n}\prod_{i=1}^n\frac{(2i)^2}{(2i-1)^2}
+	\end{align*}
+	Nun ziehen wir die Quadratwurzel:
+	\begin{align*}
+		\sqrt{\pi}&=\lim_{n\to\infty}\frac1{\sqrt{n}}\prod_{i=1}^n\frac{2i}{2i-1}.
+	\end{align*}
+	Schlie\ss lich rechnen wir nach, da\ss\ $\prod_{i=1}^n\frac{2i}{2i-1}=\frac{(n!)^22^{2n}}{(2n)!}$.
+\end{proof}
+
+\begin{proof}[Beweis von \Thm~\ref{thm_stirling}]
+	Wir betrachten die beiden Folgen
+	\begin{align*}
+		a_n&=\frac{n^{n+\frac12}}{n!}\exp(-n),&b_n&=a_n\exp\bcfr1{12n}.
+	\end{align*}
+	Dann gilt
+	\begin{align}\label{eqthm_stirling0}
+		\lim_{n\to\infty}\frac{a_n}{b_n}&=\lim_{n\to\infty}\exp\bc{-\frac1{12n}}=1.
+	\end{align}
+	Ferner erhalten wir 
+	\begin{align*}
+		\log a_n&=-n+\frac12\log n+\sum_{i=1}^n\log\frac ni,&\log b_n&=\frac1{12n}-n+\frac12\log n+\sum_{i=1}^n\log\frac ni.
+	\end{align*}
+	Folglich gilt
+	\begin{align}\label{eqthm_stirling7}
+		\log\frac{a_{n+1}}{a_n}&=\bc{n+\frac12}\log\frac{n+1}n-1,&
+		\log\frac{b_{n+1}}{b_n}&=\bc{n+\frac12}\log\frac{n+1}n-1-\frac1{12}\bc{\frac1n-\frac1{n+1}}.
+	\end{align}
+
+	Wir werden nun die beiden Ausdr\"ucke auf den rechten Seiten dieser Ungleichungen absch\"atzen.
+	Dazu definieren wir die Funktionen
+	\begin{align*}
+		\varphi(x)&=\frac12\log\bcfr{1+x}{1-x}-x,&\psi(x)&=\varphi(x)-\frac{x^3}{3(1-x^2)}.
+	\end{align*}
+	Die Ableitungen dieser Funktionen, die wir mit Hilfe der Formel~\eqref{eqlog} berechnen, sind
+	\begin{align}\label{eqthm_stirling1}
+		\varphi'(x)&=\frac{x^2}{1-x^2}\geq0,&\psi'(x)&=-\frac{2x^4}{3(1-x^2)^2}\leq0.
+	\end{align}
+	Aus \eqref{eqthm_stirling1} und $\varphi(0)=0$ folgt $\varphi(x)\geq0$ f\"ur $0\leq x<1$.
+	Entsprechend folgt aus $\psi(0)=0$, da\ss\ $\psi(x)\leq0$ f\"ur alle $0\leq x<1$.
+	Daher erhalten wir die Ungleichungen
+	\begin{align}\label{eqthm_stirling2}
+		0\leq\frac12\log\bcfr{1+x}{1-x}-x&\leq\frac{x^3}{3(1-x^2)}&&(0\leq x<1).
+	\end{align}
+	Setze nun $x=1/(2n+1)$, so da\ss\
+	\begin{align}\label{eqthm_stirling3}
+		\frac{1+x}{1-x}&=\frac{n+1}n,&\frac{x^3}{3(1-x^2)}&=\frac1{12(2n+1)(n^2+n)}.
+	\end{align}
+	Zusammen mit \eqref{eqthm_stirling3} zeigt \eqref{eqthm_stirling2} dann
+	\begin{align}%\label{eqthm_stirling4}
+		0&\leq\frac12\log\bcfr{n+1}n-\frac1{2n+1}\leq\frac1{12(2n+1)(n^2+n)},\qquad\mbox{so da\ss}\nonumber\\
+		0&\leq\bc{n+\frac12}\log\bcfr{n+1}n-1\leq\frac1{12}\bc{\frac1n-\frac1{n+1}}.\label{eqthm_stirling4}
+	\end{align}
+
+	In Kombination mit \eqref{eqthm_stirling7} zeigt \eqref{eqthm_stirling4} nun, da\ss\ $a_{n+1}\geq a_n$ und $b_{n+1}\leq b_n$ f\"ur alle $n$.
+	Weil $a_1\leq b_1$, folgt aus \eqref{eqthm_stirling0} also, da\ss\ die Grenzwerte
+	\begin{align}\label{eqthm_stirling6}
+		c=\lim_{n\to\infty}a_n=\lim_{n\to\infty}b_n
+	\end{align}
+	existieren und \"ubereinstimmen, und da\ss\ $a_n\leq c\leq b_n$ f\"ur alle $n$.
+	Umformen ergibt also, da\ss
+	\begin{align}\label{eqthm_stirling5}
+		n^{n+\frac12}\bcfr{n}\eul^n\leq c\cdot n!\leq\exp\bcfr1{12n}n^{n+\frac12}\bcfr{n}\eul^n.
+	\end{align}
+
+	Wir m\"ussen zuletzt noch $c$ berechnen.
+	Dazu setzen wir in \eqref{eqthm_stirling6} gerade Werte von $n$ ein:
+	\begin{align}\nonumber
+	c&=\lim_{n\to\infty}a_{2n}=\lim_{n\to\infty}\frac{(2n)^{2n+\frac12}\exp(-2n)}{(2n)!}=\sqrt2\lim_{n\to\infty}\frac{(n!)^22^{2n}}{(2n)!\sqrt n}\bcfr{n^{n+\frac12}\exp(-n)}{n!}^2\\
+	 &=\sqrt{2\pi}\lim_{n\to\infty}a_n^2=\sqrt{2\pi}c^2\qquad[\mbox{nach \Cor~\ref{cor_wallis}}].\label{eqthm_stirling8}
+	\end{align}
+	Weil $c>0$ folgt aus \eqref{eqthm_stirling8}, da\ss\ $c=1/\sqrt{2\pi}$.
+	Einsetzen dieser Zahl in \eqref{eqthm_stirling5} beschlie\ss t den Beweis.
+\end{proof}
+
+\subsection{Binomialkoeffizienten}\label{sec_binom}
+In der Analyse von Algorithmen begegnet oft der {\em Binomialkoeffizient}: f\"ur $0\leq k\leq n$ ist dieser definiert als
+\begin{align*}
+	\binom nk&=\frac{n!}{k!\cdot(n-k)!};
+\end{align*}
+Sprechweise: ``$n$ \"uber $k$''.
+Falls $k>n\geq0$ definieren wir ferner $\binom nk=0$.
+
+Aus der Schule wissen Sie vielleicht, da\ss\ Binomialkoeffizienten auf dem Weg \"uber das ``Pascalsche Dreieck'' berechnet werden k\"onnen.
+Lassen Sie uns dies kurz herleiten.
+
+\begin{lemma}\label{lem_pascal}
+	F\"ur alle $0<k<n$ gilt
+	\begin{align*}
+		\binom nk&=\binom{n-1}{k-1}+\binom{n-1}k.
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Wir berechnen
+	\begin{align*}
+		\binom{n-1}{k-1}+\binom{n-1}k&=\frac{(n-1)!}{(k-1)!(n-k)!}+\frac{(n-1)!}{k!(n-k-1)!}=\frac{(n-1)!\cdot(k+(n-k))}{k!(n-k)!}=\binom nk,
+	\end{align*}
+	wie behauptet.
+\end{proof}
+
+Als unmittelbare Anwendung erhalten wir folgende kombinatorische Interpretation des Binomialkoeffizienten.
+
+\begin{corollary}\label{cor_pascal}
+	F\"ur $0\leq k\leq n$ z\"ahlt $\binom nk$ die $k$-elementigen Teilmengen von $[n]=\{1,\ldots,n\}$.
+\end{corollary}
+\begin{proof}
+	Sei $T(n,k)$ die Zahl der $k$-elementigen Teilmengen von $[n]$.
+	Dann gilt
+	\begin{align*}
+		T(n,k)&=T(n-1,k-1)+T(n-1,k).
+	\end{align*}
+	Denn eine $k$-elementige Teilmenge enth\"alt entweder das Element $n$, oder sie enth\"alt nicht das Element $n$.
+	Die Zahl ersterer Teilmengen ist $T(n-1,k-1)$, die Zahl letzterer ist $T(n-1,k)$.
+	Ferner gilt $T(n,0)=1$ f\"ur alle $n\geq1$ (leere Teilmenge).
+	Weil $\binom n0=1$ f\"ur alle $n$, zeigt \Lem~\ref{lem_pascal}, da\ss\ $T(n,k)=\binom nk$ f\"ur alle $n,k$.
+\end{proof}
+
+\begin{corollary}[``binomischer Lehrsatz'']\label{cor_binom}
+	F\"ur alle $a,b\in\RR$ und alle $n\in\NN$ gilt
+	\begin{align*}
+		(a+b)^n&=\sum_{k=0}^n\binom nka^kb^{n-k}.
+	\end{align*}
+\end{corollary}
+\begin{proof}
+	Wir f\"uhren Induktion nach $n$.
+	F\"ur $n=1$ ist nichts zu zeigen.
+	Ferner erhalten wir mittels \Lem~\ref{lem_pascal}
+	\begin{align*}
+		(a+b)^{n+1}&=(a+b)\cdot(a+b)^n=(a+b)\sum_{k=0}^n\binom nka^kb^{n-k}\\
+				   &=\sum_{k=0}^n\binom{n}ka^{k+1}b^{n-k}+\sum_{k=0}^n\binom{n}ka^{k}b^{n-(k-1)}\\
+				   &=a^{n+1}+\sum_{k=1}^n\binom{n}{k-1}a^kb^{n+1-k}+\sum_{k=1}^n\binom nka^kb^{n+1-k}+b^{n+1}\\
+				   &=a^{n+1}+b^{n+1}+\sum_{k=1}^n\binom{n+1}ka^kb^{n+1-k}=\sum_{k=0}^{n+1}\binom {n+1}ka^kb^{n+1-k},
+	\end{align*}
+	was den Induktionsschritt zeigt.
+\end{proof}
+
+Eine direkte Konsequenz des binomischen Lehrsatzes ist die Aussage, da\ss\ die Menge $[n]$ insgesamt genau $2^n$ Teilmengen besitzt.
+Denn
+\begin{align*}
+	2^n&=(1+1)^n=\sum_{k=0}\binom nk,
+\end{align*}
+und rechts steht nach \Cor~\ref{cor_pascal} die Zahl aller Teilmengen von $[n]$.
+
+\section{Heapsort}\label{sec_heap}
+
+Quicksort ist einfach und ``normalerweise'' schnell.
+Aber die Laufzeit $O(n\log n)$ ist nicht {\em deterministisch} garantiert, sondern tritt nur mit hoher Wahrscheinlichkeit auf.
+Au\ss erdem ben\"otigt der Algorithmus einen Zufallsgenerator.
+
+Heapsort ist ein deterministischer Sortieralgorithmus, der die Vorteile von Quicksort teilt.
+Im Gegensatz zu Mergesort ist Heapsort au\ss erdem speichereffizienter.
+Heapsort ist ferner der erste Algorithmus, den wir kennenlernen, der als Kernelement eine clevere Datenstruktur benutzt.
+Geeignete Datenstrukturen sind nicht selten ein wichtiges Hilfsmittel beim Algorithmenentwurf und k\"onnen zu wesentlichen Effizienzstigerungen f\"uhren.
+
+Wir beginnen mit der Datenstruktur, die Heapsort verwendet.
+Anschlie\ss end werden wir sehen, wie die Datenstruktur zum Sortieren verwendet wird.
+Zum Schlu\ss\ sehen wir eine weitere Anwendung der Datenstruktur, n\"amlich ``priority queues''.
+
+\subsection{Heaps}\label{sec_heaps}
+Ein {\em Heap} ist eine Datenstruktur, die in einem Array abgespeichert werden kann.
+Es ist hilfreich, sich diese Datenstruktur als einen Baum mit einer ausgezeichneten Wurzel vorzustellen.
+In diesem Baum hat jeder Knoten h\"ochstens zwei Kinder.
+Genauer gesagt entsteht der Baum aus einem vollst\"andigen Bin\"arbaum, in dem jeder Knoten in Blatt ist oder genau zwei Kinder hat, indem ggf.\ einige der Bl\"atter gel\"oscht werden.
+
+Um dies zu pr\"azisieren, werden wir zu einem Array $\vA=(A_1,\ldots,A_n)$ mit $n$ Elementen einen gewurzelten Baum $B(\vA)$ konstruieren.
+Der Baum hat Knoten $v_1,\ldots,v_n$.
+Die Wurzel des Baumes ist ein Knoten $v_1$.
+Das linke Kind eines Knoten $v_i$ ist der Knoten $v_{2i}$, falls $2i\leq n$.
+Wenn $2i>n$, hat der Knoten $v_i$ keine Kinder.
+Das rechte Kind von Knoten $v_i$ ist der Knoten $v_{2i+1}$, falls $2i+1\leq n$.
+Andernfalls hat $v_i$ kein rechtes Kind.
+Der Elternknoten eines Knoten $v_i$, $i\geq2$, ist der Knoten $v_{\lfloor i/2\rfloor}$.
+Im Knoten $v_i$ wird das $i$-te Element $A_i$ des Arrays gespeichert.
+Mit Hilfe dieses Schemas k\"onnen wir also die Knoten des Baumes bijektiv auf die Arrayeintr\"age abbilden.
+
+Wir nehmen an, da\ss\ die Elemente $A_i$ des Arrays vergleichbar sind.
+F\"ur je zwei Elemente $A_i,A_j$ gilt also entweder $A_i<A_j$, $A_i=A_j$ oder $A_i>A_j$.
+Wie genau diese Relation definiert ist (z.B.\ ob es sich um Zahlen handelt oder Zeichenketten), ist nicht von Belang.
+
+Wir nehmen weiterhin an, da\ss\ das Array $\vA$ einen Gr\"o\ss enparameter $\size(\vA)=n$ hat.
+Dieser zeigt die Anzahl der Elemente des Heaps an.
+(M\"oglicherweise ist f\"ur $\vA$ jedoch mehr Speicherplatz reserviert.)
+
+Die wesentliche Eigenschaft der Datenstruktur ist, da\ss\ die Elemente $A_i$ entsprechend der Eltern-Kind-Struktur des Baumes angeordnet sind.
+Es gibt zwei Varianten.
+In einem {\em max-heap} werden die Elemente so angeordnet, da\ss\ das Element $A_i$, das im Elternknoten $v_i$ gespeichert ist, niemals kleiner ist als das Element $A_j$ in einem Kindknoten $v_j$.
+In einem {\em min-heap} ist das Element im Elternknoten niemald gr\"o\ss er.
+Wir werden uns hier ausschlie\ss lich mit max-heaps befassen.
+
+Es stellt sich nat\"urlich die Frage, wie wir die zu sortierenden Eingabedaten in eine Heap-Struktur bringen.
+Au\ss erdem erfordert der Sortiervorgang verschiedene Operationen auf der Datenstruktur.
+Wir befassen uns daher mit zwei Hilfsoperationen: {\tt MaxHeapify} und {\tt BuildMaxHeap}.
+
+\subsection{Die {\tt MaxHeapify}-Operation}\label{sec_maxheapify}
+{\tt MaxHeapify} ist eine Hilfsfunktion, die wir zum Aufbau eines Heaps ben\"otigen.
+Die Eingabe besteht aus einem Array $\vA$ und einem Index $i$.
+Wir nehmen an, da\ss\ das Array so beschaffen ist, da\ss\ die Unterb\"aume ``unter'' den Kindern von $i$ bereits die max-heap-Eigenschaft haben.
+Allerdings ist m\"oglicherweise das Element $A_i$ kleiner als eines seiner Kinderelemente.
+Die Idee ist nun, das Element $A_i$ ``absinken'' zu lassen, bis die max-heap-Eigenschaft f\"ur den Unterbaum ``unter'' $i$ selbst erf\"ullt ist.
+
+\begin{algorithm}\upshape {\tt MaxHeapify}$(\vA,i)$.\label{alg_maxheapify}
+	\begin{enumerate}
+		\item Wenn $A_i$ gr\"o\ss er ist als die Werte seiner Kinder oder $A_i$ kein Kind hat, halte. 
+		\item Sonst bestimme gr\"o\ss te Kind $A_j$.
+		\item Vertausche die Wert von $A_i$ und $A_j$.
+		\item Rufe {\tt MaxHeapify}$(\vA,j)$ auf.
+	\end{enumerate}
+\end{algorithm}
+
+Mit ``Laufzeit'' ist weiterhin die Zahl der durchgef\"uhren Vergleiche gemeint.
+Die {\em H\"ohe} eines Knotens $i$ in $\vA$ ist der maximale direkte Abstand von $i$ von einem Blatt in dem Baum $B(\vA)$.
+Wir beginnen mit folgender Beobachtung.
+
+\begin{lemma}\label{lemma_highheap}
+	Die H\"ohe der Wurzel in $B(\vA)$ ist $O(\log n)$.
+\end{lemma}
+\begin{proof}
+	Indem wir den Baum ``auff\"ullen'', d\"urfen wir annehmen, da\ss\ $B(\vA)$ ein vollst\"andiger Bin\"arbaum ist.
+	In diesem Fall sind die Pfade von der Wurzel zu allen Bl\"attern gleichlang.
+	Ferner erf\"ullt die Zahl $N(h)$ der Knoten in einem solchen Baum der H\"ohe $h$ die Rekurrenz
+	\begin{align*}
+		N(h+1)&=1+2N(h),&N(0)&=1,
+	\end{align*}
+	weil die beiden Teilb\"aume ``unter'' den Kindern der Wurzel symmetrisch sind.
+	
+	Wir behaupten nun, da\ss\
+	\begin{align}\label{eqlemma_highheap}
+		N(h)=2^{h+1}-1.
+	\end{align}
+	Den Beweis f\"uhren wir per Induktion nach $h$.
+	F\"ur $h=0$ ist die Behauptung offensichtlich.
+	F\"ur den Induktionsschritt erhalten wir
+	\begin{align*}
+		N(h+1)&=1+2N(h)=1+2\cdot(2^{h+1}-1)=2^{h+2}-1,
+	\end{align*}
+	wie behauptet.
+	Umstellen des Ausdrucks nach $h$ vervollst\"andigt den Beweis.
+\end{proof}
+
+\begin{proposition}\label{prop_maxheapify}
+	Angenommen der Knoten $i$ has H\"ohe $h$.
+	Die Laufzeit von {\tt MaxHeapify} betr\"agt $O(h)$.
+\end{proposition}
+\begin{proof}
+	Sei $h$ die H\"ohe des Knotens $i$.
+	Weil jeder Nachkomme von Knoten $i$ nur mit seinen direkten Kindern verglichen wird, ist die Zahl der Vergleichen wird, ist die Laufzeit $O(h)$.
+\end{proof}
+
+Als direkte Konsequenz aus \Lem~\ref{lemma_highheap} und \Prop~\ref{prop_maxheapify} erhalten wir folgendes.
+
+\begin{corollary}\label{cor_maxheapify}
+	{\tt MaxHeapify} hat Laufzeit $O(\log n)$. 
+\end{corollary}
+
+\subsection{Die {\tt BuildMaxHeap}-Operation}\label{sec_buildmaxheap}
+Zweck von {\tt BuildMaxHeap} ist, aus einem beliebigen Array $\vA$ einen max-heap zu machen.
+Dazu arbeiten wir uns von hinten nach vorn durch die Arrayeintr\"age und bauen den gew\"unschten Heap von unten nach oben auf.
+Fur die zweite H\"alfte des Arrays ist zun\"achst nichts zu tun.
+Diese Arrayeintr\"age bilden schlie\ss lich die Bl\"atter des Heaps und haben somit am Ende H\"ohe Null.
+Auf die erste H\"alfte der Eintr\"age wenden wir nach und nach die {\tt MaxHeapify}-Operation an.
+
+\begin{algorithm}\upshape {\tt BuildMaxHeap}$(\vA)$.\label{alg_buildmaxheap}
+	\begin{enumerate}
+		\item F\"ur $i=\lfloor n/2\rfloor,\ldots,1$
+		\item $\quad${\tt MaxHeapify}$(\vA,i)$
+	\end{enumerate}
+\end{algorithm}
+
+Die Analyse von {\tt MaxHeapify} stellt sicher, da\ss\ das Ergebnis von {\tt BuildMaxHeap} tats\"achlich ein max-heap ist.
+
+\begin{proposition}\label{prop_buildmaxheap}
+	{\tt BuildMaxHeap} hat Laufzeit $O(n)$.
+\end{proposition}
+\begin{proof}
+	Wir wenden {\tt MaxHeapify} nacheinander auf alle Knoten an.
+	Die H\"ohe $H$ der Wurzel ist nach \eqref{eqlemma_highheap} beschr\"ankt durch $\log_2n$.
+	Die Zahl der Knoten mit Abstand $t$ von der Wurzel betr\"agt nach \eqref{eqlemma_highheap} h\"ochstens $2^{t+1}-1$.
+	Nach \Prop~\ref{prop_maxheapify} ist die Laufzeit f\"ur eine {\tt MaxHeapify}-Operation beschr\"ankt durch $O(H-t)$.
+	Weil die Funktion $x\mapsto x2^{-x}$ f\"ur $x\geq1/\log2$ monoton f\"allt, berechnet die Gesamtlaufzeit sich also zu
+	\begin{align*}
+		\sum_{t=1}^{H}(H-t)2^{t+1}\leq O(2^{H})\int_0^{\infty}x2^{-x}\dd x=
+		-\frac{x\log(2)+1}{2^x\log(2)^2}\bigg|_0^\infty\cdot O(2^H)=O(2^H)=O(n),
+	\end{align*}
+	wie behauptet.
+\end{proof}
+
+\subsection{Der Heapsort-Algorithmus}\label{sec_hs}
+Mit Hilfe der max-heap Datenstruktur ist es einfach, einen effizienten Sortieralgorithmus zu realisieren.
+Die Eingabe des Algorithmus' ist ein Array $\vA$.
+
+\begin{algorithm}\upshape {\tt Heapsort}$(\vA)$.\label{alg_heapsort}
+	\begin{enumerate}
+		\item {\tt BuildMaxHeap}$(\vA)$
+		\item F\"ur $i=n,n-1,\ldots,2$
+		\item $\quad$vertausche $A_1$ und $A_i$
+		\item $\quad$wende {\tt MaxHeapify} an auf das Array $(A_1,\ldots,A_{i-1})$ und Element $1$ an
+		\item gib $(A_1,\ldots,A_n)$ aus
+	\end{enumerate}
+\end{algorithm}
+
+Der Algorithmus nutzt die Tatsache aus, da\ss\ $A_1$ stets das gr\"o\ss te Element des max-heaps ist.
+Dieses wird stets genau mit dem letzten Element des max-heaps vertauscht und somit an die ``richtige'' Stelle verschoben.
+Anschlie\ss end wird der max-heap um ein Element verk\"urzt.
+Weil die Wurzel jetzt nicht mehr notwendigerweise das gr\"o\ss te Element ist (denn wir haben ja gerade das $i$-te Element an die erste Stelle getauscht), wird {\tt MaxHeapify} ausgef\"uhrt, um die max-heap Eigenschaft wiederherzustellen.
+
+\begin{theorem}\label{thm_heapsort}
+	{\tt Heapsort} sortiert ein gegebenes Array in Zeit $O(n\log n)$.
+\end{theorem}
+\begin{proof}
+	Die Laufzeit f\"ur {\tt BuildMaxHeap} ist $O(n)$ nach \Prop~\ref{prop_buildmaxheap}.
+	Ferner zeigt \Prop~\ref{prop_maxheapify}, da\ss\ jeder Aufruf von {\tt MaxHeapify} Zeit $O(\log n)$ beansprucht.
+	Wir kommen somit auf eine Gesamtlaufzeit von $O(n\log n)$.
+\end{proof}
+
+\subsection{Priority queues}\label{sec_priority}
+Die Datenstruktur max-heap hat weitere Anwendungen.
+Dazu versehen wir die Datenstruktur mit einigen weiteren Funktionen.
+Das resultierende Konstrukt wird als {\em priority queue} bezeichnet.
+Entsprechend gibt es auch min-priority queues, die beispielsweise f\"ur die Berechnung k\"urzester Pfade verwendet werden k\"onnen.
+
+In einer (max-)priority queue $\vA=(A_1,\ldots,A_n)$ ist es nat\"urlich leicht, das maximale Element zu finden: es ist einfach das Element $A_1$.
+Eine weitere wichtige Operation ist die {\em Extraktion} des Maximums.
+Hierbei wird das maximale Element aus der Datenstruktur entfernt.
+
+\begin{algorithm}\upshape {\tt ExtractMax}$(\vA)$.\label{alg_extractmax}
+	\begin{enumerate}
+		\item falls $n=0$, abbrechen; falls $n=1$, gib $A_1$ aus und halte.
+		\item vertausche $A_1$ und $A_n$
+		\item wende {\tt MaxHeapify}$((A_1,\ldots,A_{n-1}),1)$ an
+		\item gib $A_n$ und $(A_1,\ldots,A_{n-1})$ aus
+	\end{enumerate}
+\end{algorithm}
+
+Die Vorgehensweise ist also \"ahnlich wie bei {\tt Heapsort}.
+Wir vertauschen das letzte und das erste Element und bringen dann die Datenstruktur $(A_1,\ldots,A_{n-1})$ der L\"ange $n-1$ ``in Ordnung''.
+
+Eine weitere Operation einer max-priority queue ist {\tt IncreaseKey}.
+Diese Operation erh\"oht den Wert eines Elements auf einen gegebenen Wert $\alpha$.
+
+\begin{algorithm}\upshape {\tt IncreaseKey}$(\vA,i,\alpha)$.\label{alg_increasekey}
+	\begin{enumerate}
+		\item falls $\alpha<A_i$, brich ab
+		\item setzte $A_i=\alpha$
+		\item solange $i>1$
+		\item $\quad$setze $j=\lfloor i/2\rfloor$ \hfill\# $j=$Elternknoten von $A_i$
+		\item $\quad$falls $A_j\geq\alpha$, halte
+		\item $\quad$falls $A_j<\alpha$, vertausche $A_j$ und $\alpha$
+		\item $\quad$setze $i=j$
+	\end{enumerate}
+\end{algorithm}
+
+Der $i$-te Knoten steigt also in der Datenstruktur auf, bis die max-heap-Eigenschaft wiederhergestellt ist.
+
+Schlie\ss lich ben\"otigen wir eine Operation, die neue Elemente in die Datenstruktur einf\"ugt.
+Dazu f\"uge wir ein neues Element mit einem k\"unstlichen Wert $-\infty$, der als kleiner gilt als alle anderen Werte, in die Datenstruktur ein.
+Anschlie\ss end wenden wir {\tt IncreaseKey} an.
+
+\begin{algorithm}\upshape {\tt Insert}$(\vA,i,\alpha)$.\label{alg_insert}
+	\begin{enumerate}
+		\item f\"uge ein Element $\vA_{n+1}=-\infty$ zu $\vA$ hinzu
+		\item wende {\tt IncreaseKey}$((A_1,\ldots,A_{n+1},n+1,\alpha)$ an
+	\end{enumerate}
+\end{algorithm}
+
+Wenn wir annehmen, da\ss\ der Speicherplatz $A_{n+1}$ verf\"ugbar ist, dann l\"a\ss t sich der erste Schritt des Algorithmus' effizient implementieren.
+Andernfalls mu\ss\ das Array ggf.\ umkopiert werden.
+F\"ur die folgende Aussage verwenden wir ``Laufzeit'' wiederum gleichbedeutend mit ``Vergleichen''.
+
+\begin{proposition}\label{prop_priority}
+	Die Laufzeiten der Operationen {\tt ExtractMax}, {\tt IncreaseKey} und {\tt Insert} sind $O(\log n)$.
+\end{proposition}
+\begin{proof}
+	Dies folgt unmittelbar aus \Lem~\ref{lemma_highheap}.
+\end{proof}
+
+\section{Die Registermaschine}\label{sec_ram}
+In diesem Abschnitt, der~\cite{Papadimitriou} folgt, befassen wir uns mit der Registermaschine (``random access machine'').
+Diese erm\"oglicht eine exakte Definition von ``Laufzeit''.
+Wir werden die Registermaschine nur (relativ) informell einf\"uhren.
+Eine vollst\"andige formale Abhandlung ist in~\cite{Papadimitriou} zu finden.
+
+\subsection{Definition}\label{sec_ram_def}
+Es gibt verschiedene formale (d.h.\ mathematische) Modelle von realen Computern oder Computerprogrammen.
+Ein bekanntes Modell, von dem Sie wom\"oglich schon geh\"ort haben, ist die Turingmaschine.
+Allerdings ist die ``Hardware'' der Turingmaschine (im wesentlichen ein unendlich langes Speicherband) modernen Computern sehr un\"ahnlich.
+Aus diesem Grund ist sie ungeeignet, um reale Laufzeit realistisch abzubilden.
+
+Die {\em Registermaschine} ist besser geeignet.
+Ihre ``Hardware'' besteht aus einer unendlichen Zahl von {\em Registern} $(r_i)_{i\geq0}$, von denen jedes eine ganze Zahl speichern kann.
+Die Register \"ahneln also den RAM-Speicherzellen eines realen Computers, bis auf die Tatsache, da\ss\ die Wortgr\"o\ss e unbeschr\"ankt ist.
+Das Register $r_0$ spielt eine besondere Rolle, n\"amlich die des ``Akkumulators''.
+Das bedeutet, da\ss\ mit dem Wert dieses Registers Rechenoperationen durchgef\"uhrt werden k\"onnen.
+
+Wie ein realer Computer auch, kann die Registermaschine programmiert werden.
+Das Programm ist nicht ver\"anderbar, also sozusagen ``hart verdrahtet''.
+Ein Registermaschinenprogramm besteht aus einer geordneten Abfolge von Befehlen, die in aufsteigend numerierten Zeilen daherkommen.
+Die Registermaschine verf\"ugt \"uber einen Programmz\"ahler $z$, der die Zeilennummer der als n\"achstes auszuf\"uhrende Anweisung enth\"alt.
+Anfangs hat der Z\"ahler den Wert $z=1$.
+
+Das Programm der Registermaschine besteht aus folgenden Befehlen, wobei $j\in\NN_0$ und $x\in\ZZ$:
+
+\begin{center}
+\begin{tabular}{|l|l|}\hline
+	{\tt read} $j$&schreibe den Wert von $r_j$ in $r_0$\\
+	{\tt read} $*j$&wenn $h$ der Wert von $r_j$ ist, schreibe den Wert von $r_h$ in $r_0$\\
+	{\tt store} $j$&schreibe den Wert von $r_0$ in $r_j$\\
+	{\tt store} $*j$&wenn $h$ der Wert von $r_j$ ist, schreibe den Wert von $r_0$ in $r_h$\\
+	{\tt load} $x$&schreibe die Zahl $x$ in $r_0$\\
+	{\tt add} $x$&addiere $x$ zu der Zahl in $r_0$\\
+	{\tt half}&wenn $y$ der Wert von $r_0$ ist, setze $r_0$ auf $\lfloor y/2\rfloor$\\
+	{\tt jump} $j$&setze den Programmz\"ahler auf den Wert $j$\\
+	{\tt jpos} $j$&wenn der Wert in $r_0$ positiv ist, f\"uhre {\tt jump} $j$ aus\\
+	{\tt jneg} $j$&wenn der Wert in $r_0$ negativ ist, f\"uhre {\tt jump} $j$ aus\\
+	{\tt jzero} $j$&wenn der Wert in $r_0$ gleich Null ist, f\"uhre {\tt jump} $j$ aus\\
+	{\tt halt}&beende das Programm\\\hline
+\end{tabular}
+\end{center}
+
+Bei Programmstart steht die Eingabe in Register $r_0$ und alle anderen Register haben den Wert $0$.
+Entsprechend ist das Ergebnis der Berechnung ist der Inhalt von $r_0$.
+Insbesondere sind also Eingabe und Ergebnis immer ganze Zahlen.
+Die Semantik h\"angt von dem Programm ab.
+
+Das Programm kann also verschiedene Codierungen der Eingabe vorsehen.
+Beispielsweise kann eine Zeichenfolge mit dem ASCII-Code (oder einem anderen Code wie UTF8) in eine Zahl \"uberf\"uhrt werden.
+Die Zeichenkette ``Hallo!'' w\"urde beispielsweise den ASCII-Codes 72, 97, 108, 108, 111, 33 entsprechen.
+Im Hezadezimalsystem lauten diese Werte 48, 61, 6c, 6c, 6f, 21.
+Um daraus die Eingabe zu codieren, bilden wir die Hexadezimalzahl 48616c6c6f21.
+Der Dezimalwert dieser Zahl lautet
+\begin{align*}
+72\cdot256^5+97\cdot254^4+108\cdot256^3+108\cdot256^2+111\cdot256+33=79583268073249.
+\end{align*}
+Da wir prinzipiell jedes diskrete Objekt (Br\"uche, algebraische Ausdr\"ucke, Graphen, Grammatiken, logische Formeln, Matrizen, \ldots) als Zeichenketten darstellen k\"onnen, ist es m\"oglich, all diese Objekte mit einer Registermaschine zu verarbeiten.
+Die Idee der Eingabecodierung als Zahlen ist offenbar der Codierung in einem realen Computer sehr \"ahnlich. 
+Analog kann die Ausgabe interpretiert werden.
+Beispielsweise kann ein Wert von $0$ oder $1$ ``Erfolg'' oder ``Mi\ss erfolg'' anzeigen.
+
+Die Registermaschine hat ``nativ'' keine Operationen zur Addition, Multiplikation oder Division von Zahlen.
+Jedoch k\"onnen diese Operationen mit den obigen Befehlen realisiert werden.
+Dazu programmieren Sie im wesentlichen die Algorithmen, die Sie in der Grundschule kennengelernt haben.
+
+Die M\"achtigkeit der Registermaschine w\"urde sich nicht wesentlich ver\"andern, wenn wir einen Befehl hinzuf\"ugen w\"urden, der den Inhalt eines gegebenen Registers zum Wert des Registers $r_0$ addiert.
+Ein Multiplikationsbefehl hingegen w\"urde die Maschine wirklich m\"achtiger machen.
+Denn wenn wir den Wert $2$ in Register $r_0$ einspeichern und dann $r_0$ mit sich selbst multiplizieren, so erhielten wir innerhalb von $n$ Operationen den Wert $2^{2^n}$.
+Eine Registermaschine ohne Multiplikationsbefehl br\"auchte hingegen etwa $2^n$ Operationen, um denselben Wert zu erreichen.
+
+\subsection{Effiziente Algorithmen}\label{sec_P}
+Formal gesehen ist f\"ur uns ein Algorithmus also eine Registermaschine (ausgestattet mit einem Programm).
+Die Registermaschine gibt uns daher ein Hilfsmittel zur Messung der Laufzeit eines Algorithmus' an die Hand.
+Wir definieren also die Laufzeit $T_{\cM}(e)$ einer Registermaschine $\cM$ auf einer Eingabe $e\in\ZZ$ als die Zahl der Befehle, die die Maschine ausf\"uhrt bevor sie h\"alt.
+Folglich gilt $T_\cM(e)\in\NN\cup\cbc\infty$.
+Der Wert $\infty$ wird angenommen, wenn die Maschine gar nicht h\"alt.
+
+Um den Begriff des {\em effizienten} Algorithmus zu definieren, fragen wir nach der Laufzeit von $\cM$ auf einer {\em gro\ss en} Eingabe.
+Dazu definieren wir die {\em Eingabel\"ange} einer Zahl $e\in\ZZ$ als $\lceil\log_2(2+|e|)\rceil$.
+Die Eingabel\"ange ist also die Anzahl Bits, die ben\"otigt werden, um $e$ in Bin\"ardarstellung zu schreiben.
+Diese Begriffsbildung passt gut mit unserer obigen Codierung von Zeichenketten in Zahlendarstellungen zusammen.
+Die Anzahl von Zeichen in einem festen Alphabet, die zur Eingabe einer Zeichenkette ben\"otigt werden, stimmt n\"amlich bis auf einen konstanten Faktor, also bis auf $\Theta(1)$, mit der Bitl\"ange \"uberein.
+
+Wir nennen nun einen Algorithmus $\cM$ {\em effizient}, falls es eine Zahl $\ell\geq0$ gibt, so da\ss\ f\"ur die Funktion
+\begin{align*}
+	\cT_{\cM}(n)&=\max\cbc{T_\cM(e):\log_2(2+|e|)\leq n}
+\end{align*}
+gilt $\cT_{\cM}(n)=O(n^\ell)$.
+Die Laufzeit von $\cM$ auf einer Eingabe der L\"ange $n$ skaliert also h\"ochstens als ein Polynom $n^\ell$ f\"ur $n\to\infty$.
+
+\begin{definition}\label{def_P}
+	Eine Funktion $f:\ZZ\to\ZZ$ hei\ss t {\em effizient berechenbar}, wenn es einen effizienten Algorithmus $\cM$ gibt, der f\"ur alle $e\in\ZZ$ bei Eingabe $e$ den Wert $f(e)$ ausgibt.
+	Mit P wird ferner die Menge aller effizient berechenbaren Funktionen $f:\ZZ\to\{0,1\}$ bezeichnet.
+\end{definition}
+
+Interpretieren wir die Werte $0$ und $1$ als ``ja'' und ``nein'', so k\"onnen wir uns Funktionen $f:\ZZ\to\{0,1\}$ als Entscheidungsprobleme vorstellen.
+
+Obiger Begriff der effizienten Berechenbarkeit ist nicht perfekt, hat sich aber in der Praxis bew\"ahrt.
+Allerdings sind f\"ur viele wichtige Funktionen keine effizienten Algorithmen bekannt.
+Stattdessen kennen wir h\"aufig nur Algorithmen, deren Laufzeit exponentiell in der Gr\"o\ss e der Eingabe skaliert. 
+Diese Algorithmen sind in der Regel schon f\"ur moderat gro\ss e Eingaben nicht praktikabel.
+
+Kommen wir zum Abschlu\ss\ noch einmal auf die Turingmaschine zur\"uck.
+Die konkreten Laufzeitdefinition, wenn wir statt der Befehle einer Registermaschine die Schritte einer Turingmaschine z\"ahlen, \"andert sich ganz erheblich.
+Was sich aber interessanterweise nicht \"andert, ist der Begriff der effizienten Berechenbarkeit.
+Dieser ist gewisserma\ss en ``universell''.
+
+In der GTI-Veranstaltung wird das Thema Laufzeiten weiter vertieft.
+Dort wird auch die Klasse NP eingef\"uhrt, die die Klasse P enth\"alt.
+Zus\"atzlich enth\"alt die Klasse NP viele Entscheidungsprobleme, f\"ur die wir bisher keine effizienten Algorithmen kennen.
+Ob es solche Algorithmen gibt, ist die Essenz des br\"uhmten P$\neq$NP-Problems.
+
+\section{Sortieren in linearer Zeit}\label{sec_radix}
+
+\noindent
+In Abschnitt~\ref{sec_inf} haben wir die informationstheoretische untere Schranke $\Omega(n\log n)$ f\"ur vergleichsbasierte Sortieralgorithmen kennengelernt.
+In diesem Abschnitt lernen wir Sortieralgorithmen kennen, die eine lineare Laufzeit haben, sofern die Eingabedaten geeignet ``strukturiert'' sind.
+Diese Algorithmen k\"onnen folglich nicht vergleichsbasiert sein.
+Der Abschnitt folgt~\cite{Cormen}.
+
+\subsection{Sortieren via Z\"ahlen}\label{sec_counting}
+Wir nehmen an, da\ss\ die Elemente des zu sortierenden Arrays $\vA=(A_1,\ldots,A_n)$ jeweils mit einem \emph{Schl\"ussel} aus einer Menge $\cS=\{s_1,\ldots,s_k\}$ versehen sind.
+Die Aufgabenstellung ist, die Elemente so zu sortieren, da\ss\ zuerste alle Elemente mit Schl\"ussel $s_1$, dann alle mit Schl\"uss el $s_2$ kommen, etc.
+Dabei sollen Elemente $A_i$ mit {\em demselben} Schl\"ussel in derselben Reihenfolge ausgegeben werden, in der sie eingegeben wurden.
+Man spricht in diesem Fall von einem \emph{stabilen} Sortieralgorithmus.
+
+Der folgende Algorithmus l\"ost diese Aufgabe.
+
+\begin{algorithm}{\tt CountingSort$(\vA,\cS)$}
+	\begin{enumerate}
+		\item Lege ein Hilfsarray $\vC=(C_1,\ldots,C_k)$ an, so da\ss\ $C_i$ die Zahl der Vorkommnisse von $s_i$ in $\vA$ enth\"ahlt.
+		\item Verwende das Hilfsarray, um die Zahlen $C_i'$ der Elemente mit Schl\"usseln $s_1,\ldots,s_i$ zu bestimmen.
+		\item Reserviere Speicherplatz $\vB=(B_1,\ldots,B_n)$ f\"ur das Ausgabearray
+		\item F\"ur $j=n,\ldots,1$
+		\item $\quad$ermittle den Schl\"ussel $\sigma$ von $A_j$
+		\item $\quad$setze $B_{C'_\sigma}=A_j$
+		\item $\quad$verringere $C'_\sigma$ um 1
+	\end{enumerate}
+\end{algorithm}
+
+Die Stabilit\"at des Sortierverfahrens wird dadurch sichergestellt, da\ss\ wir in Schritt (4) die Elemente des Arrays von hinten nach vorn durchgehen.
+Die Laufzeit des Verfahrens ist offenbar $O(n+k)$.
+
+\subsection{Radixsort}\label{sec_radixsort}
+Beim Radixsort-Verfahren nehmen wir an, da\ss\ die Elemente der Eingabeliste $\vA$ jeweils mit einer Folge von $d$ Schl\"usseln aus der Menge versehen sind.
+Diese Folgen sind lexikographisch angeordnet.
+Gewisserma\ss en ist also die Menge der Schl\"ussel nun $\cS^d$ mit der lexikographischen Ordnung.
+Nat\"urlich k\"onnten wir das Array $\vA$ mit {\tt CountingSort} in Zeit $O(n+k^d)$ sortieren.
+Es gibt aber eine bessere L\"osung: Radixsort.
+
+\begin{algorithm}{\tt Radixsort$(\vA,\cS,d)$}
+	\begin{enumerate}
+		\item f\"ur $i=d,\ldots,1$
+		\item $\quad$sortiere $\vA$ nach der $i$-ten Komponente des Schl\"ussels mit {\tt CountingSort}
+	\end{enumerate}
+\end{algorithm}
+
+Wir verwenden also {\tt CountingSort} $d$ Mal mit der Schl\"usselmenge $\cS$, anstatt einmal mit $\cS^d$.
+Wichtig ist, da\ss\ wir mit der $d$-ten, also der {\em geringwertigsten} Stelle des Gesamtschl\"ussels beginnen!
+Unsere Analyse von {\tt CountingSort} liefert unmittelbar folgendes Ergebnis.
+
+\begin{proposition}\label{prop_radix}
+	{\tt Radixsort} hat Laufzeit $O(n+dk)$.
+\end{proposition}
+
+Anstatt einer Laufzeit von $O(n+k^d)$ bekommen wir also lediglich eine Laufzeit $O(n+dk)$ heraus.
+Schon f\"ur moderate Werte von $d,k$ ist das eine deutliche Verbesserung.
+{\tt Radixsort} ist hervorragend geeignet, um nach alphanumerischen Schl\"usseln fester L\"ange oder nach Daten (``Tag--Monat--Jahr'') zu sortieren.
+
+\section{Mediane und das Auswahlproblem}\label{sec_select}
+
+\noindent
+Gegeben ein Array $\vA=(A_1,\ldots,A_n)$ vergleichbarer Elemente, ist unser Ziel, das $\ell$-te Element (in aufsteigender Reihenfolge) auszuw\"ahlen.
+Dazu k\"onnten wir selbstverst\"andlich einfach die Eingabe zun\"achst sortieren (z.B.\ mit Heapsort) und dann das $\ell$-te Element ausgeben.
+Die Laufzeit w\"are $\Theta(n\log n)$.
+In diesem Abschnitt lernen wir aber ein noch effizienteres Verfahren kennen, das das Problem in Zeit $O(n)$ l\"ost.
+Der Abschnitt folgt~\cite{Cormen}.
+
+Dieser Algorithmus verwendet den Begriff des Medians.
+
+\begin{definition}\label{def_median}
+Ein \emph{Median} eines Arrays $\vA$ aus $n$ Elementen ist ein Element $m$ von $\vA$, so da\ss\
+\begin{align*}
+	\abs{\cbc{i\in[n]:A_i<m}}\leq\frac n2\quad\mbox{und}\quad\abs{\cbc{i\in[n]:A_i>m}}\leq\frac n2.
+\end{align*}
+\end{definition}
+
+Jedes Array besitzt einen Median.
+Um diesen zu finden, k\"onnten wir das Array sortieren. 
+Das Element an Position $\lfloor\frac{n+1}2\rfloor$ {\em oder} an Position $\lceil\frac{n+1}2\rceil$ ist dann ein Median.
+Wenn also $n$ ungerade ist und alle Arrayelemente verschieden sind, ist also der Median eindeutig bestimmt.
+Wenn andererseits $n$ gerade ist und alle Arrayelemente verschieden sind, gibt es stets zwei Mediane.
+
+\begin{algorithm}
+	{\tt Select}$(\vA,\ell)$
+	\begin{enumerate}
+		\item Falls $n=1$, gib $A_1$ aus.
+		\item Unterteile $\vA$ in $k=\lfloor n/5\rfloor$ Teilarrays $T_1,\ldots,T_{\lfloor n/5\rfloor}$ zu je $5$ Elementen und, falls $n$ nicht durch 5 teilbar ist, ein weiteres Teilarray $T_{\lfloor n/5\rfloor+1}$ auf.
+		\item Setze $N=\lfloor n/5\rfloor$, falls $n$ durch 5 teilbar ist, und $N=\lfloor n/5\rfloor+1$ sonst.
+		\item Finde in jedem dieser Teilarray $T_i$ einen Median $m_i$.
+		\item Wende {\tt Select} rekursiv an, um einen Median $m$ von $\vm=(m_1,\ldots,m_N)$ zu finden.
+		\item Bestimme Arrays $\vK=(K_1,\ldots,K_{n'}),\vM=(M_1,\ldots,M_{n''}),\vG=(G_1,\ldots,G_{n'''})$, die die Elemente von $\vA$ kleiner, gleich oder gr\"o\ss er als $m$ enthalten.
+		\item Falls $n'\geq\ell$, f\"uhre {\tt Select}$(\vK,\ell)$ aus;
+		\item sonst, falls $n'+n''\geq\ell$, gib $m$ aus;
+		\item sonst f\"uhre {\tt Select}$(\vG,\ell-n'-n'')$ aus.
+	\end{enumerate}
+\end{algorithm}
+
+Es ist klar, da\ss\ dieser Algorithmus das $\ell$-te Element der Liste ausgibt.
+Weniger offensichtlich ist m\"oglicherweise, da\ss\ der Algorithmus Laufzeit $O(n)$ hat.
+
+\begin{theorem}\label{thm_select}
+	{\tt Select}$(\vA,\ell)$ hat Laufzeit $O(n)$.
+\end{theorem}
+\begin{proof}
+	Mit $\cT_L$ bezeichnen wir die maximale Laufzeit von {\tt Select} auf einem Array aus h\"ochstens $L$ Elementen.
+	Sei $N'$ die Zahl der Mediane $m_i$, die kleiner als $m$ sind.
+	Sei entsprechend $N'''$ die Zahl der Mediane $m_i$, die gr\"o\ss er als $m$ sind.
+	Dann gilt die Schranke
+	\begin{align}\label{eqthm_select1}
+		n'&\leq5N'+2N'''.
+	\end{align}
+	Denn schlimmstenfalls sind die Elemente eines Arrays $T_i$ mit $m_i<m$ allesamt kleiner als $m$, w\"ahrend in einem Array $T_i$ mit $m_i>m$ h\"ochstens zwei Elemente kleiner als $m$ sein k\"onnen.
+	Analog erhalten wir die Schranke
+	\begin{align}\label{eqthm_select2}
+		n'''&\leq5N'''+2N'.
+	\end{align}
+	Ferner gilt nach Definition~\ref{def_median}
+	\begin{align}\label{eqthm_select3}
+		N'&\leq N/2\leq\frac12\bc{\left\lfloor\frac n5\right\rfloor+1},&N'''&\leq N/2\leq\frac12\bc{\left\lfloor\frac n5\right\rfloor+1}.
+	\end{align}
+	Kombinieren wir \eqref{eqthm_select1}--\eqref{eqthm_select3}, so erhalten wir
+	\begin{align}\label{eqthm_select4}
+		n'&\leq\frac{7n}{10}+6,&n'''&\leq\frac{7n}{10}+6.
+	\end{align}
+	Die Laufzeiten $\cT_L$ erf\"ullen daher die Rekurrenz
+	\begin{align}\label{eqthm_select5}
+		\cT_n\leq\cT_{\lfloor\frac{7n}{10}+6\rfloor}+Cn
+	\end{align}
+	f\"ur eine Konstante $C>0$.
+
+	Wir leiten schlie\ss lich aus \eqref{eqthm_select5} her, da\ss\ $\cT_n=O(n)$.
+	Dazu zeigen wir per Induktion, da\ss\ f\"ur eine hinreichend gro\ss e Konstante $C'>0$ die Ungleichung
+	\begin{align}\label{eqthm_select5}
+		\cT_n\leq C'(n+1)
+	\end{align}
+	gilt.
+	Die Ungleichung \eqref{eqthm_select5} gilt offenbar f\"ur $n\leq1000$, wenn wir $C'$ hinreichend gro\ss\ w\"ahlen.
+	Wir nehmen also an, da\ss\ $n>1000$.
+	Dann zeigt \eqref{eqthm_select4}, da\ss
+	\begin{align*}
+		\cT_n&\leq \cT_{\lfloor 7n/10+6\rfloor}+Cn\leq \frac7{10}C'n+6C'+Cn\leq\frac45C'n+Cn\leq C'n,
+	\end{align*}
+	sofern $C'$ hinreichend gro\ss\ gew\"ahlt ist.
+\end{proof}
+
+\section{Hashing}\label{sec_hash}
+
+Das Ziel ist, eine Art ``W\"orterbuch'' zu implementieren.
+W\"ahrend die Elemente eines gew\"ohnlichen Arrays $\vA$ durch ihre Indices adressiert werden, sollen in einem W\"orterbuch beliebige {\em Schl\"ussel} zur Adressierung verwendet werden k\"onnen.
+Wir nehmen dabei an, da\ss\ verschiedene Elemente verschiedene Schl\"ussel haben.
+Denken Sie beispielsweise an den Zugriff auf Pr\"ufungsleistungen anhand der Matrikelnummer.
+Dieser Abschnitt folgt~\cite{Cormen}.
+
+\subsection{Grundlegende Datenstrukturen}\label{sec_lists}
+Bevor wir zum eigentlichen Hashing kommen, rufen wir uns einige elementare Datenstrukturen in Erinnerung.
+In einer {\em einfach verketteten Liste} werden Datenelemente mit Hilfe von {\em Zeigern} gespeichert.
+Zeiger sind Verweise auf die Speicherstelle, an der ein Datum zu finden ist.
+Jedes Element einer einfach verketteten List enth\"alt neben dem eigentlichen Datenelement, der ``Nutzlast'' sozusagen, einen Zeiger auf das n\"achste Element der Liste.
+Falls kein weiteres Element folgt, wird ein spezieller NULL-Zeiger gespeichert.
+Dieser markiert also das Ende der Liste.
+
+Neue Elemente k\"onnen leicht in eine einfach verkettete Liste eingef\"ugt werden (an den Anfang).
+Ebenso leicht ist es, Elemente aus der Liste zu entfernen.
+Beide Operationen erfordern Zeit $O(1)$.
+Um allerdings ein bestimmtes Element in der Liste ausfindig zu machen, kann es schlimmstenfalls notwendig sein, die gesamte Liste von vorn bis hinten durchzugehen.
+
+In einer {\em doppelt verkettete Liste} enthalten die Listeneintr\"age nicht nur einen Zeiger auf den nachfolgenden Listeneintrag, sondern auch auf den vorherigen Eintrag.
+Der Vorg\"angerzeiger des ersten Listeneintrags ist NULL.
+Wie im Fall der einfach verketteten Liste ist es leicht, Elemente einzuf\"ugen und wieder zu entfernen.
+Das Auffinden eines bestimmten Elementes kann aber wiederum das Abklappern der gesamten Liste erfordern.
+Wenn wir die Datenstruktur der doppelt verketteten List erg\"anzen um Zeiger auf das erste und letzte Listenelement, so ist in Zeit $O(1)$ m\"oglich, zwei solche Listen zu vereinigen.
+
+Eine {\em Warteschlange} ist eine Datenstruktur, in die Elemente eingef\"ugt und aus der Elemente entnommen werden k\"onnen, so da\ss\ die Elemente in derselben Reihenfolge entnommen werden, in der sie eingef\"ugt wurden.
+Eine Warteschlange kann offenbar mit Hilfe einer verketteten Liste implementiert werden.
+Ein {\em Stapel} ist eine Datenstruktur, in die Elemente eingef\"ugt und aus der Elemente entnommen werden k\"onnen, so da\ss\ die Elemente in der {\em umkehrten} Reihenfolge entnommen werden.
+Ein Stapel kann ebenfalls mit einer verketteten Liste implementiert werden.
+Das Einf\"ugen und das Entfernen in Warteschlangen und Stapeln k\"onnen also in Zeit $O(1)$ implementiert werden.
+
+\subsection{Direkte Adressierung}\label{sec_direct}
+Sofern die Menge der {\em Schl\"ussel} in unserem W\"orterbuchproblem klein und im voraus bekannt ist, kann das Problem durch direkte Adressierung gel\"ost werden.
+Dazu werden die Schl\"ussel $\cS=\{s_1,\ldots,s_k\}$ durchnumeriert.
+Wir legen ein Array $\vA=(A_1,\ldots,A_m)$ der Gr\"o\ss e $m=k$ an, dessen Eintr\"age auf einen NULL-Dummywert initialisert werden.
+Falls ein Element mit dem Schl\"ussel $s_i$ eingef\"ugt wird, speichern wir es im Eintrag $A_i$.
+Um das Element mit dem Schl\"ussel $s_i$ abzurufen (falls eines vorhanden ist), lesen wir einfach die Speicherstelle $A_i$ aus.
+
+Die Zugriffe k\"onnen also in Zeit $O(1)$ realisiert werden.
+Der Speicherbedarf liegt bei $O(k)$.
+
+\subsection{Hashtabellen}\label{sec_hashtable}
+Die direkte Adressierung kommt nicht mehr in Frage, wenn die Menge $\cS=\{s_1,\ldots,s_k\}$ der m\"oglichen Schl\"ussel zu gro\ss\ wird.
+Stattdessen wird {\em Hashing} verwendet.
+Die Idee dabei ist, die Menge $\cS$ auf eine (kleinere) Menge $[m]$ von Indices abzubilden.
+Wir ben\"otigen also eine {\em Hashfunktion}
+\begin{align*}
+	\cH:\cS\to[m].
+\end{align*}
+Wir nennen $\cH(s_i)$ den {\em Hash} des Schl\"ussels $s_i$.
+Wenn $k>m$, kann diese Funktion nicht injektiv sein (``Schubfachprinzip'').
+Es gibt also notwendigerweise Werte $w\in[m]$, so da\ss\ verschiedene Schl\"ussel $i,j$ mit $\cH(s_i)=\cH(s_j)$ existieren.
+Solche Schl\"usselpaare nennt man {\em Kollisionen}.
+
+Um mit Kollisionen umgehen zu k\"onnen, verwenden wir eine Datenstruktur $\vL=(L_1,\ldots,L_m)$, die aus $m$ einfach verketteten Listen besteht.
+Die Liste $L_j$ speichert Elemente mit Hash $j$.
+Diese Datenstruktur nennen wir eine {\em Hashtabelle}.
+
+Die Hashtabelle unterst\"utzt drei Operationen: {\tt Insert}, {\tt Search} und {\tt Delete}.
+{\tt Insert} f\"ugt neue Elemente ein, {\tt Search} sucht nach einem Element mit einem gegebenen Schl\"ussel, und {\tt Delete} entfernt ein bestimmtes Element aus der Hashtabelle.
+
+\begin{description}
+	\item[{\tt Insert}]
+		Um ein neues Element $e$ mit Schl\"ussel $s$ in die Hashtabelle einzuf\"ugen, berechnen wir zun\"achst den Hash $\cH(s)$.
+		Dann wird das Element in die Liste $L_{\cH(s)}$ eingef\"ugt.
+		Diese Operationen kann in Laufzeit $O(1)$ durchgef\"uhrt werden (wenn wir die Berechnung der Hashfunktion als eine Operation z\"ahlen).
+	\item[\tt Search]
+		Um ein Element mit einem gegeben Schl\"ussel $s$ zu finden, bestimmen wir den Hash $\cH(s)$. 
+		Anschlie\ss end durchsuchen wir die Liste $L_{\cH(s)}$ nach einem Element mit Schl\"ussel $s$.
+		Die Laufzeit f\"ur diese Operation ist die L\"ange der Liste $L_{\cH(s)}$.
+	\item[\tt Delete] Auch diese Operation kann in Zeit $L_{\cH(s)}$ ausgef\"uhrt werden, wenn $s$ der Schl\"ussel des zu l\"oschenden Elements ist.
+\end{description}
+
+Die Schwierigkeit beim Hashing besteht darin, eine gute Hashfunktion $\cH$ zu konstruieren.
+Schlimmstenfalls ist es m\"oglich, da\ss\ alle gespeicherten Elemente denselben Hash haben.
+In diesem Fall erzielt Hashing keinen Vorteil gegen\"uber dem simplen Abspeichern aller Elemente in einer verketteten Liste.
+Im Idealfall verteilt die Hashfunktion die gespeicherten Elemente gleichm\"a\ss ig \"uber die $m$ Speicherpl\"atze.
+Werden dann $n$ Elemente gespeichert, haben die Listen L\"ange $n/m$.
+Typischerweise versuchen wir, die Hashtabelle so zu dimensionieren, da\ss\ $m>n$.
+
+Wir lernen zwei Kontruktionen von Hashfunktionen kennen: eine einfache, heuristische Methode und eine etwas anspruchsvollere, aber beweisbar ``gute'' Methode.
+
+\subsection{Die Multiplikationsmethode}\label{sec_hash_mult}
+Wir nehmen an, da\ss\ die Schl\"ussel $s_i$ nat\"urliche Zahlen sind und w\"ahlen eine reelle Zahl $\alpha$ zwischen $0$ und $1$.
+Die Hashfunktion lautet dann
+	\begin{align*}
+		\cH_\alpha(s)&=\lceil m \cdot (s\alpha-\lfloor s\alpha\rfloor)\rceil.
+	\end{align*}
+Wir multiplizieren also $s$ mit $\alpha$ und ``werfen die Stellen vor dem Komma'' weg.
+Dabei kommt eine Zahl zwischen $0$ und $1$ heraus.
+Diese multiplizieren wir mit $m$.
+Eine gute Wahl von $\alpha$ scheint beispielsweise
+\begin{align*}
+	\alpha=\frac{\sqrt 5-1}2
+\end{align*}
+zu sein.
+
+Die Multiplikationsmethode ist ``heuristisch'', d.h.\ sie ist nicht beweisbar gut.
+Allerdings ist sie leicht zu implementieren.
+
+\subsection{Universelle Hashfunktionen}\label{sec_universal}
+Wie beim Quicksort-Algorithmus kann Randomisierung helfen, um gute Hashfunktionen zu konstruieren.
+Beispielsweise w\"are eine Funktion $\cH$, die einfach jedem Schl\"ussel unabh\"angig einen rein zuf\"alligen Hash zuweist, mit hoher Wahrscheinlichkeit ``gut''.
+Das Problem ist aber, da\ss\ wir die Hashfunktion selbst auch abspeichern m\"ussten.
+Dieses Verfahren w\"are also genauso speicherintensiv wie die direkte Adressierung.
+
+Wir ben\"otigen also eine Hashfunktion, die ``zuf\"allig aussieht'', aber nicht wirklich zuf\"allig ist; sozusagen eine pseudozuf\"allige Hashfunktion.
+Die folgende Definition pr\"azisiert diesen Begriff.
+
+\begin{definition}\label{def_hash}
+	Eine Folge $\fH=(\cH_1,\ldots,\cH_\ell)$ von Hashfunktionen $\cH_i:\cS\to[m]$ hei\ss t {\em universell}, falls f\"ur je zwei Schl\"ussel $s,s'\in\cS$, $s\neq s'$, gilt
+	\begin{align}\label{eqdef_hash}
+		\abs{\cbc{i\in[\ell]:\cH_i(s)=\cH_i(s')}}\leq\frac\ell m.
+	\end{align}
+\end{definition}
+
+In Worten: f\"ur eine zuf\"allige Hashfunktion $\cH_i$ ist die Wahrscheinlichkeit einer Kollision f\"ur je zwei verschiedene Schl\"ussel $s,s'$ nicht gr\"o\ss er als $1/m$.
+Wir werden im Anschlu\ss\ sehen, wie universelle Hashfunktionen konstruiert werden k\"onnen.
+Zuvor vergewissern wir uns, da\ss\ sie das Hashing-Problem zufriedenstellend l\"osen.
+
+\begin{theorem}\label{thm_hash}
+	Angenommen $\fH$ ist eine universelle Folge von Hashfunktionen und $\cH$ ist ein zuf\"alliges Element der Folge.
+	Dann hat f\"ur jeden Schl\"ussel $k\in\cS$ die Liste $L_{h(k)}$ erwartete L\"ange $\frac nm+O(1)$.
+\end{theorem}
+
+\begin{remark}\label{rem_hash}
+	Die Erwartung in \Thm~\ref{thm_hash} bezieht sich nur auf die Wahl von $\cH$.
+\end{remark}
+
+\begin{proof}[Beweis von \Thm~\ref{thm_hash}]
+	F\"ur Schl\"ussel $s,s'$ definiere $\vX(s,s')=\vecone\{\cH(s)=\cH(s')\}$.
+	Angenommen die Elemente $e_1,\ldots,e_n$ mit paarweise verschiedenen Schl\"usseln $\sigma_1,\ldots,\sigma_n$ werden in dem Heap gespeichert.
+	Wir definieren
+	\begin{align*}
+		\vY(s)&=\sum_{i=1}^n\vX(s,\sigma_i)&&(s\in\cS)
+	\end{align*}
+	als die Zahl von Schl\"usseln $\sigma_i$, die mit $s$ kollidieren.
+	Dann gilt aufgrund von \eqref{eqdef_hash}
+	\begin{align*}
+		\ex[\vY(s)]&=\sum_{i=1}^n\ex[\vX(s,\sigma_i)]\leq\sum_{i=1}^n\bc{\vecone\cbc{s=\sigma_i}+\frac1m}\leq1+\frac nm=\frac nm+O(1),
+	\end{align*}
+	wie behauptet.
+\end{proof}
+
+\subsection{Konstruktion universeller Hashfunktionen}\label{sec_uni_constr}
+Die Konstruktion verwendet ein wenig elementare Zahlentheorie.
+Wir erinnern uns an die {\em Division mit Rest}.
+F\"ur je zwei ganze Zahlen $a,b\in\ZZ$, $b\neq0$, existieren $q\in\ZZ$ und $r\in\{0,1,2,\ldots,|b|-1\}$, so da\ss
+	\begin{align*}
+		a&=q\cdot b+r.
+	\end{align*}
+Wir nennen $r$ den {\em Rest} von $a$ bei Division durch $b$ und schreiben $r=a\mod b$ (``modulo'').
+Ferner sagen wir, $b$ {\em teilt} $a$, falls $r=0$.
+In diesem Fall schreiben wir $b|a$.
+
+Der {\em gr\"o\ss te gemeinsame Teiler} von $a,b\in\NN$ ist die gr\"o\ss te Zahl $c\in\NN$, so da\ss\ $c\mid a$ und $c\mid b$.
+Der folgende Algorithmus bestimmt den gr\"o\ss ten gemeinsamen Teiler zweier Zahlen $a,b$.
+
+\begin{algorithm}
+	{\tt Euclid}$(a,b)$
+	\begin{enumerate}
+		\item falls $a<b$, vertausche $a$ und $b$
+		\item setze $a_0=a$, $a_1=b$, $i=1$.
+		\item solange $a_i>0$
+		\item $\quad$berechne $q_i\in\ZZ$, $a_{i+1}\in\{0,1,\ldots,a_i\}$, so da\ss\ $a_{i-1}=q_ia_i+a_{i+1}$.
+		\item $\quad$erh\"ohe $i$ um $1$
+		\item gib $a_{i-1}$ aus
+	\end{enumerate}
+\end{algorithm}
+
+\begin{proposition}\label{prop_euclid}
+	{\tt Euclid} gibt $\ggt(a,b)$ aus und hat Laufzeit $O(\log(|a|+|b|))$.
+\end{proposition}
+\begin{proof}
+	Wir beweisen mit Induktion, da\ss\ $\ggt(a_{i-1},a_{i})=ggt(a_{i},a_{i+1})$ f\"ur alle $i\geq1$.
+	Denn angenomen $c=\ggt(a_{i-1},a_i)$.
+	Dann teilt $c$ auch
+		$$a_{i+1}=a_{i-1}-q_ia_i.$$
+	Also $\ggt(a_i,a_{i-1})|\ggt(a_i,a_{i+1})$.
+	Wenn umgekehrt $d=\ggt(a_i,a_{i+1})$, dann teilt $d$ auch $a_{i-1}=q_ia_i+a_{i+1}$; somit $\ggt(a_i,a_{i+1})|\ggt(a_i,a_{i-1})$ und somit $\ggt(a_i,a_{i+1})=\ggt(a_i,a_{i-1})$.
+	Weil f\"ur den letzten Index $i$, mit dem die ``solange''-Schleife abbricht, gilt $a_i=0$, folgt schlie\ss lich $\ggt(a_i,a_{i-1})=a_{i-1}$.
+
+	In Bezug auf die Laufzeit behaupten wir, da\ss\
+	\begin{align}\label{eqprop_euclid}
+		a_{i+1}\leq a_{i-1}/2.
+	\end{align}
+	Denn wenn $a_i<a_{i-1}/2$, dann folgt \eqref{eqprop_euclid} aus $a_{i+1}<a_i$.
+	Wenn andererseits $a_i\geq a_{i-1}/2$, dann folgt \eqref{eqprop_euclid} aus $a_{i-1}=q_ia_i+a_{i+1}$ und $a_{i+1}<a_i$.
+\end{proof}
+
+Der Euklidische Algorithmus berechnet also effizient den gr\"o\ss ten gemeinsamen Teiler von $a,b$.
+Durch R\"uckverfolgen der Schritte des Algorithmus' erhalten wir folgende Aussage.
+
+\begin{corollary}\label{cor_euclid}
+	F\"ur je zwei Zahlen $a,b\in\NN$ gibt es Zahlen $u,v\in\ZZ$, so da\ss\ $\ggt(a,b)=au+bv$.
+\end{corollary}
+\begin{proof}
+	Wir verfolgen die Schritte des Algorithmus' zur\"uck.
+	Wenn $a_{i+1}=0$, dann gilt $\ggt(a_i,a_{i+1})=a_{i}=1\cdot a_{i}+0\cdot a_{i+1}$.
+	Nehmen wir nun an, da\ss\
+	\begin{align*}
+		\ggt(a_i,a_{i+1})&=ua_i+va_{i+1}.
+	\end{align*}
+	Dann gilt
+	\begin{align*}
+		\ggt(a_{i-1},a_i)&=\ggt(a_i,a_{i+1})=ua_i+va_{i+1}=ua_i+v(a_{i-1}-q_ia_i)=(u-vq_i)a_i+va_{i-1},
+	\end{align*}
+	wie behauptet.
+\end{proof}
+
+Der Beweis des Korollars ist ``algorithmisch''; d.h.\ der Beweis beschreibt einen Algorithmus, wie die Zahlen $u,v$ effizient berechnet werden k\"onnen.
+
+Wir verwenden die ``Modulo''-Rechnung, um eine universelle Menge von Hashfunktionen zu erzeugen.
+Sei dazu $m>1$ eine nat\"urliche Zahl und $p>m$ eine Primzahl.
+F\"ur ganze Zahlen $1\leq a<p$ und $0\leq b<p$ definieren wir
+	\begin{align*}
+		\cH_{a,b}&:\{0,\ldots,p-1\}\to\{0,\ldots,m-1\},&k&\mapsto((a\cdot k+b)\mod p)\mod m.
+	\end{align*}
+Sei $\fH_{p,m}=(\cH_{a,b})_{a,b}$.
+
+\begin{lemma}\label{lemma_Hpm}
+	Es gilt $\fH_{p,m}=p(p-1).$
+\end{lemma}
+\begin{proof}
+	Wir m\"ussen zeigen, da\ss\ verschiedene $a,b$ verschiedene Funktionen $\cH_{a,b}$ ergeben.
+\end{proof}
+
+\begin{theorem}\label{thm_Hpm}
+	Die Menge $\fH_{p,m}$ von Hashfunktionen $\{0,1,\ldots,p-1\}\to\{0,1,\ldots,m-1\}$ ist universell.
+\end{theorem}
+\begin{proof}
+	Sei $\cV=\cbc{(s,s')\in\{0,1,\ldots,p-1\}^2:s'\neq s}$.
+	Wir behaupten, da\ss\ f\"ur alle $(s,s')\in\cV$ die Abbildung
+	\begin{align}\label{eqthm_Hpm0}
+		(a,b)\in\{1,\ldots,p-1\}\times\{0,\ldots,p\}\to\cV,\qquad(a,b)\mapsto(as+b\mod p,as'+b\mod p)
+	\end{align}
+eine Bijektion ist.
+Weil $|\cV|=p(p-1)$, gen\"ugt es zu zeigen, da\ss\ diese Abbildung surjektiv ist.
+Indem wir ggf.\ $s,s'$ vertauschen, d\"urfen wir annehmen, da\ss\ $s>s'$.
+Weil $s\neq s'$ und $0\leq s,s'<p$, gilt $\ggt(p,s-s')=1$.
+Es gibt daher nach \Cor~\ref{cor_euclid} Zahlen $u,v\in\ZZ$, so da\ss
+	\begin{align}\label{eqthm_Hpm1}
+		pu+(s-s')v=1.
+	\end{align}
+W\"ahle nun $(r,r')\in\cV$ und definiere
+\begin{align*}
+	a&=v\cdot(r-r')\mod p,&b=r-as\mod p.
+\end{align*}
+Dann gilt aufgrund von \eqref{eqthm_Hpm1}
+\begin{align*}
+	as+b\mod p&=r\mod p=r,\\
+	as'+b\mod p&=a(s'-s)+r\mod p=v(s'-s)(r-r')+r\mod p\\
+			   &=-(r-r')+r\mod p=r'\mod p=r'.
+\end{align*}
+Dies zeigt, da\ss\ \eqref{eqthm_Hpm0} surjektiv ist.
+
+Wir zeigen ferner, da\ss\
+\begin{align}\label{eqthm_Hpm2}
+	\abs{\cbc{(r,r')\in\cV:r\mod m=r'\mod m}}&\leq\frac{p(p-1)}m.
+\end{align}
+Fixiere dazu $0\leq r<p$.
+Dann ist die Anzahl m\"oglicher $0\leq r'<p$, $r\neq r'$, die denselben Rest bei Division durch $m$ lassen wir $r$, beschr\"ankt durch $\lceil p/m\rceil-1\leq(p-1)/m$.
+Aufsummierein \"uber $r$ gibt \eqref{eqthm_Hpm2}.
+Weil die Abbildung \eqref{eqthm_Hpm0} bijektiv ist, folgt die Behauptung aus \eqref{eqthm_Hpm2}.
+\end{proof}
+
+Die Folge $\fH_{p,m}$ ist also universell.
+
+\begin{thebibliography}{99}
+	\bibitem{Cormen}T.~Cormen, C.~Leiserson, R.~Rivest, C.~Stein: Introduction to algorithms. MIT Press.
+	\bibitem{Knuth}D.~Knuth: The art of computer programming. Addison Wesley.
+	\bibitem{Lang}S.~Lang: Undergraduate analysis. Springer.
+	\bibitem{Papadimitriou}C.~Papadimitriou: Computational complexity. Addison Wesley.
+\end{thebibliography}
+
+\end{document}
