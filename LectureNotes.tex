@@ -16,7 +16,6 @@
 
 \numberwithin{equation}{section}
 
-\newcommand{\ggt}{\mathrm{ggT}}
 \newcommand\Ae{\"A}
 \newcommand\Oe{\"O}
 \newcommand\Ue{\"U}
@@ -27,6 +26,7 @@
 \newcommand\KL[2]{D\bc{{{#1}\|{#2}}}}
 \newcommand\nix{\,\cdot\,}
 \newcommand\ndiv{\nmid}
+\newcommand\ggt{\ggT}
 \newcommand\ggT{\mathrm{ggT}}
 \newcommand\kgV{\mathrm{kgV}}
 \newcommand\Start{\rhd}
@@ -1602,13 +1602,6 @@ F\"ur ganze Zahlen $1\leq a<p$ und $0\leq b<p$ definieren wir
 		\cH_{a,b}&:\{0,\ldots,p-1\}\to\{0,\ldots,m-1\},&k&\mapsto((a\cdot k+b)\mod p)\mod m.
 	\end{align*}
 Sei $\fH_{p,m}=(\cH_{a,b})_{a,b}$.
-
-\begin{lemma}\label{lemma_Hpm}
-	Es gilt $\fH_{p,m}=p(p-1).$
-\end{lemma}
-\begin{proof}
-	Wir m\"ussen zeigen, da\ss\ verschiedene $a,b$ verschiedene Funktionen $\cH_{a,b}$ ergeben.
-\end{proof}
 
 \begin{theorem}\label{thm_Hpm}
 	Die Menge $\fH_{p,m}$ von Hashfunktionen $\{0,1,\ldots,p-1\}\to\{0,1,\ldots,m-1\}$ ist universell.

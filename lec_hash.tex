@@ -1,0 +1,412 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\documentclass[aspectratio=1610, 11pt]{beamer}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usetheme{tudo}
+
+\title{Datenstrukturen, Algorithmen und Prorammierung~2}
+\author[A.~Coja-Oghlan]{Amin Coja-Oghlan}
+\institute[DAP2]{Lehrstuhl Informatik 2\\Fakult\"at f\"ur Informatik}
+
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand\NULL{{\tt NULL}}
+\newcommand\dd{\mathrm d}
+\newcommand\eul{\mathrm e}
+\newcommand\cA{\mathcal A}
+\newcommand\cB{\mathcal B}
+\newcommand\cC{\mathcal C}
+\newcommand\cD{\mathcal D}
+\newcommand\cE{\mathcal E}
+\newcommand\cF{\mathcal F}
+\newcommand\cG{\mathcal G}
+\newcommand\cH{\mathcal H}
+\newcommand\cI{\mathcal I}
+\newcommand\cJ{\mathcal J}
+\newcommand\cK{\mathcal K}
+\newcommand\cL{\mathcal L}
+\newcommand\cM{\mathcal M}
+\newcommand\cN{\mathcal N}
+\newcommand\cO{\mathcal O}
+\newcommand\cP{\mathcal P}
+\newcommand\cQ{\mathcal Q}
+\newcommand\cR{\mathcal R}
+\newcommand\cS{\mathcal S}
+\newcommand\cT{\mathcal T}
+\newcommand\cU{\mathcal U}
+\newcommand\cV{\mathcal V}
+\newcommand\cW{\mathcal W}
+\newcommand\cX{\mathcal X}
+\newcommand\cY{\mathcal Y}
+\newcommand\cZ{\mathcal Z}
+\newcommand\fA{\mathfrak A}
+\newcommand\fB{\mathfrak B}
+\newcommand\fC{\mathfrak C}
+\newcommand\fD{\mathfrak D}
+\newcommand\fE{\mathfrak E}
+\newcommand\fF{\mathfrak F}
+\newcommand\fG{\mathfrak G}
+\newcommand\fH{\mathfrak H}
+\newcommand\fI{\mathfrak I}
+\newcommand\fJ{\mathfrak J}
+\newcommand\fK{\mathfrak K}
+\newcommand\fL{\mathfrak L}
+\newcommand\fM{\mathfrak M}
+\newcommand\fN{\mathfrak N}
+\newcommand\fO{\mathfrak O}
+\newcommand\fP{\mathfrak P}
+\newcommand\fQ{\mathfrak Q}
+\newcommand\fR{\mathfrak R}
+\newcommand\fS{\mathfrak S}
+\newcommand\fT{\mathfrak T}
+\newcommand\fU{\mathfrak U}
+\newcommand\fV{\mathfrak V}
+\newcommand\fW{\mathfrak W}
+\newcommand\fX{\mathfrak X}
+\newcommand\fY{\mathfrak Y}
+\newcommand\fZ{\mathfrak Z}
+\newcommand\fa{\mathfrak a}
+\newcommand\fb{\mathfrak b}
+\newcommand\fc{\mathfrak c}
+\newcommand\fd{\mathfrak d}
+\newcommand\fe{\mathfrak e}
+\newcommand\ff{\mathfrak f}
+\newcommand\fg{\mathfrak g}
+\newcommand\fh{\mathfrak h}
+%\newcommand\fi{\mathfrak i}
+\newcommand\fj{\mathfrak j}
+\newcommand\fk{\mathfrak k}
+\newcommand\fl{\mathfrak l}
+\newcommand\fm{\mathfrak m}
+\newcommand\fn{\mathfrak n}
+\newcommand\fo{\mathfrak o}
+\newcommand\fp{\mathfrak p}
+\newcommand\fq{\mathfrak q}
+\newcommand\fr{\mathfrak r}
+\newcommand\fs{\mathfrak s}
+\newcommand\ft{\mathfrak t}
+\newcommand\fu{\mathfrak u}
+\newcommand\fv{\mathfrak v}
+\newcommand\fw{\mathfrak w}
+\newcommand\fx{\mathfrak x}
+\newcommand\fy{\mathfrak y}
+\newcommand\fz{\mathfrak z}
+\newcommand\vA{\vec A}
+\newcommand\vB{\vec B}
+\newcommand\vC{\vec C}
+\newcommand\vD{\vec D}
+\newcommand\vE{\vec E}
+\newcommand\vF{\vec F}
+\newcommand\vG{\vec G}
+\newcommand\vH{\vec H}
+\newcommand\vI{\vec I}
+\newcommand\vJ{\vec J}
+\newcommand\vK{\vec K}
+\newcommand\vL{\vec L}
+\newcommand\vM{\vec M}
+\newcommand\vN{\vec N}
+\newcommand\vO{\vec O}
+\newcommand\vP{\vec P}
+\newcommand\vQ{\vec Q}
+\newcommand\vR{\vec R}
+\newcommand\vS{\vec S}
+\newcommand\vT{\vec T}
+\newcommand\vU{\vec U}
+\newcommand\vV{\vec V}
+\newcommand\vW{\vec W}
+\newcommand\vX{\vec X}
+\newcommand\vY{\vec Y}
+\newcommand\vZ{\vec Z}
+\newcommand\va{\vec a}
+\newcommand\vb{\vec b}
+\newcommand\vc{\vec c}
+\newcommand\vd{\vec d}
+\newcommand\ve{\vec e}
+\newcommand\vf{\vec f}
+\newcommand\vg{\vec g}
+\newcommand\vh{\vec h}
+\newcommand\vi{\vec i}
+\newcommand\vj{\vec j}
+\newcommand\vk{\vec k}
+\newcommand\vl{\vec l}
+\newcommand\vm{\vec m}
+\newcommand\vn{\vec n}
+\newcommand\vo{\vec o}
+\newcommand\vp{\vec p}
+\newcommand\vq{\vec q}
+\newcommand\vr{\vec r}
+\newcommand\vs{\vec s}
+\newcommand\vt{\vec t}
+\newcommand\vu{\vec u}
+\renewcommand\vv{\vec v}
+\newcommand\vw{\vec w}
+\newcommand\vx{\vec x}
+\newcommand\vy{\vec y}
+\newcommand\vz{\vec z}
+\renewcommand\AA{\mathbb A}
+\newcommand\NN{\mathbb N}
+\newcommand\ZZ{\mathbb Z}
+\newcommand\PP{\mathbb P}
+\newcommand\QQ{\mathbb Q}
+\newcommand\RR{\mathbb R}
+\newcommand\RRpos{\mathbb R_{\geq0}}
+\renewcommand\SS{\mathbb S}
+\newcommand\CC{\mathbb C}
+\newcommand{\ord}{\mathrm{ord}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\pr}{\mathrm{P}}
+\newcommand{\Vol}{\mathrm{vol}}
+\newcommand\norm[1]{\left\|{#1}\right\|} 
+\newcommand\sign{\mathrm{sign}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand\bc[1]{\left({#1}\right)} 
+\newcommand\cbc[1]{\left\{{#1}\right\}} 
+\newcommand\bcfr[2]{\bc{\frac{#1}{#2}}} 
+\newcommand{\bck}[1]{\left\langle{#1}\right\rangle} 
+\newcommand\brk[1]{\left\lbrack{#1}\right\rbrack} 
+\newcommand\scal[2]{\bck{{#1},{#2}}} 
+\newcommand{\vecone}{\mathbb{1}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\ggt}{\mathrm{ggT}}
+\newcommand{\kgv}{\mathrm{kgV}}
+\newcommand{\trans}{\top}
+\newcommand{\Karonski}{Karo\'nski}
+\newcommand{\Erdos}{Erd\H{o}s}
+\newcommand{\Renyi}{R\'enyi}
+\newcommand{\Lovasz}{Lov\'asz}
+\newcommand{\Juhasz}{Juh\'asz}
+\newcommand{\Bollobas}{Bollob\'as}
+\newcommand{\Furedi}{F\"uredi}
+\newcommand{\Komlos}{Koml\'os}
+\newcommand{\Luczak}{\L uczak}
+\newcommand{\Kucera}{Ku\v{c}era}
+\newcommand{\Szemeredi}{Szemer\'edi}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Die Problemstellung}
+		\begin{itemize}
+			\item Arrays sind zusammenh\"angende Speicherbl\"ocke, die direkt addressiert werden
+			\item h\"aufig werden aber Datenstrukturen ben\"otigt, deren Elemente durch besondere Schl\"ussel adressiert werden k\"onnen
+			\item \alert{Beispiele:} Matrikelnummern, W\"orterb\"ucher, Telefonverzeichnisse 
+			\item wir nehmen an, da\ss\ die verschiedenen Elemente verschiedene Schl\"ussel haben
+			\item Hashtabellen stellen eine entsprechende Datenstruktur bereit 
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Einfach verkettete Listen}
+		\begin{itemize}
+			\item wir wiederholen {\em verkettete Listen}
+			\item jeder Listeneintrag enth\"alt einen \alert{Zeiger} auf den n\"achsten Eintrag 
+			\item die Abwesenheit eines Nachfolgers wird durch einen besonderen Wert \NULL\ gekennzeichnet
+			\item neue Elemente k\"onnen in Zeit $O(1)$ eingef\"ugt werden
+			\item Elemente k\"onnen in Zeit $O(1)$ gel\"oscht werden
+			\item Durchsuchen der Liste kostet Zeit $\Theta(n)$
+			\item zwei Listen k\"onnen in Zeit $O(1)$ vereinigt werden
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Doppelt verkettete Listen}
+		\begin{itemize}
+			\item jeder Listeneintrag enth\"alt zus\"atzlich einen Zeiger auf den Vorg\"anger
+			\item eine Liste kann in Zeit $O(1)$ an einer bestimmten Stelle aufgeteilt werden
+			\item unser ``W\"orterbuchproblem'' kann mit einer verketten Liste gel\"ost werden
+			\item allerdings ist $\Theta(n)$ Zeit notwendig, um Eintr\"age aufzufinden
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Direkte Adressierung}
+		\begin{itemize}
+			\item sei $\cS=\{s_1,\ldots,s_k\}$ die Menge der Schl\"ussel
+			\item wenn $\cS$ ``klein'' ist, k\"onnen wir einfach ein Array anlegen, das f\"ur jeden m\"oglichen Schl\"ussel einen Eintrag bereitstellt
+			\item in dieser Speicherstelle legen wir den entsprechenden Eintrag ab, wenn einer vorhanden ist; sonst \NULL
+			\item \alert{Speicherbedarf:} $\Theta(k)$; ok f\"ur ``kleine'' $k$
+			\item \alert{Zugriffszeit:} $O(1)$ (speichern/abrufen/l\"oschen)
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Hashtabellen}
+		\begin{itemize}
+			\item f\"ur gro\ss e Schl\"usselmengen kommt direkte Adressierung nicht infrage
+			\item stattdessen verwenden wir \alert{Hashing}
+			\item eine \alert{Hashfunktion}
+				$$\cH:\cS\to[m]=\{1,\ldots,m\}$$
+				bildet die Schl\"ussel auf eine (kleiner) Menge $[m]$ ab
+			\item die Zahlen $1,\ldots,m$ verwenden wir, um ein Array zu adressieren
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Hashtabellen}
+		\begin{itemize}
+			\item wenn $m<|\cS|$, kann es zu \emph{Kollisionen} kommen
+			\item deshalb speichern wir die Eintr\"age nicht einfach in einem Array ab
+			\item stattdessen legen wir $m$ einfach verkettete Listen $\vL=(L_1,\ldots,L_m)$ an
+			\item Liste $L_i$ speichert Elemente mit Hash $i$
+			\item die Datenstruktur erlaubt Operationen {\tt Insert}, {\tt Search} und {\tt Delete}
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Hashtabellen}
+		\begin{description}
+			\item[{\tt Insert}]
+				Um ein neues Element $e$ mit Schl\"ussel $s$ in die Hashtabelle einzuf\"ugen, berechnen wir zun\"achst den Hash $\cH(s)$.
+				Dann wird das Element in die Liste $L_{\cH(s)}$ eingef\"ugt.
+				Diese Operationen kann in Laufzeit $O(1)$ durchgef\"uhrt werden (wenn wir die Berechnung der Hashfunktion als eine Operation z\"ahlen).
+			\item[\tt Search]
+				Um ein Element mit einem gegeben Schl\"ussel $s$ zu finden, bestimmen wir den Hash $\cH(s)$. 
+				Anschlie\ss end durchsuchen wir die Liste $L_{\cH(s)}$ nach einem Element mit Schl\"ussel $s$.
+				Die Laufzeit f\"ur diese Operation ist die L\"ange der Liste $L_{\cH(s)}$.
+			\item[\tt Delete] Auch diese Operation kann in Zeit $L_{\cH(s)}$ ausgef\"uhrt werden, wenn $s$ der Schl\"ussel des zu l\"oschenden Elements ist.
+		\end{description}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Hashfunktionen}
+		\begin{itemize}
+			\item wir konstruieren wir gute Hashfunktionen?
+			\item f\"ur jede \emph{deterministische} Hashfunktion kann die Hashtabelle schlimmstenfalls zu einer verketteten Liste degenerieren
+			\item dennoch werden oft einfache deterministische Hashfunktionen eingesetzt, weil sie schnell zu berechnen sind
+			\item zuf\"allige Hashfunktionen sind eine attraktive, beweisbar gute Alternative
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Die Multiplikationsmethode}
+		\begin{itemize}
+			\item \alert{Annahme:} die Schl\"ussel $s_i$ sind nat\"urliche Zahlen
+			\item wir w\"ahlen eine reelle Zahl $0<\alpha<1$, z.B. $$\alpha=\frac{\sqrt5-1}2$$ und definieren
+				$$\cH(s)=\lceil m\cdot(s\alpha-\lfloor s\alpha\rfloor)\rceil\in\{1,\ldots,m\}$$
+			\item \alert{Vorsicht:} diese Methode ist ``heuristisch''
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{block}{Definition\hfill[Universelle Hashfunktionen]}
+		Eine Folge $\fH=(\cH_1,\ldots,\cH_\ell)$ von Hashfunktionen $$\cH_i:\cS\to[m]$$ hei\ss t \alert{universell}, falls f\"ur je zwei Schl\"ussel $s,s'\in\cS$, $s\neq s'$, gilt
+		\begin{align}\label{eqdef_hash}
+			\abs{\cbc{i\in[\ell]:\cH_i(s)=\cH_i(s')}}\leq\frac\ell m
+		\end{align}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{block}{Satz}
+		\begin{itemize}
+			\item Angenommen $n$ Elemente werden in einer Hashtabelle gespeichert.
+			\item Angenommen $\fH$ ist eine universelle Folge von Hashfunktionen.
+			\item Wenn $\cH$ ist ein zuf\"alliges Element von $\fH$ ist, hat f\"ur jeden Schl\"ussel $k\in\cS$ die Liste $L_{h(k)}$ erwartete L\"ange $\frac nm+O(1)$.
+		\end{itemize}
+	\end{block}
+	\begin{exampleblock}{}
+		\em	Die Erwartung bezieht sich nur auf die Wahl von $\cH$.
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Division mit Rest}
+		\begin{itemize}
+			\item f\"ur $a,b\in\ZZ$, $b\neq0$, existieren ganze Zahlen $q$ und $0\leq r<|b|$, so da\ss
+				\begin{align*}
+					a&=q\cdot b+r.
+				\end{align*}
+			\item wir nennen $r$ den {\em Rest} von $a$ bei Division durch $b$ und schreiben
+				\begin{align*}
+					r&=a\mod b&\mbox{[``modulo'']}
+				\end{align*}
+			\item $b$ {\em teilt} $a$, falls $r=0$.  \em Schreibweise: $b|a$.
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Der gr\"o\ss te gemeinsame Teiler}
+		\begin{itemize}
+			\item f\"ur $a,b\in\ZZ$ ist $\ggt(a,b)$ die gr\"o\ss te Zahl $c\in\NN$, so da\ss\ $c\mid a$ und $c\mid b$
+			\item jede Zahl teilt die Null
+			\item falls $a=b=0$ definieren wir daher $\ggt(a,b)=\infty$
+			\item f\"ur $a,b\in\NN$ bestimmt der Algorithmus {\tt Euclid} den gr\"o\ss ten gemeinsamen Teiler
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{{\tt Euclid}$(a,b)$}
+		\begin{enumerate}
+			\item falls $a<b$, vertausche $a$ und $b$
+			\item setze $a_0=a$, $a_1=b$, $i=1$.
+			\item solange $a_i>0$
+			\item $\quad$berechne $q_i\in\ZZ$, $a_{i+1}\in\{0,1,\ldots,a_i\}$, so da\ss\ $a_{i-1}=q_ia_i+a_{i+1}$.
+			\item $\quad$erh\"ohe $i$ um $1$
+			\item gib $a_{i-1}$ aus
+		\end{enumerate}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{block}{Satz}
+		F\"ur $a,b\in\NN$ gibt {\tt Euclid} den $\ggt(a,b)$ aus und hat Laufzeit $O(\log(a+b))$.
+	\end{block}
+	\begin{exampleblock}{}
+		\begin{itemize}
+			\item der Algorithmus ist \alert{effizient}
+			\item denn die L\"ange der Eingabe ist $\Theta(\log(a+b))$
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{block}{Korollar}
+		F\"ur je zwei Zahlen $a,b\in\NN$ gibt es Zahlen $u,v\in\ZZ$, so da\ss\ $\ggt(a,b)=au+bv$.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Konstruktion universeller Hashfunktionen}
+		\begin{itemize}
+			\item sei $m>1$ eine nat\"urliche Zahl und $p>m$ eine Primzahl
+			\item f\"ur ganze Zahlen $1\leq a<p$ und $0\leq b<p$ definiere
+				\begin{align*}
+					\cH_{a,b}&:\{0,\ldots,p-1\}\to\{0,\ldots,m-1\},&k&\mapsto((a\cdot k+b)\mod p)\mod m.
+				\end{align*}
+			\item sei $\fH_{p,m}=(\cH_{a,b})_{a,b}$.
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{block}{Satz}
+		Die Menge $\fH_{p,m}$ von Hashfunktionen $\{0,1,\ldots,p-1\}\to\{0,1,\ldots,m-1\}$ ist universell.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Hashing}
+	\begin{exampleblock}{Zusammenfassung}
+		\begin{itemize}
+			\item das Hashingproblem tritt in der Praxis h\"aufig auf
+			\item die Multiplikationsmethode bietet eine einfache heuristische L\"osung
+			\item mit Hilfe der Zahlentheorie haben wir universelle Hashfunktionen konstruiert
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\end{document}
