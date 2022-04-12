@@ -398,7 +398,7 @@ Die Funktion $g(x)$ w\"achst also f\"ur $x\geq1000$ schneller als $f(x)$, so da\
 Angenommen $f(n)=10n^2+1000n$ und $g(n)=-3n^2$.
 Dann erhalten wir
 \begin{align*}
-	\lim_{n\to\infty}\frac{f(n)}{g(n)}=\lim_{n\to\infty}\frac{10n^2+1000n}{-3n^2}=\lim_{n\to\infty}-\frac{10}3-\frac{1000}{n}=-\frac{10}3.
+	\lim_{n\to\infty}\frac{f(n)}{g(n)}=\lim_{n\to\infty}\frac{10n^2+1000n}{-3n^2}=\lim_{n\to\infty}-\frac{10}3-\frac{1000}{3n}=-\frac{10}3.
 \end{align*}
 Der Quotient $f(n)/g(n)$ konvergiert also gegen eine reelle Zahl f\"ur $n\to\infty$.
 In diesem Fall gilt stets $f(n)=O(g(n))$.
@@ -417,7 +417,7 @@ Allgemeiner gilt $f(n)=O(g(n))$, wenn der ``obere H\"aufungspunkt'' $\limsup_{n\
 Angenommen $f(n)=n^4-10n^3$ und $g(n)=n^3$.
 Dann erhalten wir
 \begin{align*}
-	\lim_{n\to\infty}\frac{g(n)}{f(n)}=\lim_{n\to\infty}\frac{n^4-10n^3}{n^3}=\lim_{n\to\infty}n-10{n}=\infty.
+	\lim_{n\to\infty}\frac{f(n)}{g(n)}=\lim_{n\to\infty}\frac{n^4-10n^3}{n^3}=\lim_{n\to\infty}n-10=\infty.
 \end{align*}
 Der Quotient $f(n)/g(n)$ divergiert also gegen $+\infty$.
 In diesem Fall gilt $f(n)=\Omega(g(n))$.
@@ -433,7 +433,7 @@ Allgemeiner gilt $f(n)=\Omega(g(n))$, wenn der ``untere H\"aufungspunkt'' $\limi
 	Angenommen $f(n)=\sqrt n-7\sqrt[4]n$ und $g(n)=10\sqrt n$.
 Dann erhalten wir
 \begin{align*}
-	\lim_{n\to\infty}\frac{f(n)}{g(n)}=\lim_{n\to\infty}\frac{\sqrt n-7\sqrt[4]n}{10\sqrt n}=\lim_{n\to\infty}\frac1{10}-\frac7{\sqrt[4]n}=\frac1{10}.
+	\lim_{n\to\infty}\frac{f(n)}{g(n)}=\lim_{n\to\infty}\frac{\sqrt n-7\sqrt[4]n}{10\sqrt n}=\lim_{n\to\infty}\frac1{10}-\frac7{10\sqrt[4]n}=\frac1{10}.
 \end{align*}
 Der Quotient $f(n)/g(n)$ konvergiert also gegen eine reelle Zahl.
 In diesem Fall gilt $f(n)=\Theta(g(n))$.
