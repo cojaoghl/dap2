@@ -4,7 +4,7 @@
 
 \usepackage[german]{babel}
 \usepackage{latexsym,amsmath}
-\usepackage{times}
+\usepackage{enumerate}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{latexsym}
@@ -1118,7 +1118,7 @@ Andernfalls mu\ss\ das Array ggf.\ umkopiert werden.
 F\"ur die folgende Aussage verwenden wir ``Laufzeit'' wiederum gleichbedeutend mit ``Vergleichen''.
 
 \begin{proposition}\label{prop_priority}
-	Die Laufzeiten der Operationen {\tt ExtractMax}, {\tt IncreaseKey} und {\tt Insert} sind $O(\log n)$.
+	Die Operationen {\tt ExtractMax}, {\tt IncreaseKey} und {\tt Insert} haben Laufzeit $O(\log n)$.
 \end{proposition}
 \begin{proof}
 	Dies folgt unmittelbar aus \Lem~\ref{lemma_highheap}.
@@ -1368,11 +1368,11 @@ Weniger offensichtlich ist m\"oglicherweise, da\ss\ der Algorithmus Laufzeit $O(
 
 	Wir leiten schlie\ss lich aus \eqref{eqthm_select5} her, da\ss\ $\cT_n=O(n)$.
 	Dazu zeigen wir per Induktion, da\ss\ f\"ur eine hinreichend gro\ss e Konstante $C'>0$ die Ungleichung
-	\begin{align}\label{eqthm_select5}
+	\begin{align}\label{eqthm_select6}
 		\cT_n\leq C'(n+1)
 	\end{align}
 	gilt.
-	Die Ungleichung \eqref{eqthm_select5} gilt offenbar f\"ur $n\leq1000$, wenn wir $C'$ hinreichend gro\ss\ w\"ahlen.
+	Die Ungleichung \eqref{eqthm_select6} gilt offenbar f\"ur $n\leq1000$, wenn wir $C'$ hinreichend gro\ss\ w\"ahlen.
 	Wir nehmen also an, da\ss\ $n>1000$.
 	Dann zeigt \eqref{eqthm_select4}, da\ss
 	\begin{align*}
@@ -1644,11 +1644,462 @@ Weil die Abbildung \eqref{eqthm_Hpm0} bijektiv ist, folgt die Behauptung aus \eq
 
 Die Folge $\fH_{p,m}$ ist also universell.
 
+\section{Graphen}
+
+\noindent
+Dieser Teil der Vorlesung orientiert sich an~\cite{Cormen,Diestel}.
+
+\subsection{Grundbegriffe}
+In diesem Abschnitt behandeln wir einige Grundbegriffe der Graphentheorie.
+Graphen spielen in der Informatik aufgrund ihrer vielseitigen Einsatzm\"oglichkeiten eine zentrale Rolle.
+
+\begin{definition}\label{def_graph}
+Ein \emph{Graph} ist ein Paar $G=(V,E)$ aus einer Menge $V$ von Knoten und einer Menge $E$ von Kanten ist.
+Jede Kante ist eine zweielementige Teilmenge von $V$.
+\end{definition}
+
+\begin{remark}\label{rem_graph}
+	Definition~\ref{def_graph} beschreibt genaugenommen {\em einfache, ungerichtete} Graphen.
+	{\bf\em Wir nehmen in der Vorlesung stets an, da\ss\ die Knotenmenge $V$ endlich ist.}
+\end{remark}
+
+F\"ur einen Knoten $v$ bezeichnet $\partial_Gv$ die Menge der Nachbarn von $v$, d.h.\ 
+	$$\partial_Gv=\{w\in V:\exists e\in E:v,w\in e\}.$$
+Mit $d_G(v)=|\partial_Gv|$ bezeichnen wir ferner den {\em Grad} von $v$.
+Wir nennen $v$ {\em isoliert in $G$}, falls $d_G(v)=0$.
+Wenn $d_G(v)=1$, nennen wir $v$ ein {\em Blatt}.
+Den minimalen und maximalen Grad bezeichnen wir durch
+	$$\delta(G)=\min\cbc{d_G(v):v\in V},\qquad\Delta(G)=\max\cbc{d_G(v):v\in V}.$$
+Der Graph $G$ hei\ss t {\em $k$-regul\"ar}, falls $\delta(G)=\Delta(G)=k$.
+
+Der Graph $G$ hei\ss t {\em vollst\"andig}, falls f\"ur je zwei Knoten $v\neq w$ gilt $\{v,w\}\in E$.
+Der vollst\"andige Graph auf der Knotenmenge $[n]=\{1,\ldots,n\}$ wird mit $K_n$ bezeichnet.
+Er hat $ n\choose 2$ Kanten.
+Das {\em Komplement} eines Graphen $G=(V,E)$ ist der Graph $\bar G=(V,\bar E)$, wobei f\"ur $v,w\in V$, $v\neq w$ gilt $\{v,w\}\in\bar E$ genau dann, wenn
+$\{v,w\}\not\in E$.
+Falls $\bar G$ vollst\"andig ist, hei\ss t $G$ {\em leer}.
+
+Ein Graph $H=(V_H,E_H)$ hei\ss t {\em Untergraph} von $G=(V_G,E_G)$, falls $V_H\subset V_G$ und $E_H\subset E_G$.
+Der Untergraph $H$ hei\ss t {\em spannend}, falls $V_H=V_G$.
+Wir nennen $H$ einen {\em induzierten Untergraphen} von $G$, falls
+	$H$ ein Untergraph von $G$ ist und f\"ur alle $v,w\in V_H$ genau dann $\{v,w\}\in E_H$ gilt, wenn $\{v,w\}\in E_G$.
+F\"ur eine Menge $S\subset V_G$ bezeichnet $G[S]=(S,\{e\in E_G:e\subset S\})$ den auf $S$ induzierten Untergraphen.
+
+Sind $G=(V_G,E_G)$ und $H=(V_H,E_H)$ zwei Graphen, so nennen wir eine Abbildung $\phi:G\to H$ einen {\em Homomorphismus}, falls
+f\"ur alle $\{v,w\}\in E_G$ gilt, da\ss\ $\{\phi(v),\phi(w)\}\in E_H$.
+Falls es einen Homomorphismus $\psi:H\to G$ mit $\phi\circ\psi=\id$, $\psi\circ\phi=\id$ gibt, so nennen wir $\phi$ einen {\em Isomorphismus}.
+Falls $\phi$ ein Isomorphismus ist und $G=H$, so hei\ss t $\phi$ ein {\em Automorphismus}.
+
+Eine {\em stabile Menge} in $G=(V,E)$ ist eine Menge $S\subset V$, so da\ss\ $\{v,w\}\not\in E$ f\"ur alle $v,w\in S$.
+Falls $S$ eine stabile Menge in $\bar G$ ist, nennen wir $S$ eine {\em Clique} von $G$.
+Die maximale Gr\"o\ss e einer stabilen Menge bzw.\ Clique wird durch
+	$$\alpha(G)=\max\{|S|:S\subset V\mbox{ ist stabil in }G\},\qquad
+		\omega(G)=\max\{|S|:S\subset V\mbox{ ist Clique in }G\}$$
+bezeichnet.
+
+Ein {\em Weg} in einem Graphen $G=(V,E)$ ist eine alternierende Folge $w=(v_1,e_1,v_2,e_2,\ldots,e_\ell,v_{\ell+1})$ von Knoten $v_1,\ldots,v_{\ell+1}$
+und Kanten $e_1,\ldots,e_\ell$, so da\ss\ $e_{i}=\{v_i,v_{i+1}\}$ f\"ur alle $i\in[\ell]$.
+Wir nennen $l$ die {\em L\"ange} des Weges und sagen, $w$ {\em verbindet} $v_1$ und $v_{\ell+1}$.
+Falls $v_1,\ldots,v_{\ell+1}$ paarweise verschieden sind, nennen wir $w$ einen {\em Pfad}.
+Falls $w$ ein Weg ist, in dem $v_1=v_{\ell+1}$, w\"ahrend $v_1,\ldots,v_\ell$ paarweise verschieden sind, nennen wir $w$ einen {\em Kreis}.
+Mit $P_\ell$ wird ein Pfad der L\"ange $\ell$ und mit $C_\ell$ ein Kreis der L\"ange $\ell$ bezeichnet.
+
+Ein Graph $G=(V,E)$ hei\ss t {\em zusammenh\"angend}, falls es zu je zwei Knoten $v,w\in V$, $v\neq w$, einen Weg gibt, der $v$ und $w$ verbindet. 
+Die Relation ``$v$ und $w$ sind durch einen Weg verbunden'' ist eine \"Aquivalenzrelation (mit der Konvention, da\ss\ $(v)$ ein Weg der L\"ange $0$ ist).
+Ihre \"Aquivalenzklassen hei\ss en die {\em Zusammenhangskomponenten} von $G$.
+
+Eine {\em $k$-F\"arbung} eines Graph $G=(V,E)$ ist eine Abbildung $f:V\to[k]$, so da\ss\ $f(v)\neq f(w)$ falls $\{v,w\}\in E$.
+Falls $G$ eine $k$-F\"arbung besitzt, nennen wir $G$ {\em $k$-f\"arbbar}.
+Mit $\chi(G)$ bezeichnen wir die kleinste Zahl $k\in\NN$, so da\ss\ $G$ $k$-f\"arbbar ist, die {\em chromatische Zahl} von $G$.
+Ein Graph hei\ss t {\em bipartit}, falls $\chi(G)\leq2$.
+
+\subsection{B\"aume}
+Die einfachste wichtige Klasse von Graphen sind B\"aume und W\"alder.
+
+\begin{definition}\label{def_baum}
+Ein {\em Wald} ist ein Graph, der keinen Kreis enth\"alt.
+Ein {\em Baum} ist ein zusammenh\"angender Wald.
+\end{definition}
+
+Wir leiten einige wichtige Eigenschaften von B\"aumen her.
+
+\begin{lemma}\label{Lemma_Blatt}
+Jeder Baum auf mindestens zwei Knoten hat mindestens zwei Bl\"atter.
+\end{lemma}
+\begin{proof}
+Sei $G=(V,E)$ ein Baum mit $|V|\geq2$.
+Sei $(v_1,e_1,\ldots,e_l,v_{l+1})$ ein l\"angster Pfad in $G$.
+Dann gilt $\partial_Gv_1\cup \partial_Gv_{l+1}\subset\{v_1,\ldots,v_{l+1}\}$, weil wir andernfalls den Pfad verl\"angern k\"onnten.
+Aber $v_1,v_{l+1}$ k\"onnen h\"ochstens einen Nachbarn auf dem Pfad haben, weil $G$ kreisfrei ist.
+\end{proof}
+
+\begin{proposition}\label{Lemma_Baum}
+Sei $G=(V,E)$ ein Graph.
+Die folgenden Aussagen sind \"aquivalent.
+\begin{enumerate}
+\item $G$ ist ein Baum.
+\item $G$ ist zusammenh\"angend und $|E|=|V|-1$.
+\item $G$ ist zusammenh\"angend und f\"ur jede Kante $e\in E$ ist $(V,E\setminus\{e\})$ unzusammenh\"angend.
+\item $G$ ist kreisfrei aber f\"ur jedes Paar $v,w\in V$, $v\neq w$, $\{v,w\}\not\in E$ enth\"alt $(V,E\cup\{\{v,w\}\})$ einen Kreis.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+Wir f\"uhren Induktion \"uber $|V|$.
+Im Fall $|V|=1$ ist nichts zu zeigen.
+\begin{description}
+\item[(1)$\Rightarrow$(2)] nach \Lem~\ref{Lemma_Blatt} enth\"alt $G$ ein Blatt $v$.
+	Sei $G'=(V',E')$ der Graph, der durch Entfernen von $v$ und der Kante, die $v$ enth\"alt, entsteht.
+	Nach Induktion gilt $|E'|=|V'|-1$ und folglich $|E|=|V|-1$.
+\item[(2)$\Rightarrow$(1)] Da $|E|<|V|$, gibt es ein Blatt $v\in V$.
+	Sei $G'=(V',E')$ der Graph, der durch Entfernen von $v$ und der Kante, die $v$ enth\"alt, entsteht.
+	Nach Induktion in $G'$ ein Baum.
+	Also trifft dasselbe auf $G$ zu.
+\item[(1)$\Rightarrow$(3)]
+	Sei $v$ ein Blatt und $f$ die inzidente Kante.
+	Entfernen wir $e=f$, so ist der resultierende Graph unzusammen\"angend.
+	Ist andererseits $e\neq f$, so ist nach Induktion der Graph, der aus $G$ durch entfernen von $v,e,f$ entsteht, unzusammenh\"angt.
+	Folglich ist auch der Graph, der aus $G$ durch entfernen von $e$ entsteht, unzusammenh\"angend.
+\item[(3)$\Rightarrow$(4)] Enthielte $G$ einen Kreis, so k\"onnten wir eine beliebige Kante auf dem Kreis entfernen, ohne den
+	Zusammenhang zu zerst\"oren.
+	Da ferner $G$ zusammenh\"angend ist, schlie\ss t f\"ur je zwei Knoten $v\neq w$ mit $\{v,w\}\not\in E$ das Hinzuf\"ugen von $\{v,w\}$ einen Kreis.
+\item[(4)$\Rightarrow$(1)]
+	Angenommen $G$ w\"are unzusammenh\"angend.
+	Seien $v\neq w$ Knoten, die nicht durch einen Pfad verbunden sind.
+	Dann schlie\ss t sich durch Hinzuf\"ugen der Kanten $\{v,w\}$ kein Kreis, Widerspruch.
+\end{description}
+\end{proof}
+
+\begin{corollary}
+In einem Baum existiert zu je zwei Knoten $v,w\in V$, $v\neq w$, genau ein Pfad, der $v$ und $w$ verbindet.
+\end{corollary}
+\begin{proof}
+Angenommen es g\"abe zwei verschiedene Pfade.
+Dann k\"onnten wir auf einem der beiden eine Kante l\"oschen, ohne den Zusammenhang zu zerst\"oren.
+\end{proof}
+
+\begin{corollary}\label{Cor_spannend}
+Jeder zusammenh\"angende Graph hat einen spannenden Baum.
+\end{corollary}
+\begin{proof}
+Sei $G=(V,E)$.
+Wir f\"uhren Induktion nach $|E|$.
+Falls $E=\emptyset$ ist nichts zu zeigen.
+Sonst unterscheiden wir zwei F\"alle.
+\begin{description}
+\item[1.\ Fall: $G$ ist ein Baum] Dann ist nichts zu zeigen.
+\item[2.\ Fall: $G$ ist kein Baum] Dann gibt es nach \Prop~\ref{Lemma_Baum} eine Kante $e$, die entfernt werden kann,
+	ohne den Zusammenhang zu zerst\"oren.
+	Die Behauptung folgt also aus der Induktion.
+\end{description}
+\end{proof}
+
+Als Anwendung von \Cor~\ref{Cor_spannend} leiten wir folgende Aussage her.
+
+\begin{proposition}\label{Prop_bipartit}
+Ein Graph $G=(V,E)$ ist genau dann bipartit, wenn er keinen Kreis ungerader L\"ange enth\"alt.
+\end{proposition}
+\begin{proof}
+Es ist leicht einzusehen, da\ss\ ein Graph, der einen Kreis ungerader L\"ange enth\"alt, nicht bipartit ist.
+Allein zum F\"arben des Kreises werden n\"amlich drei Farben ben\"otigt.
+
+Nehmen wir also an, da\ss\ $G$ keinen Kreis ungerader L\"ange enth\"alt.
+Indem wir gegebenenfalls jede Komponente einzeln f\"arben, d\"urfen wir annehmen, da\ss\ $G$ zusammenh\"angend ist.
+Nach \Cor~\ref{Cor_spannend} hat $G$ also einen spannenden Baum $T=(V,E_T)$.
+Wir w\"ahlen einen beliebigen Knoten $r\in V$ aus.
+Dann gibt es zu jedem Knoten $v\in V$ einen eindeutig bestimmten Pfad $p_v$ in $T$, der $v$ mit $r$ verbindet.
+Sei $\ell_v$ die L\"ange des Pfades.
+Definiere
+	$$f(v)=\begin{cases}
+		0&\mbox{ falls $\ell_v$ gerade ist},\\
+		1&\mbox{ sonst.}
+		\end{cases}$$
+Wir behaupten, da\ss\ $f$ eine $2$-F\"arbung von $G$ ist, d.h.\ $f(v)\neq f(w)$ falls $\{v,w\}\in E$.
+
+Denn angenommen $\{v,w\}\in E$ und $f(v)=f(w)$.
+Sei $u$ der erste Knoten, der sowohl auf dem Pfad von $v$ nach $r$ als auch auf dem Pfad von $w$ nach $r$ in $T$ auftritt.
+Dann liegt $r$ auf dem Pfad $q$ von $v$ nach $w$ in $T$ und dieser hat gerade L\"ange.
+Da $\{v,w\}\in E$, schlie\ss t $q$ zusammen mit $\{v,w\}$ also einen Kreis ungerader L\"ange in $G$, Widerspruch.
+\end{proof}
+
+\subsection{Datenstrukturen f\"ur Graphen}\label{sec_adj}
+Es gibt zwei g\"angige Datenstrukturen zur Darstellung von Graphen: die Adjazenzliste oder die Adjazenzmatrix.
+Sofern nicht ausdr\"ucklich anders angegeben, nehmen wir immer an, da\ss\ ein Graphn als Adjazenzliste gegeben ist.
+Der Speicherbedarf f\"ur die Adjazenzliste betr\"agt $O(|V|)+O(|E|)$.
+
+\begin{definition}\label{def_adj}
+	Sei $G=(V,E)$ ein Graph mit Knotenmenge $V=\{v_1,\ldots,v_n\}$.
+	Eine {\em Adjazenzliste} f\"ur $G$ besteht aus $n$ verketteten Listen $L_1,\ldots,L_n$, so da\ss\ $L_i$ die Nachbarn von $v_i$ enth\"ahlt.
+\end{definition}
+
+Die Listen $L_i$ k\"onnen sind doppelt verkettet.
+In manchen Anwendungen gen\"ugen allerdings einfach verkettete Listen.
+Die Nachbarn von $v_i$ k\"onnen in beliebiger Reihenfolge in der entsprechenden Liste auftreten.
+Es kann $\Omega(\min\{d_G(v_i),d_G(v_j)\})$ Zeit in Anspruch nehmen, herauszufinden, ob $v_i$ und $v_j$ benachbart sind.
+
+\begin{definition}\label{def_adjm}
+	Sei $G=(V,E)$ ein Graph mit Knotenmenge $V=\{v_1,\ldots,v_n\}$.
+	Die {\em Adjazenzmatrix} $A(G)$ ist die $n\times n$-Matrix $(A_{v_iv_j}(G))_{i,j=1,\ldots,n}$ mit Eintr\"agen
+	\begin{align*}
+		A_{v_iv_j}(G)=\vecone\{v_j\in\partial v_i\}.
+	\end{align*}
+\end{definition}
+
+Die Adjazenzmatrix ben\"otigt $\Omega(n^2)$ Speicherplatz; das ist ihr gro\ss er Nachteil.
+Ein weiterer Nachteil gegen\"uber der Adjazenzliste ist, da\ss\ wir Zeit $\Omega(n)$ ben\"otigen, um die Nachbarn eines gegebenen Knotens zu ermitteln.
+Positiv schl\"agt hingegen zu Buche, da\ss\ wir in Zeit $O(1)$ pr\"ufen k\"onnen, ob zwei Knoten $v_i,v_j$ benachbart sind.
+
+\section{Breiten- und Tiefensuche}\label{sec_connected}
+
+\noindent
+Breiten- und Tiefensuche sind fundamentale Algorithmen, mit denen ein Graph durchsucht werden kann.
+Beide Algorithmen k\"onnen insbesondere verwendet werden, um die Zusammenhangskomponenten eines Graphen zu bestimmen.
+Breitensuche bestimmt ferner ungewichteten Abst\"ande.
+Dieser Abschnitt folgt~\cite{Cormen}.
+Wie \"ublich nehmen wir an, da\ss\ die Graphen als Adjazenzlisten gegeben sind.
+
+\subsection{Breitensuche}\label{sec_bfs}
+Ausgehend von einem Startknoten $s$ findet Breitensuche alle Knoten in der Zusammehangskomponente von $s$ im gegebenen Graphen $G$.
+Dabei durchk\"ammt Breitensuche den Graphen ``zuerste in die Breite''.
+D.h.\ die Reihenfolge, in der die Knoten besucht werden, entspricht ihrem Abstand von $s$.
+W\"ahrnd Breitensuche l\"auft, ist jeder der Knoten entweder rot ($\mathtt r$), gelb ($\mathtt y$) oder gr\"un ($\mathtt g$) gef\"arbt.
+%Die Farbe eines Knotens wird in einem Array $c(\nix)$ gespeichert.
+Breitensuche (``breadth-first search'', BFS) verwendet eine Warteschlange als Datenstruktur.
+
+\begin{algorithm}{\tt BFS}$(G,s)$
+	\begin{enumerate}
+		\item F\"arbe alle Knoten $v\in V(G)\setminus\cbc s$ gr\"un und f\"arbe $s$ gelb.
+		\item Setze $d(v)=\infty$ f\"ur alle $v\in V(G)\setminus\cbc s$ und setze $d(s)=0$.
+		\item Setze $p(v)=\emptyset$ f\"ur alle $v\in V$.
+		\item Lege eine Warteschlange $Q$ an und f\"uge $s$ in $W$ ein.
+		\item Solange $Q$ nicht leer ist,
+		\item $\quad$entnehme $v$ aus $Q$
+		\item $\quad$f\"arbe $v$ rot
+		\item $\quad$f\"ur alle $u\in\partial v$ mit Farbe gr\"un
+		\item $\quad\quad$f\"arbe $u$ gelb
+		\item $\quad\quad$setze $p(u)=v$
+		\item $\quad\quad$setze $d(u)=d(v)+1$
+		\item $\quad\quad$f\"uge $u$ in $Q$ ein
+	\end{enumerate}
+\end{algorithm}
+
+F\"ur zwei Knoten $v,w\in G$ definiere $\dist_G(v,w)$ als die k\"urzeste L\"ange (d.h.\ minimale Anzahl Kanten) eines $v$-$w$-Pfades.
+Falls $v,w$ in verschiedenen Komponenten von $G$ liegen, definieren wir $\dist_G(v,w)=\infty$.
+
+\begin{theorem}\label{Thm_BFS}
+	{\tt BFS} hat Laufzeit $O(|V(G)|+|E(G)|)$.
+	Bei Beendigung des Algorithmus' gilt folgendes.
+	\begin{enumerate}[(i)]
+		\item Die Zusammehangskomponente des Startknotens $s$ besteht aus genau den Knoten $v$, f\"ur die $d(v)<\infty$.
+		\item F\"ur alle $v\in V(G)$ gilt $d(v)=\dist_G(s,v)$.
+		\item Der Untergraph $(\{v\in V(G):d(v)<\infty\},\{\{v,p(v)\}:v\in V(G),\,p(v)\neq\emptyset\})$ ist ein spannender Baum der Zusammehangskomponente von $s$ in $G$.
+	\end{enumerate}
+\end{theorem}
+
+Wir beginnen mit der Analyse der Laufzeit.
+Der Beweis beruht auf dem sog.\ {\em Handschlaglemma}: f\"ur jeden Graphen $G$ gilt
+\begin{align}\label{eqhandshaking}
+	\sum_{v\in V(G)}d_v(G)=2|E(G)|
+\end{align}
+Der Beweis dieser Aussage kann z.B.\ per Induktion nach der Zahl der Kanten gef\"uhrt werden.
+
+\begin{lemma}\label{lem_bfs0}
+	{\tt BFS} hat Laufzeit $O(|V(G)|+|E(G)|)$.
+\end{lemma}
+\begin{proof}
+	Die Laufzeit der Schritte (1)--(4) betr\"agt $O(|V(G|)$.
+	Jeder Knoten wechselt h\"ochstens zweimal seine Farbe, und zwar von gr\"un auf gelb auf rot.
+	Deshalb wird kein Knoten mehrmals in $Q$ eingef\"ugt, und folglich auch nicht wieder entnommen.
+	Aus diesem Grund ist die Laufzeit der Hauptschleife (5)--(12) beschr\"ankt durch
+	\begin{align*}
+		O(|V(G)|)+\sum_{v\in V(G)}d_G(v)=O(|V(G)|)+O(|E(G)|)&&[\mbox{nach \eqref{eqhandshaking}}],
+	\end{align*}
+	woraus die Behauptung unmittelbar folgt.
+\end{proof}
+
+\Lem~\ref{lem_bfs0} zeigt insbesondere, da\ss\ {\tt BFS} stets nach einer endlichen Zahl von Schritten h\"alt.
+
+\begin{lemma}\label{lem_bfs1}
+	W\"ahrend der gesamten Ausf\"uhrung von {\tt BFS} gilt 
+	\begin{align}\label{eqlem_bfs1_1}
+	d(v)\geq\dist_G(s,v)\qquad\mbox{f\"ur alle Knoten $v$}.
+	\end{align}
+\end{lemma}
+\begin{proof}
+	Wir f\"uhren Induktion nach der Zahl der Iterationen der Hauptschleife (5)--(12).
+	Anfangs gilt $d(v)=\infty$ f\"ur alle $v\in V(G)\setminus\cbc s$, weshalb \eqref{eqlem_bfs1_1} trivial erf\"ullt ist.
+	Betrachte nun den n\"achsten Knoten $v$, der aus $Q$ entnommen wird, sowie einen Nachbarn $u$ von $v$
+	Dann gilt $d(v)=d(u)+1$.
+	Andererseits gilt offensichtlich $\dist_G(s,u)\leq\dist_G(s,v)+1$, weil ein Pfad von $s$ nach $v$ um eine Kante nach $u$ verl\"angert werden kann.
+	Weil $d(v)\geq\dist_G(s,v)$ nach Induktionsvoraussetzung, schlie\ss en wir, da\ss\ $d(u)\geq\dist_G(s,u)$ f\"ur alle gr\"unen $u\in\partial_Gv$.
+\end{proof}
+
+\begin{lemma}\label{lem_bfs2}
+	Angenommen die Warteschlange $Q$ enth\"alt die Knoten $q_1,\ldots,q_\ell$ (in dieser Reihenfolge).
+	Dann gilt 
+	\begin{align}\label{eqlem_bfs2_1}
+	d(q_1)\leq\cdots\leq d(q_\ell)\leq d(q_1)+1.
+	\end{align}
+	Wird ferner ein Knoten $u$ vor einem anderen Knoten $u'$ in $Q$ eingef\"ugt, so gilt $d(u)\leq d(u')$.
+\end{lemma}
+\begin{proof}
+	Wir f\"uhren Induktion nach der Zahl der Iterationen der Hauptschleife.
+	Zu Beginn enth\"alt $Q$ nur den Knoten $s$, so da\ss\ nichts zu zeigen ist.
+
+	Es ist klar, da\ss\ \eqref{eqlem_bfs2_1} nach einer Ausf\"uhrung von Schritt (6) erhalten bleibt.
+	Betrachte ferner eine Ausf\"uhrung von Schritt (12).
+	Dann gilt nach Induktionsvoraussetzung f\"ur den neu eingef\"ugten Knoten $v$, da\ss\ $d(v)=d(v_1)+1\geq d(v_2)$.
+	Also bleibt \eqref{eqlem_bfs2_1} erhalten.
+
+	Die zweite Behauptung folgt unmittelbar aus \eqref{eqlem_bfs2_1}.
+\end{proof}
+
+\begin{proof}[Beweis von \Thm~\ref{Thm_BFS}]
+	Die behauptete Laufzeit ergibt sich unmittelbar aus \Lem~\ref{lem_bfs0}.
+
+	Wir beweisen nun Aussage (ii), aus der Aussage (i) unmittelbar folgt.
+Nach \Lem~\ref{lem_bfs1} gen\"ugt es zu zeigen, da\ss\ bei Beendigung von {\tt BFF} $d(u)\leq\dist_G(s,u)$ f\"ur alle $u$.
+	Wir nehmen daher zum Widerspruch an, es g\"abe einen Knoten $u$ mit $d(u)>\dist_G(s,u)$.
+	Unter all diesen Knoten w\"ahle $u\neq s$ so, da\ss\ $\dist_G(s,u)$ kleinstm\"oglich ist.
+
+	Wenn $d(u)>\dist_G(s,u)$, wissen wir, da\ss\ $\dist_G(s,u)<\infty$.
+	Also gibt es einen Pfad von $s$ nach $u$.
+	Sei $v$ der letzte Knoten vor $u$ auf einem k\"urzesten Pfad von $s$ nach $u$.
+	Dann folgt $\dist_G(s,v)<\dist_G(s,u)$.
+	Nach Wahl von $u$ wissen wir also, da\ss\ $d(v)=\dist_G(s,v)$.
+	Bei der Ausf\"uhrung der Schritte (8)--(12) f\"ur diesen Knoten $v$ mu\ss\ also $u$ bereits gelb oder rot gef\"arbt gewesen sein, weil sonst $d(u)=d(v)+1=\dist_G(s,u)$.
+	Also wurde $u$ in $Q$ eingef\"ugt, bevor $v$ aus $Q$ entnommen wird.
+	Der zweite Teil von \Lem~\ref{lem_bfs2} zeigt also, da\ss\ $d(u)\leq d(v)+1=\dist_G(s,u)$, Widerspruch.
+
+	Wir kommen zur dritten Behauptung.
+	Nach (i) enth\"alt $C=\{v\in V(G):d(v)<\infty\}$ genau die Knoten der Komponente von $s$ in $G$.
+	Ferner ist der Untergraph mit Knotenmenge $C$ und Kantenmenge $\{\{v,p(v)\}:v\in V(G),p(v)\neq\emptyset\}$ zusammenh\"angend.
+	Weil dieser Untergraph genau $|C|-1$ Knoten enth\"alt, zeigt \Prop~\ref{Lemma_Baum}, da\ss\ es sich um einen Baum handelt.
+\end{proof}
+
+\subsection{Tiefensuche}\label{sec_dfs}
+Der folgende Algorithmus {\tt DFS} durchl\"auft den Graphen in einer anderen Reihenfolge als {\tt BFS}.
+Die hier vorgestellte Version des Algorithmus' identifiziert alle Zusammehangskomponenten des Eingabegraphen $G$.
+
+\begin{algorithm}{\tt DFS}$(G)$
+	\begin{enumerate}
+		\item F\"arbe alle Knoten $v\in V(G)$ gr\"un.
+		\item Setze $c(v)=0$ und $p(v)=\emptyset$ f\"ur alle $v\in V$.
+		\item Setze $j=1$
+		\item F\"ur alle $v\in V(G)$
+		\item $\quad$f\"uhre {\tt DFSLoop}$(G,v,j)$ aus.
+		\item $\quad$Erh\"ohe $j$ um $1$.
+	\end{enumerate}
+\end{algorithm}
+
+\begin{algorithm}{\tt DFSLoop}$(G,v,j)$
+	\begin{enumerate}
+		\item F\"arbe $v$ gelb und setze $c(v)=j$.
+		\item F\"ur alle $u\in\partial_Gv$
+		\item $\quad$Falls $u$ gr\"un ist
+		\item $\quad\quad$Setze $p(u)=v$.
+		\item $\quad\quad$F\"uhre {\tt DFSLoop}$(G,u,c)$ aus.
+		\item F\"arbe $v$ rot.
+	\end{enumerate}
+\end{algorithm}
+
+\begin{theorem}\label{thm_dfs}
+	{\tt DFS} hat Laufzeit $O(|V(G)|+|E(G)|)$.
+	Die Mengen $c^{-1}(j)$ f\"ur $j\geq1$ bilden genau die Zusammehangskomponenten von $G$.
+\end{theorem}
+
+Der Beweis von \Thm~\ref{thm_dfs} verwendet \"ahnliche Argumente wie der Beweis von \Thm~\ref{Thm_BFS}.
+Wir verzichten daher auf eine detaillierte Analyse.
+Die Kanten $\{v,p(v)\}$ bilden einen spannenden Wald auf der Knotenmenge $V(G)$.
+Diesen Wald nennen wir einen {\em Tiefensuchensuchwald} von $G$.
+Er ist nicht eindeutig bestimmt, weil die Werte $p(v)$ von der Reihenfolge abh\"angen, in der die Nachbarn von $v$ in {\tt DFSLoop} durchlaufen werden.
+
 \begin{thebibliography}{99}
 	\bibitem{Cormen}T.~Cormen, C.~Leiserson, R.~Rivest, C.~Stein: Introduction to algorithms. MIT Press.
+	\bibitem{Diestel}R.~Diestel: Graphentheorie. Springer.
 	\bibitem{Knuth}D.~Knuth: The art of computer programming. Addison Wesley.
 	\bibitem{Lang}S.~Lang: Undergraduate analysis. Springer.
 	\bibitem{Papadimitriou}C.~Papadimitriou: Computational complexity. Addison Wesley.
 \end{thebibliography}
 
 \end{document}
+
+
+\subsection{Minimal spannende B\"aume}
+Ein {\em gewichteter Graph} ist ein Graph $G=(V,E)$ zusammen mit einer Funktion $w:E\to\RR$.
+Wenn $H=(V_H,E_H)$ ein Untergraph von $G$ ist, so definieren wir das {\em Gewicht} von $H$ als $w(H)=\sum_{e\in E_H}w(e)$.
+Wenn $G$ zusammenh\"angend ist besteht eine grundlegende Aufgabe besteht darin, einen {\em minimal spanneden Baum} von $G$ zu finden, d.h.\ einen
+Untergraphen $H$, der ein spannender Baum von $G$ ist, so da\ss\ $w(H)$ minimal ist.
+
+\begin{algorithm}[``Kruskal-Algorithmus'']
+Gegeben: ein zusammenh\"angender gewichteter Graph $G=(V,E)$.
+Ausgabe: ein minimal spannender Baum $T$.
+\begin{enumerate}
+\item Setze $V_T=V$ und $E_T=\emptyset$.
+\item Sortiere die $m=|E|$ Kanten von $G$ so, da\ss\ $w(e_1)\leq w(e_2)\leq\cdots w(e_m)$.
+\item F\"ur $i=1,\ldots,m$
+\item $\qquad$falls $e_i$ zwei verschiedene Komponenten von $T$ verbindet, f\"uge $e_i$ zu $E_T$ hinzu
+\item Gib $T$ aus.
+\end{enumerate}
+\end{algorithm}
+
+\begin{theorem}\label{Thm_Kruskal}
+Der Kruskal-Algorithmus gibt in Zeit $O(|E|\ln|V|)$ einen minimal spannenden Baum aus.
+\end{theorem}
+\begin{proof}
+Wir beginnen mit der Laufzeit.
+Mergesort realisiert Schritt 2 in Zeit $O(|E|\ln|E|)=O(|E|\ln|V|)$.
+Um Schritt 4 zu realisieren, numerieren wir die Zusammehangskomponenten von $T$.
+Wenn eine Kante $e_i$ zu $T$ hinzugef\"ugt wird, werden die Nummern der {\em kleineren} Komponente von $T$ aktualisiert.
+Jeder Knoten bekommt dann maximal $O(\ln|V|)$ mal eine neue Komponentennummer.
+
+Nun zur Korrektheit.
+Weil $G$ zusammenh\"angend ist, trifft dies auch auf $T$ zu.
+Ferner stellt Schritt 4 sicher, da\ss\ $T$ kreisfrei bleibt.
+Also ist die Ausgabe immer ein spannender Baum.
+Angenommen dessen Gewicht w\"are nicht minimal.
+Dann g\"abe es einen anderen spannenden Baum $T'$ mit $w(T')<w(T)$.
+Sei $i\in[m]$ der kleinste Index, so da\ss\ $e_i\in E(T')\setminus E(T)$ und w\"ahle $T'$ so, da\ss\ $i$ maximiert wird.
+Der Graph $T+e_i$ enth\"alt einen Kreis und dieser Kreis enth\"alt eine Kante $f\in E(T)\setminus E(T')$.
+Weil Kruskal $f$ zu $T$ hinzugef\"ugt hat anstellt von $e_i$, gilt $w(f)\leq w(e_i)$.
+Folglich ist $T''=T'-e_i+f$ ein minimal spannender Baum, im Widerspruch zur Maximalit\"at von $i$.
+\end{proof}
+
+\subsection{K\"urzeste Pfade}
+Sei $G=(V,E,w)$ ein Graph mit Gewichtsfunktion $w:E\to[0,\infty)$.
+Eine grundlegende Aufgabe besteht darin, einen k\"urzesten Pfad von einem Knoten $s$ zu einem anderen Knoten $t$ zu finden, wobei die
+L\"ange des Pfades definiert ist als die Summe der Gewichte aller Kanten auf dem Pfad.
+Der folgende Algorithmus l\"ost dieses Problem mittels des Prinzips der ``dynamischen Programmierung''.
+
+\begin{algorithm}[``Dijkstra-Algorithmus'']
+Gegeben: ein zusammenh\"angender Graph $G=(V,E)$ mit Gewichtsfunktion $w:E\to[0,\infty)$ sowie zwei Knoten $s,t\in V$.
+Ausgabe: die L\"ange eines k\"urzesten Pfades von $s$ nach $t$.
+\begin{enumerate}
+\item Setze $D(s)\leftarrow0$ und $D(u)\leftarrow\infty$ f\"ur alle $u\in V\setminus\{s\}$. Sei $Q=V$.
+\item Solange $Q\neq\emptyset$
+\item $\qquad$sei $u\in Q$ so, da\ss\ $D(u)$ minimal ist.
+\item $\qquad$setze $Q\leftarrow Q\setminus\{u\}$.
+\item $\qquad$f\"ur alle $v\in\partial u$ setze $D(v)\leftarrow\min\{D(v),D(u)+w(\{u,v\})\}$.
+%\item Solange es eine Kante $e\in E$ mit $e\cap S\neq\emptyset\neq e\setminus S$ gibt
+%\item $\qquad$sei $e$ eine solche Kante mit minimalem Gewicht $w(e)$.
+%\item $\qquad$sei $u\leftarrow e\cap S$ und $v\leftarrow e\setminus S$.
+%\item $\qquad$setze $D(u)\leftarrow D(v)+w(e)$ und $S\leftarrow S\cup\{u\}$.
+%%\item $\qquad$f\"ur alle $z\in \partial v$ setze
+%%		$D(z)\leftarrow\min\{D(z),D(v)+w(\{v,z\})\}$.
+\item Gib $D(t)$ aus.
+\end{enumerate}
+\end{algorithm}
+
+\begin{theorem}
+Der Dijkstra-Algorithmus bestimmt die L\"ange eines k"urzesten $s$-$t$-Pfades in Zeit $O(n^2)$.
+\end{theorem}
+\begin{proof}
+Die Schleife (2)--(5) wird h\"ochstens $n$ mal durchlaufen, Schritt (3) ben\"otigt Zeit $O(n)$ und Schritt (5) Zeit $O(d_G(u))=O(n)$.
+Die Gesamtlaufzeit betr\"agt also $O(n^2)$.
+Zum Beweis der Korrektheit zeigen wir per Induktion, da\ss\ stets $D(v)$ die L\"ange eines k\"urzesten $s$-$v$-Pfades ist, dessen
+interne Knoten nur aus Knoten in $V\setminus Q$ bestehen.
+Der Induktionsanfang ist klar, weil $s$ Abstand $0$ von sich selbst hat.
+Zum Induktionsschritt betrachte einen Knoten $v\in\partial u$.
+Entweder der k\"urzeste $s$-$v$-Pfad vermeidet $u$; dann hat $D(v)$ nach Induktion bereits diesen Wert.
+Oder es gibt einen k\"urzeren Pfad via $u$, in diesem Fall ist der korrekte Abstand $D(u)+w(\{u,v\})$.
+\end{proof}
+
