@@ -2009,7 +2009,7 @@ Die Kanten $\{v,p(v)\}$ bilden einen spannenden Wald auf der Knotenmenge $V(G)$.
 Diesen Wald nennen wir einen {\em Tiefensuchensuchwald} von $G$.
 Er ist nicht eindeutig bestimmt, weil die Werte $p(v)$ von der Reihenfolge abh\"angen, in der die Nachbarn von $v$ in {\tt DFSLoop} durchlaufen werden.
 
-\section{K\"urzeste Pfade}\label{sec_shortest_path}
+\section{K\"urzeste Pfade und TSP}\label{sec_shortest_path}
 
 \noindent
 Ein Problem von offensichtlichem Interesse ist das Auffinden k\"urzester Pfade in Netzwerken.
@@ -2120,6 +2120,208 @@ Eine noch bessere Laufzeit kann mit einer ausgefeilten Datenstruktur, den {\em F
 Man kommt dann auf $O(|V(G)|\log|V(G)|+|E(G)|)$.
 \end{remark}
 
+\subsection{Travelling salesman}\label{sec_tsp}
+Im \emph{travelling salesman}-Problem (`TSP') ist ein gewichteter vollsta\"andiger Graph $G,w$ auf $n$ Knoten gegeben.
+Die Zielsetzung ist, die L\"ange einer k\"urzesten Tour zu bestimmen, die alle Knoten von $G$ genau einmal besucht.
+Eine {\em Tour} ist dabei eine bijektive Abbildung $\sigma:[n]\to V(G)$.
+Die Knoten werden also in der Reihenfolge $\sigma(1),\sigma(2),\ldots,\sigma(n),\sigma(1)$ besucht.
+Die {\em L\"ange} einer solchen Tour ist definiert als
+	\begin{align*}
+		w(\sigma)&=w(\{\sigma(1),\sigma(n)\})+\sum_{i=1}^{n-1}w(\{\sigma(i),\sigma(\{i+1\}).
+	\end{align*}
+Wir interpretieren also das Gewicht der Kante $\{u,v\}$ als den Abstand der Knoten $u,v$.
+Allerdings stellen wir keine weiteren Bedingungen an diese Abst\"ande (z.B.\ Dreiecksungleichung).
+
+Derzeit ist kein effizienter Algorithmus f\"ur das TSP bekannt.
+Der {\em naive} Algorithmus, der alle Permutationen durchprobiert, hat offenbar Laufzeit $\Omega(n!)$.
+Nach Satz~\ref{thm_stirling} ist die Laufzeit also mindestens
+\begin{align}\label{eqtsp_naiv}
+	\Omega(n!)=\Omega((n/\eul)^n)=\Omega(n^{n+o(n)}).
+\end{align}
+Unser Ziel ist es, mit der Methode der dynamischen Programmierung einen schnelleren Algorithmus zu entwickeln.
+Dieser Algorithmus ist als {\em Bellmann-Held-Karp-Algorithmus} bekannt.
+
+Viele Algorithmen, die auf dynamischer Programmierung beruhen, bauen eine Art Tabelle auf.
+Diese Tabelle enth\"alt die L\"osungen von Teilproblemen und wird nach und nach bef\"ullt, beginnend mit den kleinsten Teilproblemen.
+Dabei wird zur Bestimmung eines neuen Tabelleneintrags auf die bereits ausgef\"ullten Eintr\"age zur\"uckgegriffen.
+
+Der Bellmann-Held-Karp-Algorithmus folgt diesem Muster.
+Wir w\"ahlen einen beliebigen Knoten $s\in V(G)$ als Startknoten aus.
+Die Tabelle enth\"alt nun f\"ur jede Teilmenge $U\subseteq V(G)\setminus\cbc s$ und jeden Knoten $u\neq s$, $u\not\in U$ einen Eintrag $T(u,U)$.
+Dieser Eintrag soll schlie\ss lich die L\"ange eines k\"urzesten Pfades enthalten, der im Knoten $s$ startet, alle Knoten aus $U$ besucht und in $u$ endet.
+Wir werden sehen wie die L\"ange einer optimalen TSP-Tour leicht bestimmt werden kann, wenn alle Eintr\"age $T(u,U)$ bekannt sind.
+
+\begin{lemma}\label{lemma_tsp}
+	F\"ur alle $s\in V(G)$, $\emptyset\neq U\subseteq V(G)\setminus\cbc s$, $u\in V(G)\setminus\cbc s\cup U$ gilt
+	\begin{align*}
+		T(u,U)&=\min_{v\in U}T(v,U\setminus\cbc v)+w(\{u,v\}),&T(u,\emptyset)&=w(\{s,u\}).
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Sei $v$ der letzte Knoten aus $U$, der auf einem k\"urzesten Pfad von $s$ durch alle Knoten aus $U$ nach $u$ liegt.
+	Dann ist die L\"ange dieses Pfades genau $w(\{u,v\})+T(v,U\setminus\cbc v)$.
+\end{proof}
+
+\Lem~\ref{lemma_tsp} verr\"at, wie wir die Tabelle aufbauen k\"onnen.
+Dies f\"uhrt auf den folgenden Algorithmus.
+
+\begin{algorithm}{\tt BHK}$(G,w)$
+	\begin{enumerate}
+		\item W\"ahle einen Startknoten $s$.
+		\item F\"ur alle $u\in V(G)\setminus\cbc s$ setze $T(u,\emptyset)=w(\{s,u\})$.
+		\item F\"ur $N=1,\ldots,n-2$
+		\item $\quad$f\"ur alle $u\in V(G)\setminus\{s\}$
+		\item $\quad\quad$f\"ur alle Teilmengen $U\subseteq V(G)\setminus\{u,s\}$ mit $|U|=N$
+		\item $\quad\quad\quad$setze
+\begin{align*}
+		T(u,U)&=\min_{v\in U}T(v,U\setminus\cbc v)+w(\{u,v\}).
+	\end{align*}
+\item Gib $\min_{u\in V(G)}T(u,V(G)\setminus\{u,s\})+w(\{u,s\})$ aus.
+	\end{enumerate}
+\end{algorithm}
+
+\begin{theorem}\label{thm_bhk}
+	Der Algorithmus {\tt BHK} berechnet in Zeit $O(2^{n+o(n)})$ die L\"ange einer optimalen TSP-Tour.
+\end{theorem}
+\begin{proof}
+	Die Korrektheit des Ausgabewertes folgt aus \Lem~\ref{lemma_tsp}.
+	Die Laufzeit wird dominiert durch die verschachtelten Schleifen (3)--(6).
+	Dort wird \"uber alle Teilmengen $U\subset V(G)\setminus\cbc s$ iteriert.
+	Die Zahl dieser Teilmengen ist $O(2^n)$.
+	F\"ur jede Teilmenge wird wiederum \"uber $O(n^2)$ Knoten $u,v$ iteriert.
+	Insgesamt erhalten wir also die behauptete Laufzeit.
+\end{proof}
+
+Um wirklich die in Satz~\ref{thm_bhk} angegebene Laufzeit zu erzielen, m\"ussen die Teilmengen $U$ in Schritt (4) des Algorithmus' effizient aufgez\"ahlt werden.
+Die Zahl dieser Teilmengen ist nach \Cor~\ref{cor_pascal} gerade $\binom{n-2}N$, und diese Teilmengen m\"ussten also entsprechend in Zeit $O(2^{o(n)}\binom{n-2}N)$ bestimmt werden.
+Dazu verwenden wir die Rekurrenz aus \Lem~\ref{lem_pascal} (``Pascalsches Dreieck'').
+
+Die Laufzeit des {\tt BHK}-Algorithmus ist offenbar {\em deutlich} besser als die des naiven Algorithmus' \eqref{eqtsp_naiv}.
+Jedoch ben\"otigt der {\tt BHK}-Algorithmus nicht nur exponentiell viel Zeit, sondern auch exponentiellen Speicherplatz f\"ur die Tabelle $T(\nix,\nix)$.
+
+\section{Minimal spannende B\"aume}\label{sec_mst}
+
+\noindent
+Gegeben ist ein zusammenh\"angender gewichteter Graph $G,w$.
+Die Aufgabenstellung ist, einen spannenden Baum zu finden (welche nach \Cor~\ref{Cor_spannend} existiert), der minimales Gewicht hat.
+Das {\em Gewicht} eines spannenden Baums $T$ von $G$ ist dabei definiert als
+\begin{align}\label{eqmst}
+	w(T)&=\sum_{e\in E(T)}w(e).
+\end{align}
+Motiviert ist dieses Problem z.B.\ durch den Entwurf elektrischer Schaltkreise.
+
+Wir werden sehen, da\ss\ eine einfacher algorithmischer Ansatz, die sog.\ {\em greedy-Strategie}, das Problem des minimal spannenden Baums optimal l\"ost.
+Greedy-Algorithmen f\"uhren in jedem Schritt eine lokale Optimierung durch.
+W\"ahrend sich Greedy-Algorithmen f\"ur viele kombinatorische Probleme relativ einfach entwerfen lassen, finden sie nur in Ausnahmef\"allen optimale L\"osungen.
+Das Problem des minimalen Spannbaums ist ein solcher Ausnahmefall.
+
+\subsection{Der Prim-Algorithmus}\label{sec_prim}
+Ausgehend von einem Startknoten $s$ ``z\"uchtet'' der Prim-Algorithmus einen Baum, der am Ende alle Knoten des Graphen enth\"alt.
+In jedem Schritt wird dabei der Knoten hinzugef\"ugt, der dem bereits konstruierten Baum mit kleinstem Gewicht hinzugef\"ugt werden kann.
+In dieser Wahl manifestiert sich die greedy-Strategie.
+Wir nehmen an, da\ss\ der Eingabegraph $G$ zusammenh\"angend ist.
+
+\begin{algorithm}{\tt Prim}$(G,w,s)$
+	\begin{enumerate}
+		\item F\"ur alle $u\in V(G)$ setze $c(u)=\infty$, $p(u)=\emptyset$.
+		\item Setze $c(s)=0$ und $Q=V(G)$.
+		\item Solange $Q\neq\emptyset$
+		\item $\quad$finde $v\in Q$ mit minimalem $p(v)$ und entferne $v$ aus $Q$
+		\item $\quad$f\"ur alle $u\in Q\cap\partial_Gv$
+		\item $\quad\quad$setze $c(u)=\min\{c(u),w(\{u,v\})$ und $p(u)=v$
+		\item Gib die Kantenmenge $\cbc{\{v,p(v)\}:p(v)\neq\emptyset}$ aus.
+	\end{enumerate}
+\end{algorithm}
+
+Wir beweisen zun\"achst, da\ss\ {\tt Prim} einen minimalen Spannbaum ausgibt.
+
+\begin{proposition}\label{prop_prim}
+	Angenommen $G,w$ ist ein zusammenh\"angender gewichteter Graph.
+	Dann gibt {\tt Prim}$(G,w)$ die Kantenmenge eines minimalen Spannbaums von $G$ aus.
+\end{proposition}
+\begin{proof}
+	Weil in jedem Schleifendurchlauf ein Knoten aus $Q$ entfernt wird, h\"alt der Algorithmus nach $|V(G)|$ Iterationen.
+	Wir zeigen, da\ss\ in jedem Schleifendurchlauf mit Ausnahme des ersten Durchlaufs der Menge $\cE$ eine weitere Kante hinzugef\"ugt wird.
+	Wir zeigen ferner, da\ss\ nach jeder Iteration der Schleife (3)--(6) ein minimaler Spannbaum existiert, der die Kantenmenge
+	\begin{align*}
+		\cE&=\cbc{\{v,p(v)\}:p(v)\neq\emptyset}
+	\end{align*}
+	enth\"alt.
+	Aus \Prop~\ref{Lemma_Baum} folgt dann die Behauptung.
+
+	Die Konstruktion in Schritt (6) stellt sicher, da\ss\ es keine zwei Knoten $x,y\in Q$ mit $p(x)=y$ gibt.
+	Daher w\"achst die Menge $\cE$ tats\"achlich in jedem Schleifendurchlauf um eine Kante, mit Ausnahme des ersten Schleifendurchlaufs.
+
+	Ferner gilt nach der ersten Iteration offenbar $Q=V(G)\setminus\cbc s$ und $\cE=\emptyset$.
+	Jeder minimale Spannbaum von $G$ enth\"alt also die Menge $\cE$.
+	
+	Wir nehmen nun an, da\ss\ es einen minimalen Spannbaum $T'$ gibt, der die Kanten $\cE'$ aus der vorherigen Iteration der Hauptschleife enth\"alt, und zeigen, da\ss\ dies auch f\"ur die Menge $\cE$ nach einer weiteren Iteration der Fall ist.
+	Sei $\cV'$ die Menge Knoten, die in den Kanten $\cE'$ enthalten sind, und sei $\cV=\cV'\cup\cbc v$ die Menge der Knoten, die in den Kanten $\cE$ enthalten sind.
+	Wir f\"uhren einen Widerspruchsbeweis und nehmen also an, es g\"abe keinen minimalen Spannbaum, der $\cE$ enth\"alt.
+	Sei $e=\{v,p(v)\}$ die Kante, die gerade hinzugef\"ugt wurde, also $\cE=\cE'\cup\cbc e$.
+	Weil $T'$ ein spannender Baum von $G$ ist, der die Kante $e$ nicht enth\"alt, besitzt nach \Prop~\ref{Lemma_Baum} der Graph $(V(T'),E(T')\cup\cbc e)$ einen Kreis.
+
+	Auf diesem Kreis gibt es eine Kante $f\neq e$, die einen Knoten aus $\cV'$ mit einem Knoten $z\in V(G)\setminus\cV$ verbindet.
+	Nach Wahl des Knotens $u$ gilt $w(f)\geq w(e)$.
+	Folglich ist der Baum $T$, der aus $T'$ durch Entfernen von $f$ und Hinzuf\"ugen von $e$ entsteht, ein minimaler Spannbaum von $G$.
+	Dieser Baum $T$ enth\"alt $\cE$.
+\end{proof}
+
+
+\subsection{Verwendung von priority queues}\label{sec_prim_priority}
+Wir befassen uns nun mit der Laufzeit von {\tt Prim}.
+Die Menge $Q$ kann mit Hilfe einer min priority queue implementiert werden.
+Diese Datenstruktur haben wir in Abschnitt~\ref{sec_priority} kennengelernt.
+Schritt (2) f\"ugt die Knoten in die min priority queue ein; alle bis auf den Startknoten haben dasselbe Gewicht.
+In Schritt (4) wird jeweils das Minimum aus der queue entfernt.
+Schlie\ss\ lich reduziert Schritt (6) das Gewicht einiger Nachbarn von $v$.
+
+\begin{theorem}\label{thm_prim}
+	Unter Verwendung von min priority queues bestimmt {\tt Prim} einen minimal spannenden Baum seines zusammenh\"angenden gewichteten Eingabegraphen $G$ in Zeit $O(|E(G)|\log|V(G)|)$.
+\end{theorem}
+\begin{proof}
+	Dies folgt aus \Prop~\ref{prop_priority} und \Prop~\ref{prop_prim}.
+\end{proof}
+
+\subsection{Metrisches TSP}\label{sec_metric_tsp}
+Wir befassen uns mit einem Spezialfall des TSP-Problems aus Abschnitt~\ref{sec_tsp}.
+Sei also $G,w$ ein vollst\"andiger gewichteter Graph.
+Wir nehmen zus\"atzlich an, da\ss\ die Gewichte die {\em Dreiecksungleichung} erf\"ullen, d.h.\
+\begin{align}\label{eqtriang}
+	w(\{x,z\})&\leq w(\{x,y\})+w(\{y,z\})&\mbox{f\"ur alle }x,y,z\in V(G).
+\end{align}
+Wenn \eqref{eqtriang} erf\"ullt ist, spricht man vom {\em metrischen TSP}.
+
+\begin{proposition}\label{prop_metric_tsp}
+	Angenommen $G,w$ erf\"ullt \eqref{eqtriang}.
+	Die L\"ange einer optimalen TSP-Tour ist
+	\begin{itemize}
+		\item mindestens so hoch wie das Gewicht eines optimalen Spannbaums von $G,w$ und
+		\item nicht mehr als doppelt so hoch wie das Gewicht eines optimalen Spannbaums von $G,w$.
+	\end{itemize}
+\end{proposition}
+\begin{proof}
+	Sei $\sigma$ eine optimale TSP-Tour und sei $T$ ein minimaler Spannbaum von $G,w$.
+	Die Tour $\sigma$ durchl\"auft die Knoten genau einmal in der Reihenfolge
+		$$\sigma(1),\ldots,\sigma(n),\sigma(1).$$
+	Insbesondere ist der Pfad
+		$$\sigma(1),\{\sigma(1),\sigma(2)\},\sigma(2),\ldots,\{\sigma(n-1),\sigma(n)\},\sigma(n)$$
+	ein minimaler Spannbaum.
+	Weil $T$ ein minimaler Spannbaum ist, hat die TSP-Tour $\sigma$ folglich L\"ange mindestens $w(T)$.
+
+	Umgekehrt k\"onnen wir aus dem Spannbaum $T$ eine TSP-Tour konstruieren.
+	Dazu f\"uhren wir Tiefensuche auf $T$ aus.
+	Sei $u_1,\ldots,u_n$ die Reihenfolge, in der Tiefensuche die Knoten von $T$ (und somit von $G$) zum ersten Mal besucht.
+	Aufgrund der Dreiecksungleichung \eqref{eqtriang} gilt dann
+	\begin{align*}
+		w(\{u_1,u_n\})+\sum_{i=1}^{n-1}w(\{u_i,u_{i+1}\})\leq 2w(T).
+	\end{align*}
+	Weil $\sigma$ eine optimale TSP-Tour ist, schlie\ss en wir also, da\ss\ $w(\sigma)\leq2 w(T)$.
+\end{proof}
+
+\Prop~\ref{prop_metric_tsp} zeigt, da\ss\ wir die L\"ange einer optimalen metrischen TSP-Tour bis auf einen Faktor zwei approximieren k\"onnen, indem wir das TSP-Problem l\"osen.
+Der Beweis zeigt ferner, da\ss\ {\tt Prim} zusammen mit {\tt DFS} eine Tour liefert, die h\"ochstens doppelt so gro\ss\ ist wie die optimale Tour.
+
 
 \begin{thebibliography}{99}
 	\bibitem{Cormen}T.~Cormen, C.~Leiserson, R.~Rivest, C.~Stein: Introduction to algorithms. MIT Press.
@@ -2130,45 +2332,3 @@ Man kommt dann auf $O(|V(G)|\log|V(G)|+|E(G)|)$.
 \end{thebibliography}
 
 \end{document}
-
-
-\subsection{Minimal spannende B\"aume}
-Ein {\em gewichteter Graph} ist ein Graph $G=(V,E)$ zusammen mit einer Funktion $w:E\to\RR$.
-Wenn $H=(V_H,E_H)$ ein Untergraph von $G$ ist, so definieren wir das {\em Gewicht} von $H$ als $w(H)=\sum_{e\in E_H}w(e)$.
-Wenn $G$ zusammenh\"angend ist besteht eine grundlegende Aufgabe besteht darin, einen {\em minimal spanneden Baum} von $G$ zu finden, d.h.\ einen
-Untergraphen $H$, der ein spannender Baum von $G$ ist, so da\ss\ $w(H)$ minimal ist.
-
-\begin{algorithm}[``Kruskal-Algorithmus'']
-Gegeben: ein zusammenh\"angender gewichteter Graph $G=(V,E)$.
-Ausgabe: ein minimal spannender Baum $T$.
-\begin{enumerate}
-\item Setze $V_T=V$ und $E_T=\emptyset$.
-\item Sortiere die $m=|E|$ Kanten von $G$ so, da\ss\ $w(e_1)\leq w(e_2)\leq\cdots w(e_m)$.
-\item F\"ur $i=1,\ldots,m$
-\item $\qquad$falls $e_i$ zwei verschiedene Komponenten von $T$ verbindet, f\"uge $e_i$ zu $E_T$ hinzu
-\item Gib $T$ aus.
-\end{enumerate}
-\end{algorithm}
-
-\begin{theorem}\label{Thm_Kruskal}
-Der Kruskal-Algorithmus gibt in Zeit $O(|E|\ln|V|)$ einen minimal spannenden Baum aus.
-\end{theorem}
-\begin{proof}
-Wir beginnen mit der Laufzeit.
-Mergesort realisiert Schritt 2 in Zeit $O(|E|\ln|E|)=O(|E|\ln|V|)$.
-Um Schritt 4 zu realisieren, numerieren wir die Zusammehangskomponenten von $T$.
-Wenn eine Kante $e_i$ zu $T$ hinzugef\"ugt wird, werden die Nummern der {\em kleineren} Komponente von $T$ aktualisiert.
-Jeder Knoten bekommt dann maximal $O(\ln|V|)$ mal eine neue Komponentennummer.
-
-Nun zur Korrektheit.
-Weil $G$ zusammenh\"angend ist, trifft dies auch auf $T$ zu.
-Ferner stellt Schritt 4 sicher, da\ss\ $T$ kreisfrei bleibt.
-Also ist die Ausgabe immer ein spannender Baum.
-Angenommen dessen Gewicht w\"are nicht minimal.
-Dann g\"abe es einen anderen spannenden Baum $T'$ mit $w(T')<w(T)$.
-Sei $i\in[m]$ der kleinste Index, so da\ss\ $e_i\in E(T')\setminus E(T)$ und w\"ahle $T'$ so, da\ss\ $i$ maximiert wird.
-Der Graph $T+e_i$ enth\"alt einen Kreis und dieser Kreis enth\"alt eine Kante $f\in E(T)\setminus E(T')$.
-Weil Kruskal $f$ zu $T$ hinzugef\"ugt hat anstellt von $e_i$, gilt $w(f)\leq w(e_i)$.
-Folglich ist $T''=T'-e_i+f$ ein minimal spannender Baum, im Widerspruch zur Maximalit\"at von $i$.
-\end{proof}
-
