@@ -13,6 +13,7 @@
 \usepackage{bbm}
 \usepackage{color}
 \usepackage{a4wide}
+\usepackage{graphicx}
 
 \numberwithin{equation}{section}
 
@@ -559,23 +560,12 @@ bezeichnen wir ferner die {\em $n$-te harmonische Zahl}.
 		\frac{X_{n+1}}{n+2}&\leq\sum_{k=0}^{n+1}\frac2{k+1}.
 	\end{align*}
 	Wir schlie\ss en also $X_{n+1}\leq2(n+2)H_{n+1}$, woraus die Behauptung folgt.
-%	Der Beweis folgt \cite[\Sec~7.4.2]{Cormen}.
-%	Sei $\vX$ die Zahl der Vergleiche, die Quicksort durchf\"uhrt.
-%	F\"ur $1\leq i,j\leq n$ sei ferner $\vX_{ij}=1$, falls die Zahlen $i$ und $j$ miteinander verglichen werden, und $\vX_{ij}=0$, falls nicht.
-%	Wir bemerken, da\ss\ zwei Zahlen $i,j$ h\"ochstens einmal miteinander verglichen werden.
-%	Daher erhalten wir
-%	\begin{align}\label{eqthm_qs1}
-%		\vX&=\sum_{i=1}^n\sum_{j=i}^n\vX_{ij}.
-%	\end{align}
-%	Aus \eqref{eqthm_qs1} folgt, da\ss\
-%	\begin{align}\label{eqthm_qs2}
-%		\ex[\vX]&=\sum_{i=1}^n\sum_{j=i}^n\ex[\vX_{ij}]=\sum_{i=1}^n\sum_{j=i}^n\pr[\mbox{$i,j$ werden miteinander verglichen}].
-%	\end{align}
-%
-%	Wenn $i,j$ miteinander verglichen werden, dann kommt keine der Zahlen $k\in\{i+1,\ldots,j-1\}$ vor $i$ oder $j$ als Pivot an die Reihe.
-%	Bevor eine der $j-i+1$ Zahlen $i,i+1,\ldots,j$ als Pivot ausgew\"ahlt wird, landen diese Zahlen immer in derselben Teilliste.
-%	Die Wahrscheinlichkeit, da\ss\ zu dem Zeitpunkt, wo zuerst ein Pivot aus dieser Menge ausgew\"ahlt wird, ausgerechnet $i$ oder $j$ gew\"ahlt wird, ist daher kleiner oder gleich $\frac2{i-j+1}$, weil wir eine zuf\"allige Permutation $\vec\sigma$ sortieren.
 \end{proof}
+
+\begin{figure}
+	\includegraphics[height=50mm]{images/harmonic.pdf}
+	\caption{Approximation der harmonischen Zahl durch den Logarithmus.}\label{fig_harmonic}
+\end{figure}
 
 Die Formel aus \Thm~\ref{thm_qs} ist recht genau, aber die Gr\"o\ss enordnung der Zahl der Vergleiche ist daraus nicht ganz leicht abzulesen.
 Wir m\"ussen uns also mit dem asymptotischen Verhalten der harmonischen Zahl befassen.
@@ -583,7 +573,7 @@ Dazu erinnern wir uns an die Formel
 \begin{align}\label{eqlog}
 	\log x&=\int_1^x\frac1z\dd z&&(x>0).
 \end{align}
-Weil die Funktion $z\mapsto 1/z$ f\"ur $z>0$ monoton f\"allt, sehen wir, da\ss
+Weil die Funktion $z\mapsto 1/z$ f\"ur $z>0$ monoton f\"allt, sehen wir (s.\ Abb.~\ref{fig_harmonic}), da\ss
 \begin{align}\label{eqharm}
 	\log n=\int_1^n\frac{\dd z}z\leq H_n&\leq1+\int_1^n\frac{\dd z}z=1+\log n.
 \end{align}
@@ -636,7 +626,7 @@ Ein Beispiel, das Sie aus DAP1 kennen, ist Mergesort.
 Jedoch gibt es keinen ``vergleichenden'' Algorithmus, der eine asymptotisch bessere Laufzeit, also $o(n\log n)$ Vergleiche, erzielt.
 Es stellt sich heraus, da\ss\ das kein Zufall ist.
 Denn es gibt eine informationstheoretische untere Schranke f\"ur vergleichsbasierte Algorithmen von $\Omega(n\log n)$.
-In diesem Abschnitt leiten diesen Schranke f\"ur deterministische Sortieralgorithmen her.
+In diesem Abschnitt leiten wir diese Schranke f\"ur deterministische Sortieralgorithmen her.
 Sie gilt aber ebenso f\"ur randomisierte Algorithmen.
 
 Genau gesagt ist ein {\em vergleichsbasierter Sortieralgorithmus} ein Sortieralgorithmus, der auf seine Eingabe nur durch Vergleichsanfragen $(\ell_i,\ell_j)$ zugreift.
@@ -644,7 +634,7 @@ Das Ergebnis einer solchen Vergleichsanfrage ist entweder ``kleiner'', ``gleich'
 Wir repr\"asentieren diese drei Werte durch $-1,0,1$.
 Aufgrund der Antworten auf diese Vergleichsanfragen entscheidet der Algorithmus dann \"uber die Reihenfolge der Elemente in der Ausgabe.
 Wir analysieren solche Algorithmen jetzt bei Eingabe zuf\"alliger Permutationen und werden zeigen, da\ss\ die erwartete Zahl der Vergleichsanfragen mindestens von der Ordnung $\Omega(n\log n)$ ist.
-Wir beginnen mir dem Beweis des folgenden Satzes.
+Wir beginnen mit dem Beweis des folgenden Satzes.
 
 \begin{theorem}\label{thm_inf}
 	Angenommen $\cA$ ist ein deterministischer vergleichsbasierter Sortieralgorithmus.
@@ -683,7 +673,7 @@ Beim Sortiervorgang geht also keine Information ``verloren''.
 	\begin{align*}
 		\sum_{i=0}^h3^i\leq 3^{h+1}
 	\end{align*}
-	m\"ogliche Sequenzen $a(\sigma)$ der L\"ange kleiner oder gleich $h$.
+	m\"ogliche Sequenzen $\va(\sigma)$ der L\"ange kleiner oder gleich $h$.
 	Also schlie\ss en wir
 	\begin{align*}
 		\frac{n!}2\geq 3^{h+1}.
@@ -1123,6 +1113,12 @@ F\"ur die folgende Aussage verwenden wir ``Laufzeit'' wiederum gleichbedeutend m
 \begin{proof}
 	Dies folgt unmittelbar aus \Lem~\ref{lemma_highheap}.
 \end{proof}
+
+\begin{remark}\label{rem_min}\upshape
+	\Prop~\ref{prop_priority} l\"a\ss t sich entsprechend auf min-priority-queues \"ubertragen.
+	In diesem Fall stehen die Operationen {\tt ExtractMin} und {\tt DecreaseKey} zur Verf\"ugung.
+	Werden als Schl\"ussel Zahlen verwendet, besteht die einfachste Umsetzung darin, eine max-priority-queue auf die {\em negierten} Schl\"usselwerte anzuwenden.
+\end{remark}
 
 \section{Die Registermaschine}\label{sec_ram}
 In diesem Abschnitt, der~\cite{Papadimitriou} folgt, befassen wir uns mit der Registermaschine (``random access machine'').
@@ -2013,6 +2009,118 @@ Die Kanten $\{v,p(v)\}$ bilden einen spannenden Wald auf der Knotenmenge $V(G)$.
 Diesen Wald nennen wir einen {\em Tiefensuchensuchwald} von $G$.
 Er ist nicht eindeutig bestimmt, weil die Werte $p(v)$ von der Reihenfolge abh\"angen, in der die Nachbarn von $v$ in {\tt DFSLoop} durchlaufen werden.
 
+\section{K\"urzeste Pfade}\label{sec_shortest_path}
+
+\noindent
+Ein Problem von offensichtlichem Interesse ist das Auffinden k\"urzester Pfade in Netzwerken.
+W\"ahrend {\tt BFS} dieses Problem f\"ur uns in Graphen, deren Kanten alle ``gleichlang'' sind, bereits l\"ost, l\"asst dieses Modell zu w\"unschen \"ubrig.
+Denn beispielsweise ein reales Verkehrsnetz kann besser durch einen {\em gewichteten} Graphen beschrieben werden, in dem Verbindungen verschiedene L\"angen haben k\"onnen.
+Wir befassen uns also kurz mit diesem Modell gewichteter Graphen und lernen dann einen effizienten Algorithmus kennen, der in gewichteten Graphen k\"urzeste Pfade berechnet.
+
+\subsection{Kantengewichtete Graphen}\label{sec_weighted}
+Wir betrachten Graphen, deren Kanten nicht-negative rationale Gewichte haben.
+
+\begin{definition}\label{deg_weighted}
+	Ein Graph $G=(V,E)$ zusammen mit einer Gewichtsfunktion $w:E\to[0,\infty)$ hei\ss t ein {\em gewichteter Graph}.
+\end{definition}
+
+\noindent
+Genauer kann man auch von einem {\em Kantengewichteten} Graphen sprechen.
+
+Sofern wir vorhaben, einen gewichteten Graphen als Eingabe an einen Algorithmus zu \"ubergeben, stellt sich die Frage, in welcher Form die Gewichte eingegeben werden.
+Wir nehmen dabei grunds\"atzlich an, da\ss\ die Gewichte {\em rationale} Zahlen sind.
+Diese werden als Br\"uche, also mit anderen Worten als Paare ganzer Zahlen $(z,n)$ aus Z\"ahler und Nenner eingebegen.
+
+Die gew\"ohnlichen Rechenoperationen auf rationalen Zahlen k\"onnen mit den ``Schulmethoden'' effizient durchgef\"uhrt werden.
+Da wir auch den gr\"o\ss ten gemeinsamen Teiler zweier Zahlen effizient berechnen k\"onnen, ist es effizient m\"oglich, Br\"uche nach jeder Operation zu k\"urzen.
+Dadurch wird vermieden, da\ss\ die Zahlen, mit denen wir operieren, unn\"otig gro\ss\ werden.
+
+\subsection{Der Dijkstra-Algorithmus f\"ur k\"urzeste Pfade}\label{sec_dijkstra}
+
+Sei $G=(V,E,w)$ ein Graph mit Gewichtsfunktion $w:E\to[0,\infty)$.
+Die \emph{L\"ange} eines Weges $v_1,e_1,\ldots,e_\ell,v_{\ell+1}$ in $G$ ist naheliegenderweise definiert als
+\begin{align*}
+	\sum_{i=1}^\ell w(e_i).
+\end{align*}
+Der {\em Abstand} $\dist_{G,w}(s,t)$ von zwei Knoten $s,t$ eines gewichteten Grpahen $(G,w)$ ist definiert als die minimale L\"ange eines Pfades von $s$ nach $t$.
+Falls $s,t$ verschiedenen Komponenten von $G$ angeh\"oren, definieren wir $\dist_{G,w}(s,t)=\infty$.
+
+Angenommen $v_1,e_1,\ldots,e_\ell,v_{\ell+1}$ ist ein k\"urzester Pfad von $v_1$ nach $v_{\ell+1}$.
+Dann ist f\"ur jeden Knoten $v_i$ mit $1\leq i\leq\ell$ auch das Teilst\"uck
+\begin{align*}
+	v_1,e_1,\ldots,e_{i-1},v_i
+\end{align*}
+ein k\"urzester Pfad von $v_1$ nach $v_i$.
+Eine optimale L\"osung des ``Gesamtproblems'' setzt sich also zusammen aus optimalen L\"osungen kleinerer Teilprobleme.
+
+Das Pradigma der {\em dynamischen Programmierung} besteht darin, ausgehend von kleineren Teilproblemen die L\"osungen immer gr\"osserer Teilprobleme aufzubauen, bis das Gesamtproblem gel\"ost ist.
+Der folgende Algorithmus wendet diesen Ansatz auf das k\"urzeste-Pfade-Problem an.
+Wir nehmen der Einfachheit halber an, da\ss\ der Eingabegraph zusammenh\"angend ist.
+Neben dem Graphen ist auch ein Startknoten $s$ gegeben.
+Der Algorithmus bestimmt die k\"urztesten Pfade von $s$ zu {\em allen} Knoten von $G$.
+
+\begin{algorithm}{\tt Dijkstra}$(G,w,s)$
+	\begin{enumerate}
+		\item Setze $D(s)=0$ und $D(u)=\infty$ f\"ur alle $u\in V\setminus\{s\}$.
+		\item Setze $Q=V$.
+		\item Solange $Q\neq\emptyset$
+		\item $\quad$finde einen Knoten $u\in Q$ mit minimalem Wert $D(u)$.
+		\item $\quad$setze $Q\leftarrow Q\setminus\{u\}$.
+		\item $\quad$f\"ur alle $v\in\partial_G u$ setze $D(v)=\min\{D(v),D(u)+w(\{u,v\})\}$.
+		\item Gib $D(\nix)$ aus.
+	\end{enumerate}
+\end{algorithm}
+
+In obigem Algorithmus ist $Q$ einfach eine verkettete Liste.
+Die Berechnung des Minimums in Schritt (4) erfolgt einfach, indem $Q$ komplett durchlaufen wird.
+
+\begin{theorem}
+	Sei $G,w$ ein zusammenh\"angender gewichteter Graph.
+	Der Dijkstra-Algorithmus bestimmt die Abst\"ande $D(v)$ aller Knoten $v\in V(G)$ von $s$ in Zeit $O(|V(G)|^2)$.
+\end{theorem}
+\begin{proof}
+	Die Schleife (3)--(5) wird h\"ochstens $n$ mal durchlaufen, Schritt (4) ben\"otigt Zeit $O(n)$ und die Gesamtlaufzeit von Schritt (6) ist beschr\"ankt durch $\sum_{v\in V}d_G(v)=O(|E(G)|)=O(|V(G)|^2)$ nach dem Handschlaglemma.
+	Die Gesamtlaufzeit betr\"agt also $O(|V(G)|^2)$.
+
+	Zum Beweis der Korrektheit zeigen wir per Induktion, da\ss\ stets $D(v)$ die L\"ange eines k\"urzesten $s$-$v$-Pfades ist, dessen interne Knoten nur aus Knoten in $V\setminus Q$ bestehen.
+	Der Induktionsanfang ist klar, weil $s$ Abstand $0$ von sich selbst hat.
+	Zum Induktionsschritt betrachte einen Knoten $v\in\partial_G u$.
+	Entweder der k\"urzeste $s$-$v$-Pfad vermeidet $u$; dann hat $D(v)$ nach Induktion bereits diesen Wert.
+	Oder es gibt einen k\"urzeren Pfad via $u$, in diesem Fall ist der korrekte Abstand $D(u)+w(\{u,v\})$.
+\end{proof}
+
+\subsection{K\"urzeste Pfade mit priority queues}\label{sec_dijkstra_priority}
+In Anwendungen treten in der Regel {\em d\"unne} Graphen mit deutlich weniger als $|V(G)|^2$ Kanten auf.
+Nicht selten scheint der Ansatz $|E(G)|=O(|V(G)|)$ vern\"unftig. 
+F\"ur d\"unne Graphen scheint der Dijkstra-Algorithmus relativ langsam, insbesondere wenn wir den Vergleich mit {\tt BFS} ziehen.
+Es stellt sich daher die Frage, ob die Laufzeit verbessert werden kann.
+
+Die Verwendung einer geeigneten Datenstruktur, n\"amlich der min-priority-queue, f\"uhrt bereits zu einer deutlichen Verbesserung.
+Wir haben diese Datenstruktur bereits in Abschnitt~\ref{sec_heap} kennengelernt.
+Anstatt einer Liste verwenden wir f\"ur $Q$ also eine min-priority-queue.
+Der Schl\"u\ss el eines Knotens $u$ ist der Wert $D(u)$.
+
+In Schritt (2) werden also zun\"achst alle Knoten in die min-priority-queue eingef\"ugt.
+Die Laufzeit daf\"ur ist $O(|V(G)|)$.
+In Schritten (4)--(5) wird das minimale Element entnommen. 
+Nach \Prop~\ref{prop_priority} ist dies in  Laufzeit $O(\log|V(G)|)$ m\"oglich.
+Entsprechend wird in Schritt (6) eine {\tt DecreaseKey}-Operation f\"ur jeden Knoten $v$ durchgef\"uhrt.
+Nach \Prop~\ref{prop_priority} und dem Handschlaglemma ist dies Gesamtlaufzeit daf\"ur also $O(|E(G)|\log|V(G)|)$.
+Wir erhalten also folgendes Ergebnis.
+
+\begin{corollary}\label{cor_dijkstra}
+	Unter Verwendung einer min-priority-queue hat {\tt Dijkstra} eine Laufzeit von $$O(|E(G)|\log|V(G)|).$$
+\end{corollary}
+
+\noindent
+F\"ur d\"unne Graphen ist dies eine {\em erhebliche} Beschleunigung.
+
+\begin{remark}\label{rem_fibonacci}\upshape
+Eine noch bessere Laufzeit kann mit einer ausgefeilten Datenstruktur, den {\em Fibonacci-Heaps}, erzielt werden.
+Man kommt dann auf $O(|V(G)|\log|V(G)|+|E(G)|)$.
+\end{remark}
+
+
 \begin{thebibliography}{99}
 	\bibitem{Cormen}T.~Cormen, C.~Leiserson, R.~Rivest, C.~Stein: Introduction to algorithms. MIT Press.
 	\bibitem{Diestel}R.~Diestel: Graphentheorie. Springer.
@@ -2062,44 +2170,5 @@ Sei $i\in[m]$ der kleinste Index, so da\ss\ $e_i\in E(T')\setminus E(T)$ und w\"
 Der Graph $T+e_i$ enth\"alt einen Kreis und dieser Kreis enth\"alt eine Kante $f\in E(T)\setminus E(T')$.
 Weil Kruskal $f$ zu $T$ hinzugef\"ugt hat anstellt von $e_i$, gilt $w(f)\leq w(e_i)$.
 Folglich ist $T''=T'-e_i+f$ ein minimal spannender Baum, im Widerspruch zur Maximalit\"at von $i$.
-\end{proof}
-
-\subsection{K\"urzeste Pfade}
-Sei $G=(V,E,w)$ ein Graph mit Gewichtsfunktion $w:E\to[0,\infty)$.
-Eine grundlegende Aufgabe besteht darin, einen k\"urzesten Pfad von einem Knoten $s$ zu einem anderen Knoten $t$ zu finden, wobei die
-L\"ange des Pfades definiert ist als die Summe der Gewichte aller Kanten auf dem Pfad.
-Der folgende Algorithmus l\"ost dieses Problem mittels des Prinzips der ``dynamischen Programmierung''.
-
-\begin{algorithm}[``Dijkstra-Algorithmus'']
-Gegeben: ein zusammenh\"angender Graph $G=(V,E)$ mit Gewichtsfunktion $w:E\to[0,\infty)$ sowie zwei Knoten $s,t\in V$.
-Ausgabe: die L\"ange eines k\"urzesten Pfades von $s$ nach $t$.
-\begin{enumerate}
-\item Setze $D(s)\leftarrow0$ und $D(u)\leftarrow\infty$ f\"ur alle $u\in V\setminus\{s\}$. Sei $Q=V$.
-\item Solange $Q\neq\emptyset$
-\item $\qquad$sei $u\in Q$ so, da\ss\ $D(u)$ minimal ist.
-\item $\qquad$setze $Q\leftarrow Q\setminus\{u\}$.
-\item $\qquad$f\"ur alle $v\in\partial u$ setze $D(v)\leftarrow\min\{D(v),D(u)+w(\{u,v\})\}$.
-%\item Solange es eine Kante $e\in E$ mit $e\cap S\neq\emptyset\neq e\setminus S$ gibt
-%\item $\qquad$sei $e$ eine solche Kante mit minimalem Gewicht $w(e)$.
-%\item $\qquad$sei $u\leftarrow e\cap S$ und $v\leftarrow e\setminus S$.
-%\item $\qquad$setze $D(u)\leftarrow D(v)+w(e)$ und $S\leftarrow S\cup\{u\}$.
-%%\item $\qquad$f\"ur alle $z\in \partial v$ setze
-%%		$D(z)\leftarrow\min\{D(z),D(v)+w(\{v,z\})\}$.
-\item Gib $D(t)$ aus.
-\end{enumerate}
-\end{algorithm}
-
-\begin{theorem}
-Der Dijkstra-Algorithmus bestimmt die L\"ange eines k"urzesten $s$-$t$-Pfades in Zeit $O(n^2)$.
-\end{theorem}
-\begin{proof}
-Die Schleife (2)--(5) wird h\"ochstens $n$ mal durchlaufen, Schritt (3) ben\"otigt Zeit $O(n)$ und Schritt (5) Zeit $O(d_G(u))=O(n)$.
-Die Gesamtlaufzeit betr\"agt also $O(n^2)$.
-Zum Beweis der Korrektheit zeigen wir per Induktion, da\ss\ stets $D(v)$ die L\"ange eines k\"urzesten $s$-$v$-Pfades ist, dessen
-interne Knoten nur aus Knoten in $V\setminus Q$ bestehen.
-Der Induktionsanfang ist klar, weil $s$ Abstand $0$ von sich selbst hat.
-Zum Induktionsschritt betrachte einen Knoten $v\in\partial u$.
-Entweder der k\"urzeste $s$-$v$-Pfad vermeidet $u$; dann hat $D(v)$ nach Induktion bereits diesen Wert.
-Oder es gibt einen k\"urzeren Pfad via $u$, in diesem Fall ist der korrekte Abstand $D(u)+w(\{u,v\})$.
 \end{proof}
 
