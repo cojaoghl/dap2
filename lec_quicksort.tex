@@ -248,7 +248,8 @@
 		\item gegeben ist ein Array $A$ der L\"ange $n$; Pivot ist Element $A[0]$
 		\item Eintr\"age $0$ bis ausschlie\ss lich $i$ sind kleiner als das Pivot
 		\item Eintr\"age $i$ bis ausschlie\ss lich $j$ sind gleich dem Pivot
-		\item die \"ubrigen Eintr\"age sind gr\"o\ss er
+		\item Eintr\"age $k+1$ bis $n-1$ sind gr\"o\ss er als das Pivot
+		\item \em Beachte: die Indizierung der Eintr\"age beginnt bei 0 und endet bei $n-1$
 	\end{itemize}
 	\end{exampleblock}
 \end{frame}
@@ -266,6 +267,23 @@
 		\item $\qquad$verringere $k$ um $1$
 		\item $\quad$sonst erh\"ohe $j$ um $1$
 	\end{enumerate}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Quicksort}
+\begin{exampleblock}{Beispiel: Dijkstra-Partitionierung}
+		Wir sortieren $(2,4,6,1,3,5,2)$ mit Pivot 2:
+			\begin{align*}
+				(2,4,6,1,3,5,2)&&i=0,\ j=0,\ k=6\\
+				(2,4,6,1,3,5,2)&&i=0,\ j=\textcolor{red}1,\ k=6\\
+				(2,\textcolor{red}2,6,1,3,5,\textcolor{red}4)&&i=0,\ j=1,\ k=\textcolor{red}5\\
+				(2,2,6,1,3,5,4)&&i=0,\ j=\textcolor{red}2,\ k=5\\
+				(2,2,\textcolor{red}5,1,3,\textcolor{red}6,4)&&i=0,\ j=2,\ k=\textcolor{red}4\\
+				(2,2,\textcolor{red}3,1,\textcolor{red}5,6,4)&&i=0,\ j=2,\ k=\textcolor{red}3\\
+				(2,2,\textcolor{red}1,\textcolor{red}3,5,6,4)&&i=0,\ j=2,\ k=\textcolor{red}2\\
+				(\textcolor{red}1,2,\textcolor{red}2,3,5,6,4)&&i=\textcolor{red}1,\ j=2,\ k=2\\
+				(1,2,2,3,5,6,4)&&i=1,\ j=\textcolor{red}3,\ k=2
+			\end{align*}
 	\end{exampleblock}
 \end{frame}
 
