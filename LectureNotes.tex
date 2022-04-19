@@ -663,20 +663,24 @@ Beim Sortiervorgang geht also keine Information ``verloren''.
 	Weil bei dem Sortiervorgang keine Information verlorengeht (s.~\eqref{eqthm_inf1}), ist die Abbildung $\sigma\mapsto\va(\sigma)$ also eine Bijektion.
 
 	Nehmen wir nun an, die erwartete Zahl $X_n(\cA)=\ex[N(\vec\sigma)]$ von Vergleichsanfragen, die der Algorithmus stellt, w\"are kleiner als $\eps n\log n$ f\"ur eine kleine Zahl $\eps>0$.
-	Dann erhalten wir
+	Betrachte die Menge $S$ aller Permutationen $\sigma$, so da\ss\ $N(\vec\sigma)\leq\lceil 2\eps n\log n\rceil$.
+	Dann erhalten wir%
+	\footnote{Dieser Schritt ist auch als ``Markov-Ungleichung'' bekannt.}
+	\begin{align*}
+		\eps n\log(n)\geq X_n(\cA)&=\ex[N(\vec\sigma)]=\frac1{n!}\sum_{\sigma\in\SS_n}N(\sigma)\geq\frac1{n!}\sum_{\sigma\in\SS_n\setminus S}N(\sigma)\geq\frac{n!-|S|}{n!}\cdot2\eps n\log n,
+	\end{align*}
+	woraus wir schlie\ss en, da\ss\
 	\begin{align}\label{eqthm_inf2}
-		\pr\brk{N(\vec\sigma)\leq2\eps n\log n}\geq\frac12.
+		|S|\geq\frac{n!}2.
 	\end{align}
-	Sei also $S\subset\SS_n$ die Teilmenge aller Permutation $\sigma\in\SS_n$ mit $N(\sigma)\leq h=\lceil 2\eps n\log n\rceil$.
-	Dann zeigt \eqref{eqthm_inf2}, da\ss\ $|S|\geq n!/2$.
 	Ferner gibt es insgesamt nur 
 	\begin{align*}
 		\sum_{i=0}^h3^i\leq 3^{h+1}
 	\end{align*}
 	m\"ogliche Sequenzen $\va(\sigma)$ der L\"ange kleiner oder gleich $h$.
-	Also schlie\ss en wir
+	Also schlie\ss en wir aus \eqref{eqthm_inf2}, da\ss
 	\begin{align*}
-		\frac{n!}2\geq 3^{h+1}.
+		\frac{n!}2\leq|S|\leq 3^{h+1}.
 	\end{align*}
 	Umstellen nach $h$ liefert die Behauptung.
 \end{proof}
@@ -704,29 +708,33 @@ Dazu beginnen wir mit dem {\em Wallisschen Produkt}.
 \begin{lemma}\label{lem_wallis}
 	Es gilt
 	\begin{align*}
-		\frac{\pi}2&=\lim_{n\to\infty}\frac{4n^2}{4n^2-1}.
+		\frac{\pi}2&=\lim_{n\to\infty}\prod_{i=1}^n\frac{4i^2}{4i^2-1}.
 	\end{align*}
 \end{lemma}
 \begin{proof}
 	Partielle Integration zeigt, da\ss\ f\"ur $n\geq2$,
 	\begin{align*}
-		\int\sin^n(x)\dd x&=-\frac{\cos(x)\sin^{n-1}(x)}n+\frac{n-1}n\int\sin^{n-2}(x)\dd x. %,\\
-%		\int\cos^n(x)\dd x&=-\frac{\sin(x)\cos^{n-1}(x)}n+\frac{n-1}n\int\cos^{n-2}(x)\dd x.
+		\int\sin^n(x)\dd x&=-\frac{\cos(x)\sin^{n-1}(x)}n+\frac{n-1}n\int\sin^{n-2}(x)\dd x.
 	\end{align*}
 	Weil $\sin(0)=\cos(\pi/2)=0$, folgt daraus mit Induktion nach $n$, da\ss
 	\begin{align}\label{eqlem_wallis1}
 		\int_0^{\pi/2}\sin^{2n}(x)\dd x&=\frac\pi2\prod_{i=1}^n\frac{2i-1}{2i},&
 		\int_0^{\pi/2}\sin^{2n+1}(x)\dd x&=\prod_{i=1}^n\frac{2i}{2i+1}.
 	\end{align}
-	Ferner gilt
+	Ferner gilt f\"ur $n\geq1$, da\ss\
+	\begin{align}\label{eqlem_wallis2}
+		\frac{2n}{2n+1}\leq\frac{\int_0^{\pi/2}\sin^{2n+1}(x)\dd x}{\int_0^{\pi/2}\sin^{2n-1}(x)\dd x}\leq\frac{\int_0^{\pi/2}\sin^{2n+1}(x)\dd x}{\int_0^{\pi/2}\sin^{2n}(x)\dd x}\leq1;
+	\end{align}
+	erste Ungleichung folgt aus der rechten Formel aus \eqref{eqlem_wallis1}.
+	Die zweite Ungleichung in \eqref{eqlem_wallis2} folgt daraus, da\ss\ $0\leq\sin^{2n}(x)\leq\sin^{2n-1}(x)$ f\"ur alle $x\in[0,\pi/2]$.
+	Die dritte Ungleichung folgt analog aus $0\leq\sin^{2n+1}(x)\leq\sin^{2n}(x)$ f\"ur alle $x\in[0,\pi/2]$.
+	Aus \eqref{eqlem_wallis2} folgt also, da\ss
+	\begin{align}\label{eqlem_wallis3}
+		\lim_{n\to\infty}\frac{\int_0^{\pi/2}\sin^{2n+1}(x)\dd x}{\int_0^{\pi/2}\sin^{2n}(x)\dd x}=1.
+	\end{align}
+	Indem wir nun \eqref{eqlem_wallis1} in \eqref{eqlem_wallis3} einsetzen, erhalten wir
 	\begin{align*}
-		\frac{2n}{2n+1}\leq\frac{\int_0^{\pi/2}\sin^{2n+1}(x)\dd x}{\int_0^{\pi/2}\sin^{2n}(x)\dd x}\leq1;
-	\end{align*}
-	die untere Schranke folgt aus der rechten Formel aus \eqref{eqlem_wallis1}.
-	Die obere Schranke folgt daraus, da\ss\ $0\leq \sin^{2n+1}(x)\leq\sin^{2n}(x)$ f\"ur alle $x$.
-	Indem wir nun den Quotienten der Integrale aus \eqref{eqlem_wallis1} bilden, erhalten wir
-	\begin{align*}
-		\frac\pi2&=\frac{\int_0^{\pi/2}\sin^{2n}(x)\dd x}{\int_0^{\pi/2}\sin^{2n+1}(x)\dd x}=\prod_{i=1}^n\frac{(2i-1)(2i+1)}{(2i)^2}=\lim_{n\to\infty}\frac{4n^2}{4n^2-1},
+		\frac\pi2&=\lim_{n\to\infty}\prod_{i=1}^n\frac{(2i-1)(2i+1)}{(2i)^2}=\lim_{n\to\infty}\prod_{i=1}^n\frac{4i^2}{4i^2-1},
 	\end{align*}
 	wie behauptet.
 \end{proof}
@@ -734,25 +742,34 @@ Dazu beginnen wir mit dem {\em Wallisschen Produkt}.
 \begin{corollary}\label{cor_wallis}
 Es gilt
 \begin{align*}
-	\frac{(n!)^22^{2n}}{(2n)!\sqrt n}=\sqrt\pi.
+	\frac{(n!)^22^{2n}}{(2n)!\sqrt n}\sim\sqrt\pi.
 \end{align*}
 \end{corollary}
 \begin{proof}
 	Wir schreiben das Wallissche Produkt als
 	\begin{align*}
-		\frac\pi2&=\lim_{n\to\infty}\frac1{2n}\prod_{i=1}^n\frac{(2i)^2}{(2i-1)^2}
+		\frac\pi2&\sim\prod_{i=1}^n\frac{(2i)^2}{(2i-1)(2i+1)}\sim\frac1{2n+1}\prod_{i=1}^n\frac{(2i)^2}{(2i-1)^2}\sim\frac1{2n}\prod_{i=1}^n\frac{(2i)^2}{(2i-1)^2};
 	\end{align*}
+	denn im Nenner des ersten Produkts tritt jede ungerade Zahl zweimal auf, mit Ausnahme von $2n+1$.
 	Nun ziehen wir die Quadratwurzel:
-	\begin{align*}
-		\sqrt{\pi}&=\lim_{n\to\infty}\frac1{\sqrt{n}}\prod_{i=1}^n\frac{2i}{2i-1}.
-	\end{align*}
+	\begin{align}\label{eqcor_wallis1}
+		\sqrt{\pi}&\sim\frac1{\sqrt{n}}\prod_{i=1}^n\frac{2i}{2i-1}.
+	\end{align}
 	Schlie\ss lich rechnen wir nach, da\ss\ $\prod_{i=1}^n\frac{2i}{2i-1}=\frac{(n!)^22^{2n}}{(2n)!}$.
+	\begin{align}\label{eqcor_wallis2}
+		\prod_{i=1}^n(2i)&=n!\cdot2^n,&\prod_{i=1}^n(2i-1)&=\frac{(2n)!}{n!\cdot2^n}.
+	\end{align}
+	Wir kombinieren \eqref{eqcor_wallis1} und \eqref{eqcor_wallis2} und erhalten
+	\begin{align*}
+		\frac{(n!)^22^{2n}}{(2n)!\sqrt n}&=\frac1{\sqrt{n}}\prod_{i=1}^n\frac{2i}{2i-1}\sim\sqrt\pi,
+	\end{align*}
+	wie behauptet.
 \end{proof}
 
 \begin{proof}[Beweis von \Thm~\ref{thm_stirling}]
 	Wir betrachten die beiden Folgen
 	\begin{align*}
-		a_n&=\frac{n^{n+\frac12}}{n!}\exp(-n),&b_n&=a_n\exp\bcfr1{12n}.
+		a_n&=\frac{n^{n+\frac12}}{n!}\exp(-n),&b_n&=a_n\exp\bcfr1{12n}=\frac{n^{n+\frac12}}{n!}\exp\bc{-n+\frac1{12n}}.
 	\end{align*}
 	Dann gilt
 	\begin{align}\label{eqthm_stirling0}
