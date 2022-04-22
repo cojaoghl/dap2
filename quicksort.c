@@ -97,7 +97,7 @@ void quicksort(int *a,int s,int t) { /*  sort a[s],...,a[t] */
 		}
 		else j++;
 	}
-	quicksort(a,s,i); /* recurse on the smaller/greater sub-lists */
+	quicksort(a,s,i-1); /* recurse on the smaller/greater sub-lists */
 	quicksort(a,k+1,t);
 }
 
