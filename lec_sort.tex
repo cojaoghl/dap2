@@ -137,7 +137,7 @@
 \newcommand\vs{\vec s}
 \newcommand\vt{\vec t}
 \newcommand\vu{\vec u}
-\renewcommand\vv{\vec v}
+\newcommand\vv{\vec v}
 \newcommand\vw{\vec w}
 \newcommand\vx{\vec x}
 \newcommand\vy{\vec y}
@@ -259,7 +259,7 @@
 	\begin{exampleblock}{Analyse von Radixsort}
 		\begin{itemize}
 			\item weil {\tt CountingSort} stabil ist, funktioniert {\tt RadixSort} korrekt
-			\item die Laufzeit ist $O(n)+O(d\cot k)$.
+			\item die Laufzeit ist $O(d \cdot n)+O(d \cdot k)$.
 			\item schon f\"ur moderate $d,k$ ist dies eine deutliche Verbesserung
 		\end{itemize}
 	\end{exampleblock}

@@ -137,7 +137,7 @@
 \newcommand\vs{\vec s}
 \newcommand\vt{\vec t}
 \newcommand\vu{\vec u}
-\renewcommand\vv{\vec v}
+\newcommand\vv{\vec v}
 \newcommand\vw{\vec w}
 \newcommand\vx{\vec x}
 \newcommand\vy{\vec y}
@@ -235,8 +235,8 @@
 	\begin{exampleblock}{Max-Heaps (und Min-Heaps)}
 		\begin{itemize}
 			\item in den Knoten des Heaps speichern wir \emph{vergleichbare Werte}
-			\item ein \alert{Max-Heap} hat die Eigenschaft, da\ss\ der Wert eines Kindknotens niemals kleiner ist als der Wert des Elternknotens
-			\item ein \alert{Min-Heap} hat die Eigenschaft, da\ss\ der Wert eines Kindknotens niemals gr\"o\ss er ist als der Wert des Elternknotens
+			\item ein \alert{Max-Heap} hat die Eigenschaft, da\ss\ der Wert eines Kindknotens niemals gr\"o\ss er ist als der Wert des Elternknotens
+			\item ein \alert{Min-Heap} hat die Eigenschaft, da\ss\ der Wert eines Kindknotens niemals kleiner ist als der Wert des Elternknotens
 			\item \emph{wir befassen uns im folgenden nur mit Max-Heaps}
 		\end{itemize}
 	\end{exampleblock}
@@ -356,7 +356,7 @@
 \end{frame}
 
 \begin{frame}\frametitle{Heapsort}
-	\begin{exampleblock}{\tt Insert$(\vA,i,\alpha)$}
+	\begin{exampleblock}{\tt Insert$(\vA,\alpha)$}
 		\begin{enumerate}
 			\item f\"uge ein Element $\vA_{n+1}=-\infty$ zu $\vA$ hinzu
 			\item wende {\tt IncreaseKey}$((A_1,\ldots,A_{n+1},n+1,\alpha)$ an
