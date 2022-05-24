@@ -1999,8 +1999,9 @@ Die hier vorgestellte Version des Algorithmus' identifiziert alle Zusammehangsko
 		\item Setze $c(v)=0$ und $p(v)=\emptyset$ f\"ur alle $v\in V$.
 		\item Setze $j=1$
 		\item F\"ur alle $v\in V(G)$
-		\item $\quad$f\"uhre {\tt DFSLoop}$(G,v,j)$ aus.
-		\item $\quad$Erh\"ohe $j$ um $1$.
+		\item $\quad$falls $v$ gr\"un gef\"arbt ist
+		\item $\quad\quad$f\"uhre {\tt DFSLoop}$(G,v,j)$ aus.
+		\item $\quad\quad$Erh\"ohe $j$ um $1$.
 	\end{enumerate}
 \end{algorithm}
 
@@ -2010,7 +2011,7 @@ Die hier vorgestellte Version des Algorithmus' identifiziert alle Zusammehangsko
 		\item F\"ur alle $u\in\partial_Gv$
 		\item $\quad$Falls $u$ gr\"un ist
 		\item $\quad\quad$Setze $p(u)=v$.
-		\item $\quad\quad$F\"uhre {\tt DFSLoop}$(G,u,c)$ aus.
+		\item $\quad\quad$F\"uhre {\tt DFSLoop}$(G,u,j)$ aus.
 		\item F\"arbe $v$ rot.
 	\end{enumerate}
 \end{algorithm}

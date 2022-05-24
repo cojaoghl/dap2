@@ -358,20 +358,19 @@ u&\sim_G v\mbox{ und }v\sim_G w\ \Rightarrow\ u\sim_G w&&\mbox{f\"ur alle }u,v,w
 		\onslide<4>
 		\begin{exampleblock}{Beweis \hfill[3 $\Rightarrow$ 4]}
 			\begin{itemize}
-				\item Induktion nach $n=|V|$
-				\item f\"ur $n=1,2$ ist nichts zu zeigen
+				\item Induktion nach $n=|V|$; f\"ur $n=1,2$ ist nichts zu zeigen
 				%\item weil $$\sum_{v\in V}d_G(V)=2|E|=2(n-1),$$ gibt es einen Knoten $v\in V$ vom Grad~1
-				\item weil $G$ kreisfrei ist, sind der Anfangs- und Endknoten eines l\"angsten Pfades in $G$ Bl\"atter
+				\item weil $G$ kreisfrei ist, sind Anfangs- und Endknoten eines l\"angsten Pfades Bl\"atter
 				\item $G$ enth\"alt also ein Blatt $v$
 				\item der Graph $G'=G-\cbc v$ ist kreisfrei und $|E(G')|=|V(G')|-1$
 				\item also ist $G'$ nach Induktion maximal kreisfrei
 				\item somit ist $G'$ zusammenh\"angend; denn sonst k\"onnte man eine Kante zwischen zwei Komponenten von $G'$ hinzuf\"ugen
+				\item daher kann man keine mit $v$ inzidente Kante hinzuf\"ugen, ohne einen Kreis zu schlie\ss en
 			\end{itemize}
 		\end{exampleblock}
 		\onslide<5>
 		\begin{exampleblock}{Beweis \hfill[4 $\Rightarrow$ 5]}
 			\begin{itemize}
-				\item daher kann man auch keine mit $v$ inzidente Kante hinzuf\"ugen, ohne einen Kreis zu schlie\ss en
 				\item weil $G$ kantenmaximal kreisfrei ist, ist $G$ zusammenh\"angend
 				\item angenommen man k\"onnte eine Kante $e=vw$ l\"oschen, ohne den Zusammenhang zu zerst\"oren
 				\item dann liegen $v,w$ in derselben Komponente von $G'=G-\cbc{e}$
@@ -451,7 +450,7 @@ u&\sim_G v\mbox{ und }v\sim_G w\ \Rightarrow\ u\sim_G w&&\mbox{f\"ur alle }u,v,w
 				\item F\"arbe alle Knoten $v\in V(G)\setminus\cbc s$ gr\"un und f\"arbe $s$ gelb.
 				\item Setze $d(v)=\infty$ f\"ur alle $v\in V(G)\setminus\cbc s$ und setze $d(s)=0$.
 				\item Setze $p(v)=\emptyset$ f\"ur alle $v\in V$.
-				\item Lege eine Warteschlange $Q$ an und f\"uge $s$ in $W$ ein.
+				\item Lege eine Warteschlange $Q$ an und f\"uge $s$ in $Q$ ein.
 				\item Solange $Q$ nicht leer ist,
 				\item $\quad$entnehme $v$ aus $Q$
 				\item $\quad$f\"arbe $v$ rot
@@ -480,6 +479,14 @@ u&\sim_G v\mbox{ und }v\sim_G w\ \Rightarrow\ u\sim_G w&&\mbox{f\"ur alle }u,v,w
 		\begin{block}{Lemma~1}
 			{\tt BFS} hat Laufzeit $O(|V(G)|+|E(G)|)$.
 		\end{block}
+		\begin{exampleblock}{Berweis}
+			\begin{itemize}
+				\item Laufzeit der Schritte (1)--(4) betr\"agt $O(|V(G|)$.
+				\item Jeder Knoten wechselt h\"ochstens zweimal seine Farbe, und zwar von gr\"un auf gelb auf rot.
+				\item Deshalb wird kein Knoten mehrmals in $Q$ eingef\"ugt, und folglich auch nicht wieder entnommen.
+				\item Aus diesem Grund ist die Laufzeit der Hauptschleife (5)--(9) beschr\"ankt durch $O(|V(G)|)+\sum_{v\in V(G)}d_G(v)=O(|V(G)|)+O(|E(G)|)$
+			\end{itemize}
+		\end{exampleblock}
 		\onslide<5>
 		\begin{block}{Lemma~2}
 			W\"ahrend der gesamten Ausf\"uhrung von {\tt BFS} gilt 
@@ -488,6 +495,17 @@ u&\sim_G v\mbox{ und }v\sim_G w\ \Rightarrow\ u\sim_G w&&\mbox{f\"ur alle }u,v,w
 			\end{align*}
 		\end{block}
 		\onslide<6>
+		\begin{exampleblock}{Beweis}
+			\begin{itemize}
+				\item Wir f\"uhren Induktion nach der Zahl der Iterationen der Hauptschleife (5)--(9).
+				\item Anfangs gilt $d(v)=\infty$ f\"ur alle $v\in V(G)\setminus\cbc s$, weshalb die Behauptung trivial erf\"ullt ist.
+				\item Betrachte nun den n\"achsten Knoten $v$, der aus $Q$ entnommen wird, sowie einen Nachbarn $u$ von $v$
+				\item	Dann gilt $d(v)=d(u)+1$.
+				\item Andererseits gilt offensichtlich $\dist_G(s,u)\leq\dist_G(s,v)+1$, weil ein Pfad von $s$ nach $v$ um eine Kante nach $u$ verl\"angert werden kann.
+				\item Weil $d(v)\geq\dist_G(s,v)$ nach Induktionsvoraussetzung, schlie\ss en wir, da\ss\ $d(u)\geq\dist_G(s,u)$ f\"ur alle gr\"unen $u\in\partial_Gv$.
+			\end{itemize}
+		\end{exampleblock}
+		\onslide<7>
 		\begin{block}{Lemma~3}
 			Angenommen die Warteschlange $Q$ enth\"alt die Knoten $q_1,\ldots,q_\ell$.
 			Dann gilt 
@@ -496,6 +514,18 @@ u&\sim_G v\mbox{ und }v\sim_G w\ \Rightarrow\ u\sim_G w&&\mbox{f\"ur alle }u,v,w
 			\end{align*}
 			Wird ferner ein Knoten $u$ vor einem anderen Knoten $u'$ in $Q$ eingef\"ugt, so gilt $$d(u)\leq d(u').$$
 		\end{block}
+		\onslide<8>
+		\begin{exampleblock}{Beweis}
+			\begin{itemize}
+				\item Wir f\"uhren Induktion nach der Zahl der Iterationen der Hauptschleife.
+				\item Zu Beginn enth\"alt $Q$ nur den Knoten $s$, so da\ss\ nichts zu zeigen ist.
+				\item Es ist klar, da\ss\ die Ungleichung nach einer Ausf\"uhrung von Schritt (6) erhalten bleibt.
+				\item Betrachte ferner eine Ausf\"uhrung von Schritt (9).
+				\item Dann gilt nach Induktionsvoraussetzung f\"ur den neu eingef\"ugten Knoten $v$, da\ss\ $d(v)=d(v_1)+1\geq d(v_2)$.
+				\item Also bleibt die Ungleichung erhalten.
+				\item Die zweite Behauptung folgt unmittelbar aus der Ungleichung.
+			\end{itemize}
+		\end{exampleblock}
 	\end{overprint}
 \end{frame}
 
@@ -508,8 +538,9 @@ u&\sim_G v\mbox{ und }v\sim_G w\ \Rightarrow\ u\sim_G w&&\mbox{f\"ur alle }u,v,w
 				\item Setze $c(v)=0$ und $p(v)=\emptyset$ f\"ur alle $v\in V$.
 				\item Setze $j=1$
 				\item F\"ur alle $v\in V(G)$
-				\item $\quad$f\"uhre {\tt DFSLoop}$(G,v,j)$ aus.
-				\item $\quad$Erh\"ohe $j$ um $1$.
+				\item $\quad$falls $v$ gr\"un gef\"arbt ist
+				\item $\quad\quad$f\"uhre {\tt DFSLoop}$(G,v,j)$ aus.
+				\item $\quad\quad$Erh\"ohe $j$ um $1$.
 			\end{enumerate}
 		\end{exampleblock}
 		\onslide<2>
@@ -519,7 +550,7 @@ u&\sim_G v\mbox{ und }v\sim_G w\ \Rightarrow\ u\sim_G w&&\mbox{f\"ur alle }u,v,w
 				\item F\"ur alle $u\in\partial_Gv$
 				\item $\quad$Falls $u$ gr\"un ist
 				\item $\quad\quad$Setze $p(u)=v$.
-				\item $\quad\quad$F\"uhre {\tt DFSLoop}$(G,u,c)$ aus.
+				\item $\quad\quad$F\"uhre {\tt DFSLoop}$(G,u,j)$ aus.
 				\item F\"arbe $v$ rot.
 			\end{enumerate}
 		\end{exampleblock}
