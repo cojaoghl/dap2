@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+# $1 = number of vertices
+# $2 = average degree; edge probability is d/n
+
+# because $RANDOM produces a value up to 2^15, the script works for graphs of up to about 1000 vertices
+
+n=$1
+d=$2
+D=$(($d*10))
+N=$(($n*10))
+
+echo $n
+
+for (( i=0 ; i< $n ; i++ ))
+do
+	for (( j= $i+1 ; j < $n ; j++))
+	do
+		[[ $(($RANDOM % $N)) -lt $D ]] && echo "$i $j"
+	done
+done
