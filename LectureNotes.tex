@@ -2301,6 +2301,70 @@ Schlie\ss\ lich reduziert Schritt (6) das Gewicht einiger Nachbarn von $v$.
 	Dies folgt aus \Prop~\ref{prop_priority} und \Prop~\ref{prop_prim}.
 \end{proof}
 
+\subsection{Der Kruskal-Algorithmus}\label{sec_kruskal}
+\"Ahnlich wie der Prim-Algorithmus ist auch der Kruskal-Algorithmus f\"ur die Bestimmung eines minimal spannender Baumes ist ein {\em greedy}-Algorithmus.
+Das bedeutet, da\ss\ der Algorithmus in jedem Schritt die lokal optimale Auswahl trifft.
+Im allgemeinen kann man sich nicht darauf verlassen, da\ss\ Greedy-Algorihmen optimale L\"osungen von Optimierungsproblemen finden.
+Das minimale Spannbaumproblem ist die Ausnahme, die diese Regel best\"atigt.
+
+\begin{algorithm}{\tt Kruskal}$(G,w,s)$
+	\begin{enumerate}
+		\item pr\"ufe, ob $G$ zusammenh\"angend ist; wenn nicht, gib eine Fehlermeldung aus
+		\item sortiere die Kanten von $G$ aufsteigend nach Gewichten:
+			\begin{align*}
+				c(e_1)\leq c(e_2)\leq\cdots \leq c(e_m)
+			\end{align*}
+		\item initialisiere $T=(V,\emptyset)$
+		\item f\"ur $i=1,\ldots,m$
+		\item $\quad$ wenn $e_i$ verschiedenene Komponenten von $T$ verbindet
+		\item $\quad\quad$ f\"uge $e_i$ zu $T$ hinzu
+		\item gib $T$ aus
+	\end{enumerate}
+\end{algorithm}
+
+Einige Anmerkungen zur Implementation von Kruskal:
+	\begin{itemize}
+		\item Schritt 1 kann mit Tiefensuche in Zeit $O(|E|+|V|)$ durchgef\"uhrt werden
+		\item f\"ur Schritt 2 verwenden wir {\tt Heapsort}; Laufzeit $O(|E|\log|E|)$
+		\item f\"ur Schritte 5 und 6 f\"uhren wir Buch \"uber die Komponenten von $T$
+		\item dabei f\"uhren wir die Komponentengr\"o\ss en mit
+		\item jedesmal, wenn eine Kante eingef\"ugt wird, wird die \emph{kleinere} Komponente zur gr\"o\ss eren hinzugef\"ugt
+	\end{itemize}
+
+	\begin{theorem}\label{thm_kruskal}
+			Sei $G,c$ ein zusammenh\"angender gewichteter Graph (mit rationalen Gewichten).
+			\begin{itemize}
+				\item Kruskal hat Laufzeit $O(|E|\log|E|)$
+				\item der Algorithmus gibt einen minimal spannenden Baum aus
+			\end{itemize}
+	\end{theorem}
+\begin{proof}
+	Zur Laufzeit ist nur zu kl\"aren, wie Schritte 5 und 6 implementiert werden.
+	Da jeweils die kleinere Komponente der gr\"o\ss eren hinzugef\"ugt wird, verdoppelt sich die Komponentengr\"o\ss e aus Sicht der kleineren Komponente mindestens.
+	Jeder Knoten wird also h\"ochstens $O(\log|V|)$ mal einer anderen Komponente zugeordnet.
+	Die Laufzeit ist also $O(|V|\log|V|)=O(|E|\log|E|)$
+
+	Weil Kruskal nur dann eine Kante hinzuf\"ugt, wenn sie verschiedenene Komponenten von $T$ verbindet, ist die Ausgabe kreisfrei.
+	Ferner ist der Ausgabegraph zusammenh\"angend.
+	Denn angenommen nicht; dann g\"abe es zwei Komponenten $K_1,K_2$.
+	Weil $G$ zusammenh\"angend ist, gibt es eine Kante in $G$, die $K_1,K_2$ verbindet.
+	Kruskal h\"atte also die erste solche Kante einf\"ugen m\"ussen, Widerspruch
+
+	Zu zeigen bleibt, da\ss\ die Ausgabe minimales Gewicht hat.
+	Angenommen dies w\"are nicht der Fall; dann bezeichne die in $T$ enthaltenen Kanten mit
+	\begin{align*}
+		e_{i_1},\ldots,e_{i_{n-1}}&&(n=|V|)\\
+		i_1\leq\cdots\leq i_{n-1}
+	\end{align*}
+	Sei $0\leq k<n-1$ der maximale Index, so da\ss\ ein minimal spannender Baum von $G$ existiert, der die Kanten $e_{i_1},\ldots,e_{i_k}$ enth\"alt; sei $B$ so ein minimal spannender Baum.
+	Dann enth\"alt $B$ die Kante $f=e_{i_{k+1}}$ nicht.
+	Folglich enth\"alt $(V,E(B)\cup\{f\})$ einen Kreis $C$.
+	Dieser Kreis enth\"alt eine Kante $f'\in E(B)\setminus E(T)$.
+	Somit ist $B'=(V,(E(B)\cup\{f\})\setminus\{f'\}$ ist ein spannender Baum.
+	Nach Wahl von $k$ gilt $c(B')>c(B)$, weshalb daraus folgt, da\ss\ $c(f')<c(f)$.
+	Also h\"atte Kruskal $f'$ anstelle von $f$ zu $T$ hinzuf\"ugen m\"ussen, Widerspruch.
+\end{proof}
+
 \subsection{Metrisches TSP}\label{sec_metric_tsp}
 Wir befassen uns mit einem Spezialfall des TSP-Problems aus Abschnitt~\ref{sec_tsp}.
 Sei also $G,w$ ein vollst\"andiger gewichteter Graph.
@@ -2339,6 +2403,7 @@ Wenn \eqref{eqtriang} erf\"ullt ist, spricht man vom {\em metrischen TSP}.
 
 \Prop~\ref{prop_metric_tsp} zeigt, da\ss\ wir die L\"ange einer optimalen metrischen TSP-Tour bis auf einen Faktor zwei approximieren k\"onnen, indem wir das TSP-Problem l\"osen.
 Der Beweis zeigt ferner, da\ss\ {\tt Prim} zusammen mit {\tt DFS} eine Tour liefert, die h\"ochstens doppelt so gro\ss\ ist wie die optimale Tour.
+
 
 
 \begin{thebibliography}{99}

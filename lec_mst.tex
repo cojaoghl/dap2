@@ -1,0 +1,410 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\documentclass[aspectratio=1610, 11pt]{beamer}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usetheme{tudo}
+
+\title{Datenstrukturen, Algorithmen und Prorammierung~2}
+\author[A.~Coja-Oghlan]{Amin Coja-Oghlan}
+\institute[DAP2]{Lehrstuhl Informatik 2\\Fakult\"at f\"ur Informatik}
+
+\newcommand\dist{\mathrm{dist}}
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand\NULL{{\tt NULL}}
+\newcommand\dd{\mathrm d}
+\newcommand\eul{\mathrm e}
+\newcommand\cA{\mathcal A}
+\newcommand\cB{\mathcal B}
+\newcommand\cC{\mathcal C}
+\newcommand\cD{\mathcal D}
+\newcommand\cE{\mathcal E}
+\newcommand\cF{\mathcal F}
+\newcommand\cG{\mathcal G}
+\newcommand\cH{\mathcal H}
+\newcommand\cI{\mathcal I}
+\newcommand\cJ{\mathcal J}
+\newcommand\cK{\mathcal K}
+\newcommand\cL{\mathcal L}
+\newcommand\cM{\mathcal M}
+\newcommand\cN{\mathcal N}
+\newcommand\cO{\mathcal O}
+\newcommand\cP{\mathcal P}
+\newcommand\cQ{\mathcal Q}
+\newcommand\cR{\mathcal R}
+\newcommand\cS{\mathcal S}
+\newcommand\cT{\mathcal T}
+\newcommand\cU{\mathcal U}
+\newcommand\cV{\mathcal V}
+\newcommand\cW{\mathcal W}
+\newcommand\cX{\mathcal X}
+\newcommand\cY{\mathcal Y}
+\newcommand\cZ{\mathcal Z}
+\newcommand\fA{\mathfrak A}
+\newcommand\fB{\mathfrak B}
+\newcommand\fC{\mathfrak C}
+\newcommand\fD{\mathfrak D}
+\newcommand\fE{\mathfrak E}
+\newcommand\fF{\mathfrak F}
+\newcommand\fG{\mathfrak G}
+\newcommand\fH{\mathfrak H}
+\newcommand\fI{\mathfrak I}
+\newcommand\fJ{\mathfrak J}
+\newcommand\fK{\mathfrak K}
+\newcommand\fL{\mathfrak L}
+\newcommand\fM{\mathfrak M}
+\newcommand\fN{\mathfrak N}
+\newcommand\fO{\mathfrak O}
+\newcommand\fP{\mathfrak P}
+\newcommand\fQ{\mathfrak Q}
+\newcommand\fR{\mathfrak R}
+\newcommand\fS{\mathfrak S}
+\newcommand\fT{\mathfrak T}
+\newcommand\fU{\mathfrak U}
+\newcommand\fV{\mathfrak V}
+\newcommand\fW{\mathfrak W}
+\newcommand\fX{\mathfrak X}
+\newcommand\fY{\mathfrak Y}
+\newcommand\fZ{\mathfrak Z}
+\newcommand\fa{\mathfrak a}
+\newcommand\fb{\mathfrak b}
+\newcommand\fc{\mathfrak c}
+\newcommand\fd{\mathfrak d}
+\newcommand\fe{\mathfrak e}
+\newcommand\ff{\mathfrak f}
+\newcommand\fg{\mathfrak g}
+\newcommand\fh{\mathfrak h}
+%\newcommand\fi{\mathfrak i}
+\newcommand\fj{\mathfrak j}
+\newcommand\fk{\mathfrak k}
+\newcommand\fl{\mathfrak l}
+\newcommand\fm{\mathfrak m}
+\newcommand\fn{\mathfrak n}
+\newcommand\fo{\mathfrak o}
+\newcommand\fp{\mathfrak p}
+\newcommand\fq{\mathfrak q}
+\newcommand\fr{\mathfrak r}
+\newcommand\fs{\mathfrak s}
+\newcommand\ft{\mathfrak t}
+\newcommand\fu{\mathfrak u}
+\newcommand\fv{\mathfrak v}
+\newcommand\fw{\mathfrak w}
+\newcommand\fx{\mathfrak x}
+\newcommand\fy{\mathfrak y}
+\newcommand\fz{\mathfrak z}
+\newcommand\vA{\vec A}
+\newcommand\vB{\vec B}
+\newcommand\vC{\vec C}
+\newcommand\vD{\vec D}
+\newcommand\vE{\vec E}
+\newcommand\vF{\vec F}
+\newcommand\vG{\vec G}
+\newcommand\vH{\vec H}
+\newcommand\vI{\vec I}
+\newcommand\vJ{\vec J}
+\newcommand\vK{\vec K}
+\newcommand\vL{\vec L}
+\newcommand\vM{\vec M}
+\newcommand\vN{\vec N}
+\newcommand\vO{\vec O}
+\newcommand\vP{\vec P}
+\newcommand\vQ{\vec Q}
+\newcommand\vR{\vec R}
+\newcommand\vS{\vec S}
+\newcommand\vT{\vec T}
+\newcommand\vU{\vec U}
+\newcommand\vV{\vec V}
+\newcommand\vW{\vec W}
+\newcommand\vX{\vec X}
+\newcommand\vY{\vec Y}
+\newcommand\vZ{\vec Z}
+\newcommand\va{\vec a}
+\newcommand\vb{\vec b}
+\newcommand\vc{\vec c}
+\newcommand\vd{\vec d}
+\newcommand\ve{\vec e}
+\newcommand\vf{\vec f}
+\newcommand\vg{\vec g}
+\newcommand\vh{\vec h}
+\newcommand\vi{\vec i}
+\newcommand\vj{\vec j}
+\newcommand\vk{\vec k}
+\newcommand\vl{\vec l}
+\newcommand\vm{\vec m}
+\newcommand\vn{\vec n}
+\newcommand\vo{\vec o}
+\newcommand\vp{\vec p}
+\newcommand\vq{\vec q}
+\newcommand\vr{\vec r}
+\newcommand\vs{\vec s}
+\newcommand\vt{\vec t}
+\newcommand\vu{\vec u}
+\renewcommand\vv{\vec v}
+\newcommand\vw{\vec w}
+\newcommand\vx{\vec x}
+\newcommand\vy{\vec y}
+\newcommand\vz{\vec z}
+\renewcommand\AA{\mathbb A}
+\newcommand\NN{\mathbb N}
+\newcommand\ZZ{\mathbb Z}
+\newcommand\PP{\mathbb P}
+\newcommand\QQ{\mathbb Q}
+\newcommand\RR{\mathbb R}
+\newcommand\RRpos{\mathbb R_{\geq0}}
+\newcommand\QQpos{\mathbb Q_{\geq0}}
+\renewcommand\SS{\mathbb S}
+\newcommand\CC{\mathbb C}
+\newcommand{\ord}{\mathrm{ord}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\pr}{\mathrm{P}}
+\newcommand{\Vol}{\mathrm{vol}}
+\newcommand\norm[1]{\left\|{#1}\right\|} 
+\newcommand\sign{\mathrm{sign}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand\bc[1]{\left({#1}\right)} 
+\newcommand\cbc[1]{\left\{{#1}\right\}} 
+\newcommand\bcfr[2]{\bc{\frac{#1}{#2}}} 
+\newcommand{\bck}[1]{\left\langle{#1}\right\rangle} 
+\newcommand\brk[1]{\left\lbrack{#1}\right\rbrack} 
+\newcommand\scal[2]{\bck{{#1},{#2}}} 
+\newcommand{\vecone}{\mathbb{1}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\ggt}{\mathrm{ggT}}
+\newcommand{\kgv}{\mathrm{kgV}}
+\newcommand{\trans}{\top}
+\newcommand{\Karonski}{Karo\'nski}
+\newcommand{\Erdos}{Erd\H{o}s}
+\newcommand{\Renyi}{R\'enyi}
+\newcommand{\Lovasz}{Lov\'asz}
+\newcommand{\Juhasz}{Juh\'asz}
+\newcommand{\Bollobas}{Bollob\'as}
+\newcommand{\Furedi}{F\"uredi}
+\newcommand{\Komlos}{Koml\'os}
+\newcommand{\Luczak}{\L uczak}
+\newcommand{\Kucera}{Ku\v{c}era}
+\newcommand{\Szemeredi}{Szemer\'edi}
+
+\newcommand{\mytitle}{Minimal spannende B\"aume}
+
+\begin{document}
+
+\frame[plain]{\titlepage}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{exampleblock}{Worum geht es?}
+		\begin{itemize}
+			\item jeder zusammenh\"angende Graph besitzt einen spannenden Baum
+			\item in einem gewichteten Graphen sind wir interessiert an einem \alert{minimalen} spannenden Baum
+			\item dazu lernen wir einen \emph{Greedy-Algorithmus} kennen
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{overprint}
+		\onslide<1>
+\begin{block}{Definition}
+		\begin{itemize}
+			\item ein \alert{gewichteter Graph} ist ein Graph $G=(V,E)$ zusammen mit einer Funktion $c:E\to \QQpos$.
+			\item das \alert{Gewicht} einer Kantenmenge $F\subseteq E$ ist
+				\begin{align*}
+					\sum_{e\in F}c(e)
+				\end{align*}
+			\item ein \alert{minimal spannender Baum} von $G$ ist ein spannender Baum $T=(V,E_T)$ von $G$ mit
+				\begin{align*}
+					c(E_T)=\min\cbc{c(E_B):B=(V,E_B)\mbox{ ist spannender Baum von }G}
+				\end{align*}
+		\end{itemize}
+	\end{block}
+		\onslide<2>
+\begin{exampleblock}{Bemerkung}
+		\begin{itemize}
+			\item f\"ur algorithmische Zwecke nehmen wir stets an, da\ss\ die Gewichtsfunktion $c$ rationale Werte annimmt
+			\item diese rationalen Werte werden dann exakt eingegeben, d.h.\ als Paare ganzer Zahlen
+				\begin{align*}
+					\mbox{(Z\"ahler,Nenner)}
+				\end{align*}
+			\item \"aquivalent k\"onnen wir annehmen, da\ss\ alle Gewichte ganzzahlig sind
+		\end{itemize}
+	\end{exampleblock}
+	\end{overprint}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{overprint}
+		\onslide<1>
+		\begin{exampleblock}{Algorithmus Kruskal}
+			\begin{enumerate}
+				\item pr\"ufe, ob $G$ zusammenh\"angend ist; wenn nicht, gib eine Fehlermeldung aus
+				\item sortiere die Kanten von $G$ aufsteigend nach Gewichten:
+					\begin{align*}
+						c(e_1)\leq c(e_2)\leq\cdots \leq c(e_m)
+					\end{align*}
+				\item initialisiere $T=(V,\emptyset)$
+				\item f\"ur $i=1,\ldots,m$
+				\item $\quad$ wenn $e_i$ verschiedenene Komponenten von $T$ verbindet
+				\item $\quad\quad$ f\"uge $e_i$ zu $T$ hinzu
+				\item gib $T$ aus
+			\end{enumerate}
+		\end{exampleblock}
+		\onslide<2>
+		\begin{exampleblock}{Bemerkungen}
+			\begin{itemize}
+				\item Schritt 1 kann mit Tiefensuche in Zeit $O(|E|+|V|)$ durchgef\"uhrt werden
+				\item f\"ur Schritt 2 verwenden wir {\tt Heapsort}; Laufzeit $O(|E|\log|E|)$
+				\item f\"ur Schritte 5 und 6 f\"uhren wir Buch \"uber die Komponenten von $T$
+				\item dabei f\"uhren wir die Komponentengr\"o\ss en mit
+				\item jedesmal, wenn eine Kante eingef\"ugt wird, wird die \emph{kleinere} Komponente zur gr\"o\ss eren hinzugef\"ugt
+			\end{itemize}
+		\end{exampleblock}
+		\onslide<3>
+		\begin{exampleblock}{Bemerkungen}
+			\begin{itemize}
+				\item der Kruskal-Algorithmus ist ein \emph{Greedy-Algorithmus}
+				\item wir probieren immer die g\"unstigste Kante
+				\item wir werden sehen, da\ss\ diese Strategie im MST-Problem zum Erfolg f\"uhrt
+				\item im allgemeinen sind Greedy-Algorihmen aber \emph{nicht} optimal!
+			\end{itemize}
+		\end{exampleblock}
+	\end{overprint}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{overprint}
+		\onslide<1>
+		\begin{block}{Satz}
+			Sei $G,c$ ein zusammenh\"angender gewichteter Graph (mit rationalen Gewichten).
+			\begin{itemize}
+				\item Kruskal hat Laufzeit $O(|E|\log|E|)$
+				\item der Algorithmus gibt einen minimal spannenden Baum aus
+			\end{itemize}
+		\end{block}
+		\onslide<2>
+		\begin{exampleblock}{Beweis: Laufzeit}
+			\begin{itemize}
+				\item zur Laufzeit ist nur zu kl\"aren, wie Schritte 5 und 6 implementiert werden
+				\item da jeweils die kleinere Komponente der gr\"o\ss eren hinzugef\"ugt wird, verdoppelt sich die Komponentengr\"o\ss e aus Sicht der kleineren Komponente mindestens
+				\item jeder Knoten wird also h\"ochstens $O(\log|V|)$ mal einer anderen Komponente zugeordnet
+				\item die Laufzeit ist also $O(|V|\log|V|)=O(|E|\log|E|)$
+			\end{itemize}
+		\end{exampleblock}
+		\onslide<3>
+		\begin{exampleblock}{Beweis: Korrektheit}
+			\begin{itemize}
+				\item weil Kruskal nur dann eine Kante hinzuf\"ugt, wenn sie verschiedenene Komponenten von $T$ verbindet, ist die Ausgabe kreisfrei
+				\item ferner ist der Ausgabegraph zusammenh\"angend
+				\item denn angenommen nicht
+				\item dann g\"abe es zwei Komponenten $K_1,K_2$
+				\item weil $G$ zusammenh\"angend ist, gibt es eine Kante in $G$, die $K_1,K_2$ verbindet
+				\item Kruskal h\"atte also die erste solche Kante einf\"ugen m\"ussen, Widerspruch
+			\end{itemize}
+		\end{exampleblock}
+		\onslide<4>
+		\begin{exampleblock}{Beweis: Korrektheit (fortgesetzt)}
+			\begin{itemize}
+				\item zu zeigen bleibt, da\ss\ die Ausgabe minimales Gewicht hat
+				\item angenommen nicht: bezeichne die in $T$ enthaltenen Kanten mit
+					\begin{align*}
+						e_{i_1},\ldots,e_{i_{n-1}}&&(n=|V|)\\
+						i_1\leq\cdots\leq i_{n-1}
+					\end{align*}
+				\item sei $0\leq k<n-1$ der maximale Index, so da\ss\ ein minimal spannender Baum $$e_{i_1},\ldots,e_{i_k}$$ enth\"alt; sei $B$ so ein minimal spannender Baum
+			\end{itemize}
+		\end{exampleblock}
+		\onslide<5>
+		\begin{exampleblock}{Beweis: Korrektheit (fortgesetzt)}
+			\begin{itemize}
+				\item dann enth\"alt $B$ die Kante $f=e_{i_{k+1}}$ nicht
+				\item folglich enth\"alt $(V,E(B)\cup\{f\})$ einen Kreis $C$
+				\item dieser enth\"alt eine Kante $f'\in E(B)\setminus E(T)$
+				\item $B'=(V,(E(B)\cup\{f\})\setminus\{f'\}$ ist ein spannender Baum
+				\item nach Wahl von $k$ gilt $c(B')>c(B)$
+				\item daraus folgt, da\ss\ $c(f')<c(f)$
+				\item also h\"atte Kruskal $f'$ anstelle von $f$ zu $T$ hinzuf\"ugen m\"ussen
+				\item Widerspruch
+			\end{itemize}
+		\end{exampleblock}
+	\end{overprint}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{overprint}
+		\onslide<1>
+		\begin{exampleblock}{Der Prim-Algorithmus}
+			\begin{itemize}
+				\item ein alternativer greedy-Algorithmus zur Berechnung minimaler Spannb\"aume
+				\item ausgehend von einem Startknoten $s$ ``z\"uchtet'' der Algorithmus einen spannenden Baum
+				\item in jedem Schritt wird der Knoten hinzugef\"ugt, der dem bereits konstruierten Baum mit kleinstem Gewicht hinzugef\"ugt werden kann
+				\item effizient implementierbar mit Hilfe von priority queues
+			\end{itemize}
+		\end{exampleblock}
+		\onslide<2>
+		\begin{exampleblock}{Algorithmus Prim}
+	\begin{enumerate}
+		\item F\"ur alle $u\in V(G)$ setze $c(u)=\infty$, $p(u)=\emptyset$.
+		\item Setze $c(s)=0$ und $Q=V(G)$.
+		\item Solange $Q\neq\emptyset$
+		\item $\quad$finde $v\in Q$ mit minimalem $c(v)$ und entferne $v$ aus $Q$
+		\item $\quad$f\"ur alle $u\in Q\cap\partial_Gv$
+		\item $\quad\quad$setze $c(u)=\min\{c(u),w(\{u,v\})$ und $p(u)=v$
+		\item Gib die Kantenmenge $\cbc{\{v,p(v)\}:p(v)\neq\emptyset}$ aus.
+	\end{enumerate}
+		\end{exampleblock}
+		\onslide<3>
+\begin{block}{Satz}
+	Angenommen $G,w$ ist ein zusammenh\"angender gewichteter Graph.
+	Dann gibt {\tt Prim}$(G,w)$ die Kantenmenge eines minimalen Spannbaums von $G$ aus.
+\end{block}
+		\onslide<4>
+\begin{exampleblock}{Laufzeit}
+	\begin{itemize}
+		\item die Menge $Q$ kann mit Hilfe einer min priority queue implementiert werden.
+		\item Schritt (2) f\"ugt die Knoten in die min priority queue ein; alle bis auf den Startknoten haben dasselbe Gewicht.
+			\item Schritt (4) entfernt jeweils das Minimum aus der queue
+			\item Schritt (6) reduziert das Gewicht einiger Nachbarn von $v$
+				\item Laufzeit $O(|E(G)|\log|V(G)|)$
+	\end{itemize}
+\end{exampleblock}
+	\end{overprint}
+\end{frame}
+
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{overprint}
+		\onslide<1>
+		\begin{exampleblock}{Anwendung: metrisches TSP}
+			\begin{itemize}
+\item  wir befassen uns mit einem Spezialfall des TSP-Problems
+	\item  sei $G,w$ ein vollst\"andiger gewichteter Graph
+	\item wir nehmen an, da\ss\ die Gewichte die {\em Dreiecksungleichung} erf\"ullen, d.h.\
+\begin{align*}
+	w(\{x,z\})&\leq w(\{x,y\})+w(\{y,z\})&\mbox{f\"ur alle }x,y,z\in V(G).
+\end{align*}
+\item man spricht vom {\em metrischen TSP}
+			\end{itemize}
+\end{exampleblock}
+		\onslide<2>
+		\begin{block}{Proposition}
+	Die L\"ange einer optimalen metrischen TSP-Tour ist
+	\begin{itemize}
+		\item mindestens so hoch wie das Gewicht eines optimalen Spannbaums von $G,w$ und
+		\item nicht mehr als doppelt so hoch wie das Gewicht eines optimalen Spannbaums von $G,w$.
+	\end{itemize}
+\end{block}
+	\end{overprint}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{exampleblock}{Zusammenfassung}
+		\begin{itemize}
+			\item minimal spannende B\"aume in gewichteten Graphen
+			\item Kruskal-Algorithmus
+			\item Prim-Algorithmus
+			\item Greedy-Strategie
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\end{document}
