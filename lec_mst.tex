@@ -358,6 +358,44 @@
 	Dann gibt {\tt Prim}$(G,w)$ die Kantenmenge eines minimalen Spannbaums von $G$ aus.
 \end{block}
 		\onslide<4>
+\begin{exampleblock}{Beweis}
+	\begin{itemize}
+		\item in jeder Iteration wird ein Knotan aus $Q$ entfernt
+		\item daher erfolgen h\"ochstens $|V(G)|$ Iterationen
+		\item Schritt (6) stellt sicher, da\ss\ es keine zwei Knoten $x,y\in Q$ mit $p(x)=y$ gibt
+		\item daher w\"achst 
+	\begin{align*}
+		\cE&=\cbc{\{v,p(v)\}:p(v)\neq\emptyset}
+	\end{align*}
+			in jeder Iteration um eine Kante, mit Ausnahme des ersten Durchlaufs
+	\end{itemize}
+\end{exampleblock}
+		\onslide<5>
+\begin{exampleblock}{Beweis}
+	\begin{itemize}
+		\item \alert{Behauptung:} stets existiert ein minimaler Spannbaum, der $\cE$ enth\"alt
+		\item {\em erste Iteration}: $Q=V(G)\setminus\cbc s$ und $\cE=\emptyset$
+		\item {\em Induktionsschritt}: sei $T'$ ein MSB, der $\cE'$ aus der vorherigen Iteration enth\"alt
+		\item enthalte $\cV'$ die Knoten, die mit $\cE'$ inzident sind
+		\item enthalte $\cV=\cV'\cup\cbc v$ die Knoten, die mit $\cE$ inzident sind
+		\item sei $e=\{v,p(v)\}$ die zuletzt zu $\cE$ hinzugef\"ugte Kante
+		\item angenommen es g\"abe \emph{keinen} MSB, der $\cE$ enth\"alt
+	\end{itemize}
+\end{exampleblock}
+		\onslide<6>
+\begin{exampleblock}{Beweis}
+	\begin{itemize}
+		\item weil $e\not\in E(T')$, enth\"alt $T'+\cbc e$ einen Kreis $C$
+		\item auf $C$ gibt es eine Kante $f\neq e$ mit
+			\begin{align*}
+				f\cap\cV'\neq\emptyset&&\mbox{und}&&f\setminus\cV'\neq\emptyset
+			\end{align*}
+		\item also gilt $w(f)\geq w(e)$ und $f\not\in\cE$
+		\item folglich ist $T=T-\{f\}+\{e\}$ ein MSB von $G$
+		\item Widerspruch
+	\end{itemize}
+\end{exampleblock}
+		\onslide<7>
 \begin{exampleblock}{Laufzeit}
 	\begin{itemize}
 		\item die Menge $Q$ kann mit Hilfe einer min priority queue implementiert werden.
