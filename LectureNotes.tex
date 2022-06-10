@@ -2239,14 +2239,14 @@ In jedem Schritt wird dabei der Knoten hinzugef\"ugt, der dem bereits konstruier
 In dieser Wahl manifestiert sich die greedy-Strategie.
 Wir nehmen an, da\ss\ der Eingabegraph $G$ zusammenh\"angend ist.
 
-\begin{algorithm}{\tt Prim}$(G,w,s)$
+\begin{algorithm}{\tt Prim}$(G,c,s)$
 	\begin{enumerate}
 		\item F\"ur alle $u\in V(G)$ setze $c(u)=\infty$, $p(u)=\emptyset$.
 		\item Setze $c(s)=0$ und $Q=V(G)$.
 		\item Solange $Q\neq\emptyset$
 		\item $\quad$finde $v\in Q$ mit minimalem $p(v)$ und entferne $v$ aus $Q$
 		\item $\quad$f\"ur alle $u\in Q\cap\partial_Gv$
-		\item $\quad\quad$setze $c(u)=\min\{c(u),w(\{u,v\})$ und $p(u)=v$
+		\item $\quad\quad$falls $c(\{u,v\})<c(u)$, setze $c(u)=c(\{u,v\})$ und $p(u)=v$
 		\item Gib die Kantenmenge $\cbc{\{v,p(v)\}:p(v)\neq\emptyset}$ aus.
 	\end{enumerate}
 \end{algorithm}
@@ -2254,8 +2254,8 @@ Wir nehmen an, da\ss\ der Eingabegraph $G$ zusammenh\"angend ist.
 Wir beweisen zun\"achst, da\ss\ {\tt Prim} einen minimalen Spannbaum ausgibt.
 
 \begin{proposition}\label{prop_prim}
-	Angenommen $G,w$ ist ein zusammenh\"angender gewichteter Graph.
-	Dann gibt {\tt Prim}$(G,w)$ die Kantenmenge eines minimalen Spannbaums von $G$ aus.
+	Angenommen $G,c$ ist ein zusammenh\"angender gewichteter Graph.
+	Dann gibt {\tt Prim}$(G,c)$ die Kantenmenge eines minimalen Spannbaums von $G$ aus.
 \end{proposition}
 \begin{proof}
 	Weil in jedem Schleifendurchlauf ein Knoten aus $Q$ entfernt wird, h\"alt der Algorithmus nach $|V(G)|$ Iterationen.
@@ -2280,7 +2280,7 @@ Wir beweisen zun\"achst, da\ss\ {\tt Prim} einen minimalen Spannbaum ausgibt.
 	Weil $T'$ ein spannender Baum von $G$ ist, der die Kante $e$ nicht enth\"alt, besitzt nach \Prop~\ref{Lemma_Baum} der Graph $(V(T'),E(T')\cup\cbc e)$ einen Kreis.
 
 	Auf diesem Kreis gibt es eine Kante $f\neq e$, die einen Knoten aus $\cV'$ mit einem Knoten $z\in V(G)\setminus\cV$ verbindet.
-	Nach Wahl des Knotens $u$ gilt $w(f)\geq w(e)$.
+	Nach Wahl des Knotens $u$ gilt $c(f)\geq c(e)$.
 	Folglich ist der Baum $T$, der aus $T'$ durch Entfernen von $f$ und Hinzuf\"ugen von $e$ entsteht, ein minimaler Spannbaum von $G$.
 	Dieser Baum $T$ enth\"alt $\cE$.
 \end{proof}
@@ -2307,7 +2307,7 @@ Das bedeutet, da\ss\ der Algorithmus in jedem Schritt die lokal optimale Auswahl
 Im allgemeinen kann man sich nicht darauf verlassen, da\ss\ Greedy-Algorihmen optimale L\"osungen von Optimierungsproblemen finden.
 Das minimale Spannbaumproblem ist die Ausnahme, die diese Regel best\"atigt.
 
-\begin{algorithm}{\tt Kruskal}$(G,w,s)$
+\begin{algorithm}{\tt Kruskal}$(G,c,s)$
 	\begin{enumerate}
 		\item pr\"ufe, ob $G$ zusammenh\"angend ist; wenn nicht, gib eine Fehlermeldung aus
 		\item sortiere die Kanten von $G$ aufsteigend nach Gewichten:

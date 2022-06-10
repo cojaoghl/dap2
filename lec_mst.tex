@@ -319,7 +319,7 @@
 				\item dann enth\"alt $B$ die Kante $f=e_{i_{k+1}}$ nicht
 				\item folglich enth\"alt $(V,E(B)\cup\{f\})$ einen Kreis $C$
 				\item dieser enth\"alt eine Kante $f'\in E(B)\setminus E(T)$
-				\item $B'=(V,(E(B)\cup\{f\})\setminus\{f'\}$ ist ein spannender Baum
+				\item $B'=(V,(E(B)\cup\{f\})\setminus\{f'\})$ ist ein spannender Baum
 				\item nach Wahl von $k$ gilt $c(B')>c(B)$
 				\item daraus folgt, da\ss\ $c(f')<c(f)$
 				\item also h\"atte Kruskal $f'$ anstelle von $f$ zu $T$ hinzuf\"ugen m\"ussen
@@ -348,14 +348,14 @@
 		\item Solange $Q\neq\emptyset$
 		\item $\quad$finde $v\in Q$ mit minimalem $c(v)$ und entferne $v$ aus $Q$
 		\item $\quad$f\"ur alle $u\in Q\cap\partial_Gv$
-		\item $\quad\quad$setze $c(u)=\min\{c(u),w(\{u,v\})$ und $p(u)=v$
+		\item $\quad\quad$falls $c(\{u,v\})<c(u)$, setze $c(u)=c(\{u,v\})$ und $p(u)=v$
 		\item Gib die Kantenmenge $\cbc{\{v,p(v)\}:p(v)\neq\emptyset}$ aus.
 	\end{enumerate}
 		\end{exampleblock}
 		\onslide<3>
 \begin{block}{Satz}
-	Angenommen $G,w$ ist ein zusammenh\"angender gewichteter Graph.
-	Dann gibt {\tt Prim}$(G,w)$ die Kantenmenge eines minimalen Spannbaums von $G$ aus.
+	Angenommen $G,c$ ist ein zusammenh\"angender gewichteter Graph.
+	Dann gibt {\tt Prim}$(G,c)$ die Kantenmenge eines minimalen Spannbaums von $G$ aus.
 \end{block}
 		\onslide<4>
 \begin{exampleblock}{Beweis}
@@ -390,8 +390,8 @@
 			\begin{align*}
 				f\cap\cV'\neq\emptyset&&\mbox{und}&&f\setminus\cV'\neq\emptyset
 			\end{align*}
-		\item also gilt $w(f)\geq w(e)$ und $f\not\in\cE$
-		\item folglich ist $T=T-\{f\}+\{e\}$ ein MSB von $G$
+		\item also gilt $c(f)\geq c(e)$ und $f\not\in\cE$
+		\item folglich ist $T=T'-\{f\}+\{e\}$ ein MSB von $G$
 		\item Widerspruch
 	\end{itemize}
 \end{exampleblock}
