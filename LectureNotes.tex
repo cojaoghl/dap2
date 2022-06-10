@@ -25,6 +25,7 @@
 \renewcommand\oe{\"o}
 \newcommand\ue{\"u}
 \newcommand\KL[2]{D\bc{{{#1}\|{#2}}}}
+\newcommand\alert[1]{\emph{#1}}
 \newcommand\nix{\,\cdot\,}
 \newcommand\ndiv{\nmid}
 \newcommand\ggt{\ggT}
@@ -2404,7 +2405,365 @@ Wenn \eqref{eqtriang} erf\"ullt ist, spricht man vom {\em metrischen TSP}.
 \Prop~\ref{prop_metric_tsp} zeigt, da\ss\ wir die L\"ange einer optimalen metrischen TSP-Tour bis auf einen Faktor zwei approximieren k\"onnen, indem wir das TSP-Problem l\"osen.
 Der Beweis zeigt ferner, da\ss\ {\tt Prim} zusammen mit {\tt DFS} eine Tour liefert, die h\"ochstens doppelt so gro\ss\ ist wie die optimale Tour.
 
+\section{Fl\"usse}\label{sec_flow}
 
+\subsection{Netzwerke}\label{sec_network}
+
+Ein Netzwerk ist ein gerichteter Graph mit Kantenkapazit\"aten.
+Wir befassen uns mit der Aufgabe, durch das Netzwerk eine Ladung von einer Quelle zu einer Senke zu transportieren.
+Was ist die maximale Ladung, die unter Einhaltung der Kapazit\"aten transportiert werden kann?
+Als Anwendung werden wir uns mit dem Matchingproblem in bipartiten Graphen befassen.
+Wir beginnen mit den notwendigen Definitionen.
+Zun\"achst ben\"otigen wir gerichtete Graphen, in denen die Kanten gew\"ohnlich als Pfeile dargestellt werden.
+
+\begin{definition}
+	Ein (endlicher) \alert{gerichteter Graph} $G$ besteht aus
+	\begin{itemize}
+		\item einer endlichen Menge $V(G)$ von \alert{Knoten} und
+		\item einer Menge $E(G)\subseteq V(G)\times V(G)$ von \alert{gerichteten Kanten}.
+	\end{itemize}
+	Eine Kante der Form $(v,v)$ nennt man \alert{Schleife}.
+\end{definition}
+
+In einem gerichteten Graphen unterscheiden wir f\"ur einen Knoten $v$ zwischen ``eingehenden'' und ``ausgehenden'' Kanten.
+Entsprechend bezeichnen wir mit
+	\begin{align*}
+			\partial^+v&=\partial_G^+v=\{w\in V:(w,v)\in E(G)\},&\partial^-v&=\partial_G^-v=\{w\in V:(v,w)\in E(G)\}
+	\end{align*}
+die eingehende bzw.\ die ausgehende Nachbarschaft von $v$.
+Ferner definieren wir
+		\begin{align*}
+			d^+_G(v)&=|\partial^+_Gv|,&d^-_G(v)&=|\partial^-_Gv|
+		\end{align*}
+als den eingehenden und den ausgehenden Grad von $v$.
+
+\"Ahnlich wie auf ungerichteten Graphen kann man auch auf gerichteten Grphen Breitensuche durchf\"uhren.
+Dazu ver\"andern wir den Algorithmus aus Abschnitt~\ref{sec_bfs} lediglich so, da\ss\ in Schritt (8) alle Knoten $u\in\partial^-v$ durchlaufen werden.
+Der so modifizierten Algorithmus {\tt BFS} findet dann k\"urzeste {\em gerichtete} Pfade (vgl.\ \Thm~\ref{Thm_BFS}).
+
+Netzwerke sind gerichtete Graphen mit Kantenkapazit\"aten sowie einer ausgezeichneten Quelle und Senke.
+Die genau Definition lautet folgenderma\ss en.
+
+\begin{definition}
+	Ein \alert{Netzwerk} $N=(G,c,s,t)$ besteht aus
+	\begin{itemize}
+		\item einem gerichteten Graphen $G$,
+		\item einer Kapazit\"atsfunktion $c:V\times V\to\RRpos$, so da\ss $c(v,w)=0\quad\mbox{falls }(v,w)\not\in E(G),$
+		\item einer Quelle $s\in V(G)$,
+		\item einer Senke $t\in V(G)\setminus\{s\}$.
+	\end{itemize}
+\end{definition}
+
+Als n\"achstes ben\"otigen wir die Definition von Fl\"ussen.
+Ein Flu\ss\ beschreibt, wie kapazit\"atskonform Ladung durch das Netzwerk transportiert werden kann.
+
+\begin{definition}{Definition}
+	Ein \alert{Flu\ss} in einem Netzwerk $N$ ist eine Funktion $f:V\times V\to\RR$, so da\ss
+	\begin{itemize}
+		\item $f(v,w)\leq c(v,w)$ f\"ur alle $v,w\in V(G)$.\hfill[Kapazit\"atsbedingung]
+		\item $f(v,w)+f(w,v)=0$ f\"ur alle $v,w\in V(G)$.\hfill[Schiefsymmetrie]
+		\item $\sum_{w\in V(G)}f(v,w)=0$ f\"ur alle $v\in V(G)\setminus\{s,t\}$.\hfill[Flu\ss erhaltung]
+	\end{itemize}
+	Der \alert{Wert} von $f$ ist definiert als
+	\begin{align*}
+		|f|&=\sum_{w\in V(G)}f(s,w)
+	\end{align*}
+\end{definition}
+
+Im max flow-Problem geht es darum, in einem Netzwerk $N$ einen Flu\ss\ maximalen Wertes (einen ``maximalen Flu\ss'') zu bestimmen.
+Die Idee ist, ausgehend vom Nullflu\ss\ den aktuellen Flu\ss\ immer weiter zu ``augmentieren''.
+Zu diesem Zweck stellen wir einige weitere Definitionen und Beobachtungen bereit.
+Wir beginnen mit einigen unmittelbaren Konsequenzen aus den obigen Definitionen.
+
+F\"ur eine Funktion $f:V\times V\to \RR$, $v\in V$ und $A,B\subset V$ definieren wir
+\begin{align*}
+	f(v,A)&=\sum_{w\in A}f(v,w)\\
+	f(A,v)&=\sum_{w\in A}f(w,v)\\
+	f(A,B)&=\sum_{v\in A}\sum_{w\in B}f(v,w)
+\end{align*}
+
+\begin{fact}\label{lem_flow}
+	Sei $N$ ein Netzwerk und $f$ ein Flu\ss.
+	F\"ur alle $A,B,W\subseteq V$ gilt
+	\begin{align*}
+		f(A,A)&=0\\
+		f(A,B)+f(B,A)&=0\\
+		f(A\cup B,C)&=f(A,C)+f(B,C)&&\mbox{sofern }A\cap B=\emptyset\\
+		f(C,A\cup B)&=f(C,A)+f(C,B)&&\mbox{sofern }A\cap B=\emptyset
+	\end{align*}
+\end{fact}
+
+\noindent
+Fakt~\ref{lem_flow} ist eine direkte Folgerung aus der Flu\ss erhaltung und der Schiefsymmetrie.
+
+Um den oben angesprochenen Augmentierungsprozess durchzuf\"uhren, m\"ussen wir die ``Restkapazit\"aten'' in einem Netzwerk bestimmen, wenn ein gegebener Flu\ss\ schon einige der Kapazit\"aten in Anspruch nimmt.
+
+\begin{definition}\label{def_remflow}
+	Sei $N$ ein Netzwerk und $f$ ein Flu\ss.
+	\begin{itemize}
+		\item Die \alert{Restkapazit\"at} von $f$ in $N$ ist definiert als
+			$$c_f(v,w)=c(v,w)-f(v,w)\qquad(v,w\in V(G)).$$
+		\item Das \alert{Restnetzwerk} $N_f$ von $f$ in $N$ ist das Netzwerk mit Kantenkapazit\"atsfunktion $c_f$ und Kantenmenge
+			$$E_f=\cbc{(v,w)\in V(G):c_f(v,w)>0}.$$
+	\end{itemize}
+\end{definition}
+
+Wir bemerken, da\ss\ das Restnetzwerk $N_f$ Kanten enthalten kann, die in $N$ nicht vorhanden sind.
+Wiederum als unmittelbare Konsequenz aus der Definition ergibt sich folgendes.
+
+\begin{fact}\label{lem_remflow}
+	Angenommen $N$ ist ein Netzwerk, $f$ ist ein Flu\ss\ in $N$ und $g$ ist ein Flu\ss\ in $N_f$.
+	Dann ist $f+g$ ein Flu\ss\ in $N$ mit Wert $|f+g|=|f|+|g|$.
+\end{fact}
+
+Die folgende Definition erkl\"art, wie ein Flu\ss\ augmentiert werden kann.
+
+\begin{definition}\label{def_aug}
+	Sei $N$ ein Netzwerk und $f$ ein Flu\ss\ in $N$.
+	\begin{itemize}
+		\item ein \alert{$f$-augmentierender Pfad} in $N$ ist ein $s$-$t$-Pfad in $N_f$
+		\item die \alert{Kapazit\"at} eines solchen Pfades $p$ ist
+			\begin{align*}
+				c_f(p)&=\min\{c_f(u,v):(u,v)\mbox{ ist eine Kante auf }p\}>0
+			\end{align*}
+	\end{itemize}
+\end{definition}
+
+Folgende Beobachtungen ergeben sich unmittelbar aus den obigen Definitionen.
+
+\begin{fact}\label{lem_aug}
+	Angenommen $N$ ist ein Netzwerk, $f$ ein Flu\ss\ und $p$ ein augmentierender Pfad.
+	Dann ist $f_p:V\times V\to\RR$ mit
+	\begin{align*}
+		f_p(v,w)=\bc{\vecone\{(v,w)\mbox{ ist Kante von }p\}-\vecone\{(w,v)\mbox{ ist Kante von }p\}}c_f(p)
+	\end{align*}
+	ein Flu\ss\ mit Wert $c_f(p)$ in $N_f$.
+\end{fact}
+
+\begin{fact}\label{cor_aug}
+	Angenommen $N$ ist ein Netzwerk, $f$ ein Flu\ss\ und $p$ ein augmentierender Pfad.
+	Dann ist $f+f_p$ ein Flu\ss\ in $N$ mit Wert $|f|+c_f(p)>|f|$.
+\end{fact}
+
+\subsection{Ford-Fulkerson und max flow min cut}\label{sec_ff}
+Beginnend vom Nullflu\ss, augmentiert der Ford-Fulkerson-Algorithmus den Flu\ss\ bis kein augmentierender Pfad mehr existiert.
+
+\begin{algorithm}\upshape {\tt FordFulkerson}. {\em Eingabe:} ein Netzwerk $N$. \label{alg_ff}
+	{\em Ausgabe:} ein Flu\ss\ $f$
+	\begin{enumerate}
+		\item setze $f(v,w)=0$ f\"ur alle $v,w\in V$
+		\item solange es einen augmentierenden Pfad $p$ in $N_f$ gibt
+		\item $\qquad$setze $f=f+f_p$
+		\item gib $f$ aus
+	\end{enumerate}
+\end{algorithm}
+
+Der obige Algorithmus spezifiziert nicht, wie der Pfad $p$ gefunden wird, noch welcher augmentierende Pfad auszuw\"ahlen ist, wenn es derer mehrere gibt.
+Es ist ferner nicht klar, da\ss\ der Algorithmus \"uberhaupt nach endlich vielen Schritten h\"alt (mehr dazu in den \"Ubungen)!
+Sofern alle Kapazit\"aten ganz sind, ist es aber offensichtlich, da\ss\ der Algorithmus nach h\"ochstens $\sum_{(v,w)\in E(G)}c(v,w)$ Schritten anh\"alt.
+Bemerken Sie jedoch, da\ss\ diese Laufzeitschranke \emph{exponentiell} in der Gr\"o\ss e der Eingabe ist.
+
+\begin{definition}\label{def_cut}
+	Angenommen $N$ ist ein Netzwerk
+	\begin{itemize}
+		\item ein \alert{Schnitt} in $N$ ist eine Menge $S\subseteq V(G)$ mit $s\in S$ und $t\not\in S$.
+		\item die \alert{Kapazit\"at} eines Schnittes $S$ ist
+			\begin{align*}
+				c(S)&=\sum_{(v,w)\in S\times (V\setminus S)}\vecone\{(v,w)\in E(G)\}c(v,w).
+			\end{align*}
+	\end{itemize}
+\end{definition}
+
+Das folgende einfache Lemma zeigt, da\ss\ die Kapazit\"at eines Schnittes immer eine obere Schranke f\"ur den maximalen Wert eines Flusses ist.
+
+\begin{lemma}\label{lem_cut}
+	Angenommen $N$ ist ein Netzwerk und $f$ ist ein Flu\ss\
+	F\"ur jeden Schnitt $S$ gilt
+	\begin{align*}
+		|f|=f(S,V\setminus S).
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Es gilt
+	\begin{align*}
+		|f|&=f(s,V)\\
+		   &=f(s,V)+f(S\setminus\{s\},V)&\mbox{[Flu\ss erhaltung]}\\
+		   &=f(S,V)=f(S,V\setminus S)+f(S,S)\\
+		   &=f(S,V\setminus S)&\mbox{[weil $f(S,S)=0$]},
+	\end{align*}
+	woraus die Behauptung unmittelbar folgt.
+\end{proof}
+
+\begin{corollary}\label{cor_cut}
+	Wenn $N$ ein Netzwerk, $f$ ein Flu\ss\ und $S$ ein Schnitt ist, gilt $|f|\leq c(S)$
+\end{corollary}
+
+Der folgende wichtige Satz ist als ``Max Flow Min Cut Theorem'' bekannt.
+
+\begin{theorem}\label{thm_mfmc}
+	F\"ur jedes Netzwerk $N$ gilt
+	\begin{align*}
+		\max\{|f|:f\mbox{ ist ein Flu\ss\ in $N$}\}&=\min\{c(S):S\mbox{ ist ein Schnitt in }N\}
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Wir suchen einen Flu\ss\ $f$ und einen Schnitt $S$ mit $|f|=c(S)$.
+	Sei $f$ ist ein maximaler Flu\ss, d.h.\ $$|f|=\max\{|\varphi|:\varphi\mbox{ ist ein Flu\ss\ in $N$}\}.$$
+	Angenommen es g\"abe einen augmentierenden Pfad $p$.
+	Dann w\"are $|f+f_p|>|f|$; Widerspruch.
+	Also gibt es keinen Pfad von $s$ nach $t$ in $N_f$.
+	Betrachte daher die Menge
+	\begin{align*}
+		S&=\cbc{v\in V(G):\mbox{es gibt einen Pfad von $s$ nach $v$ in $N_f$}}.
+	\end{align*}
+	Dann ist $S$ ein Schnitt.
+	Ferner gibt es keine Kante $(v,w)\in S\times (V\setminus S)$ in $N_f$.
+	Folglich $f(v,w)=c(v,w)$ f\"ur alle $(v,w)\in S\times (V\setminus S)$ mit $(v,w)\in E(G)$, also $c(S)=|f|$ nach \Cor~\ref{cor_cut}.
+\end{proof}
+
+\begin{corollary}\label{cor_mfmc}
+	Wenn {\tt FordFulkerson} terminiert, ist die Ausgabe ein maximaler Flu\ss.
+\end{corollary}
+\begin{proof}
+	Wenn es keinen augmentierenden Pfad mehr gibt, ist $f$ ein maximaler Flu\ss.
+\end{proof}
+
+\subsection{Edmonds-Karp}\label{sec_ek}
+Der Edmonds-Karp-Algorithmus ist eine Verbesserung des Ford-Fulkerson-Algorithmus.
+Dabei wird stets ein {\em k\"urzester} augmentierender Pfad verwendet.
+
+\begin{algorithm}\upshape {\tt EdmondsKarp}. {\em Eingabe:} ein Netzwerk $N$. \label{alg_ek}
+	{\em Ausgabe:} ein Flu\ss\ $f$
+	\begin{itemize}
+		\item verwende in {\tt FordFulkerson} Breitensuche, um den augmentierenden Pfad zu finden
+		\item mit anderen Worten: finde jeweils einen \emph{k\"urzesten} augmentierenden Pfad
+	\end{itemize}
+\end{algorithm}
+
+Das folgende Monotonielemma zeigt, da\ss\ die L\"ange der augmentierenden Pfade, die {\tt EdmondsKarp}  verwendet, monoton w\"achst.
+
+\begin{lemma}\label{lem_mon}
+	Seien $f_1,f_2,\ldots$ die Fl\"usse, die {\tt EdmondsKarp} konstruiert.
+	Sei ferner $\dist_{N_{f_i}}(s,v)$ der Abstand von $s,v$ im Restnetzwerk $N_{f_i}$.
+	Dann gilt 
+	\begin{align*}
+		\dist_{N_{f_i}}(s,v)&\leq\dist_{N_{f_j}}(s,v)\qquad\mbox{f\"ur alle }i\leq j,\ v\in V(G).
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Angenommen nicht.
+	W\"ahle $i$ minimal mit $\dist_{N_{f_i}}(s,v)>\dist_{N_{f_{i+1}}}(s,v)$.
+	W\"ahle au\ss erdem $v$ so, da\ss\ $\dist_{N_{f_{i+1}}}(s,v)$ minimal ist.
+	Sei ferner $p$ ein k\"urzester Pfad von $s$ nach $v$ in $N_{f_{i+1}}$.
+	Sei $u$ der letzte Knoten vor $v$ in $p$.
+	Dann gilt $(u,v)\in N_{f_{i+1}}$ und $\dist_{N_{f_{i+1}}}(s,u)+1=\dist_{N_{f_{i+1}}}(s,v)$.
+	Ferner gilt $\dist_{N_{f_{i+1}}}(s,u)\geq\dist_{N_{f_{i}}}(s,u)$ nach Wahl von $v$.
+	Angenommen $(u,v)\in N_f$; dann gilt
+	\begin{align*}
+		\dist_{N_{f_{i}}}(s,v)&\leq\dist_{N_{f_{i}}}(s,u)+1\leq\dist_{N_{f_{i+1}}}(s,u)+1=\dist_{N_{f_{i+1}}}(s,v),
+	\end{align*}
+	im Widerspruch zur Wahl von $v$.
+	Weil $(u,v)\in N_{f_{i+1}}$ aber $(u,v)\not\in N_{f_i}$, mu\ss\ beim Augmentieren der Flu\ss\ von $v$ nach $u$ erh\"oht worden sein.
+	Weil {\tt EdmondsKarp} entlang k\"urzester Pfade augmentiert, enth\"alt der k\"urzeste Pfad von $s$ nach $u$ in $N_{f_i}$ daher die Kante $(v,u)$.
+	Daraus folgt aber
+	\begin{align*}
+		\dist_{N_{f_{i}}}(s,v)&=\dist_{N_{f_{i}}}(s,u)-1\leq\dist_{N_{f_{i+1}}}(s,u)-1=\dist_{N_{f_{i+1}}}(s,v)-2,
+	\end{align*}
+	im Widerspruch zur Wahl von $v$.
+\end{proof}
+
+Aufgrund von \Lem~\ref{lem_mon} k\"onnen wir beweisen, da\ss\ {\tt EdmondsKarp} effizient ist.
+
+\begin{theorem}\label{thm_ek}
+	{\tt EdmondsKarp} hat Laufzeit $O(|V(G)|\cdot|E(G)|^2)$
+\end{theorem}
+\begin{proof}
+	Wir zeigen, da\ss\ {\tt EdmondsKarp} nach h\"ochstens $O(|V(G)|\cdot|E(G)|)$ Augmentierungen terminiert.
+	Weil Breitensuche jeweils Zeit $O(|E(G)|)$ ben\"otigt, folgt daraus der Satz.
+	Eine Kante $(v,w)$ auf einem augmentierenden Pfad $p$ ist \alert{kritisch} f\"ur einen Flu\ss\ $f$, falls $c_f(v,w)=c_f(p)$.
+	Dann ist $(v,w)$ nicht in $N_{f+f_p}$ enthalten.
+	Wir zeigen, da\ss\ keine Kante mehr als $|V(G)|/2$ mal kritisch werden kann.
+	Angenommen $(v,w)$ wird kritisch f\"ur eine Flu\ss\ $f$ f\"ur den Pfad $p$, den {\tt EdmondsKarp} ausw\"ahlt.
+	Weil $p$ ein k\"urzester Pfad ist, gilt f\"ur die Abst\"ande in dem Netzwerk $N_f$:.
+	\begin{align*}
+		\dist_{N_f}(s,w)>\dist_{N_f}(s,v).
+	\end{align*}
+	Angenommen $(v,w)$ wird sp\"ater noch einmal kritisch.
+	Dann mu\ss\ die Kante $(v,w)$ zun\"achst wieder in das Restnetzwerk eingef\"ugt worden sein.
+	Dies ist nur m\"oglich, wenn die Kante $(w,v)$ auf dem augmentierenden Pfad f\"ur einen Flu\ss\ $f'$ gelegen hat.
+	F\"ur den Flu\ss\ $f'$ gilt dann $\dist_{N_{f'}}(s,v)>\dist_{N_{f'}}(s,w)$.
+	Das Monotonielemma zeigt also
+	\begin{align*}
+		\dist_{N_{f'}}(s,v)\geq\dist_{N_f}(s,v)+2
+	\end{align*}
+	Das Monotonielemma zeigt also.
+	\begin{align*}
+		\dist_{N_{f'}}(s,v)\geq\dist_{N_f}(s,v)+2.
+	\end{align*}
+	Weil $\dist_{N_{f'}}(s,v)\leq|V(G)|$, kann $(v,w)$ also nur $|V(G)|/2$ mal kritisch werden.
+\end{proof}
+
+{\tt EdmondsKarp} ist nicht das letzte Wort in Bezug auf die effiziente Berechnung maximaler Fl\"usse.
+Es gibt eine Vielzahl weiterer, besserer Algorithmen.
+Einige davon k\"onnen Sie ggf.\ in weiterf\"uhrenden Vorlesungen kennenlernen.
+
+\subsection{Matchings in bipartiten Graphen}\label{sec_matching}
+Im Matchingproblem geht es darum, eine Zuordnung zwischen zwei verschiedenen Arten von Objekten herzustellen.
+Welche der Objekte zueinander ``passen'', ist dabei durch einen bipartiten Graphen beschrieben.
+
+\begin{definition}\label{def_match}
+Sei $G=(V,E)$ ein ungerichteter Graph.
+	\begin{itemize}
+		\item Ein \alert{Matching} in $G$ ist eine Menge $M\subseteq E$ von Kanten, so da\ss
+			\begin{align*}
+				e\cap f&=\emptyset\qquad\mbox{f\"ur alle }e,f\in M,\,e\neq f.
+			\end{align*}
+		\item Mit $\nu(G)$ wird die maximale Gr\"o\ss e eines Matchings in $G$ bezeichnet (``Matchingzahl von $G$'').
+		\item $G$ hei\ss t \alert{bipartit}, falls $\chi(G)=2$
+		\item Eine \alert{Bipartition} von $G$ ist ein Paar $(S,T)$ von stabilen Mengen, so da\ss\ $S\cup T=V(G)$.
+	\end{itemize}
+\end{definition}
+
+	Wir erinnern, da\ss\ f\"ur eine Menge $U$ von Knoten mit $\partial U=\{v\in V(G):\exists u\in U:v\in\partial u\}$ die Menge aller Nachbarn von Knoten aus $U$ bezeichnet wird.
+	Der folgende Satz, bekannt als ``Satz von Hall'' oder auch ``Heiratssatz'', gibt eine n\"utzliche Bedingung f\"ur die Existenz gr\"o\ss tm\"oglicher Matchings.
+
+\begin{theorem}\label{thm_hall}
+	Sei $G$ ein bipartiter Graph mit Bipartition $(S,T)$.
+	Es gilt $\nu(G)=|S|$ genau dann, wenn
+	\begin{align*}
+		|\partial U|\geq|U|\qquad\mbox{f\"ur alle }U\subseteq S.
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Wenn $\nu(G)=|S|$, dann gilt $|\partial U|\geq|U|$ f\"ur alle $U\subseteq S$.
+	Nehme nun umgekehrt an, da\ss\ $|\partial U|\geq|U|$ f\"ur alle $U\subseteq S$.
+	Konstruiere ein Netzwerk $N=(\Gamma,c,s,t)$, so da\ss\
+	\begin{align*}
+		V(\Gamma)&=V(G)\cup\{s,t\}\qquad\mbox{mit}\qquad s,t\not\in V(G),\\
+		E(\Gamma)&=\{(v,w)\in S\times T:vw\in E(G)\}\cup\{s\}\times S\cup T\times\{t\}.
+	\end{align*}
+	Ferner ist $c(v,w)=1$ f\"ur alle $(v,w)\in E(\Gamma)$.
+	Sei nun $f:V(\Gamma)\times V(\Gamma)\to\{0,1\}$ ein maximaler Flu\ss.
+	Dann ist
+	\begin{align*}
+		M&=\{vw\in E(G):f(v,w)=1\}
+	\end{align*}
+	ein Matching von $G$.
+	Zu zeigen ist also, da\ss\ $|f|=|S|$.
+	Nach dem max flow min cut theorem gen\"ugt es zu zeigen, da\ss\ f\"ur jeden Schnitt $Y$ von $N$ gilt
+		$$c(Y)\geq|S|$$
+	Definiere daher $A=Y\cap S$ und $B=Y\cap T$.
+	Nach Konstruktion von $N$ gilt dann
+	\begin{align*}
+		c(Y)\geq|S\setminus A|+|\partial A|.
+	\end{align*}
+	Weil ferner $|\partial A|\geq|A|$, folgt $c(Y)\geq|S|$.
+\end{proof}
+
+Mit der Konstruktion eines Netzwerkes aus dem Beweis erhalten wir ein effizientes Verfahren, um die Matchingzahl bipartiter Graphen zu berechnen.
+Wir wenden auf dieses Netzwerk einfach {\tt FordFulkerson} an.
+Da alle Kapazit\"aten $\{0,1\}$ sind, ist der optimale Flu\ss\ auch $\{0,1\}$-wertig.
+Wiederum gibt es effizientere Algorithmen f\"ur dieses Problem; mehr dazu z.B.\ in der VL Effiziente Algorithmen.
 
 \begin{thebibliography}{99}
 	\bibitem{Cormen}T.~Cormen, C.~Leiserson, R.~Rivest, C.~Stein: Introduction to algorithms. MIT Press.
