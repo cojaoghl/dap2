@@ -5,7 +5,7 @@
 \usepackage{amssymb}
 \usetheme{tudo}
 
-\title{Datenstrukturen, Algorithmen und Prorammierung~2}
+\title{Datenstrukturen, Algorithmen und Programmierung~2}
 \author[A.~Coja-Oghlan]{Amin Coja-Oghlan}
 \institute[DAP2]{Lehrstuhl Informatik 2\\Fakult\"at f\"ur Informatik}
 
@@ -424,7 +424,7 @@
 			\end{itemize}
 		\end{exampleblock}
 		\onslide<8>
-		\includegraphics[height=40mm]{./images/flow12.pdf}\hfill\includegraphics[height=40mm]{./images/flow11.pdf}
+		\includegraphics[height=40mm]{./images/flow9.pdf}\hfill\includegraphics[height=40mm]{./images/flow11.pdf}
 \begin{exampleblock}{Beispiel}
 			\begin{itemize}
 				\item links: der aktuelle Flu\ss\ im Ursprungsnetzwerk
@@ -440,7 +440,7 @@
 			\end{itemize}
 		\end{exampleblock}
 		\onslide<10>
-		\includegraphics[height=40mm]{./images/flow15.pdf}\hfill\includegraphics[height=40mm]{./images/flow14.pdf}
+		\includegraphics[height=40mm]{./images/flow12.pdf}\hfill\includegraphics[height=40mm]{./images/flow14.pdf}
 \begin{exampleblock}{Beispiel}
 			\begin{itemize}
 				\item links: der aktuelle Flu\ss\ im Ursprungsnetzwerk
@@ -586,7 +586,7 @@ Wenn es keinen augmentierenden Pfad mehr gibt, ist $f$ ein maximaler Flu\ss
 				\item sei $u$ der letzte Knoten vor $v$ in $p$
 				\item dann gilt $(u,v)\in N_{f_{i+1}}$ und $\dist_{N_{f_{i+1}}}(s,u)+1=\dist_{N_{f_{i+1}}}(s,v)$
 				\item ferner gilt $\dist_{N_{f_{i+1}}}(s,u)\geq\dist_{N_{f_{i}}}(s,u)$ nach Wahl von $v$
-				\item angenommen $(u,v)\in N_f$; dann gilt
+				\item angenommen $(u,v)\in N_{f_i}$; dann gilt
 					\begin{align*}
 						\dist_{N_{f_{i}}}(s,v)&\leq\dist_{N_{f_{i}}}(s,u)+1\leq\dist_{N_{f_{i+1}}}(s,u)+1=\dist_{N_{f_{i+1}}}(s,v),
 					\end{align*}
@@ -660,7 +660,7 @@ Wenn es keinen augmentierenden Pfad mehr gibt, ist $f$ ein maximaler Flu\ss
 					\end{align*}
 				\item mit $\nu(G)$ wird die maximale Gr\"o\ss e eines Matchings in $G$ bezeichnet (``Matchingzahl von $G$'')
 				\item $G$ hei\ss t \alert{bipartit}, falls $\chi(G)=2$
-				\item eine \alert{Bipartition} von $G$ ist ein Paar $(S,T)$ von stabilen Mengen, so da\ss\ $S\cup T=V(G)$
+				\item eine \alert{Bipartition} von $G$ ist ein Paar $(S,T)$ von stabilen Mengen, so da\ss\ $S\cup T=V(G)$ und $S\cap T=\emptyset$
 			\end{itemize}
 		\end{exampleblock}
 		\onslide<2>

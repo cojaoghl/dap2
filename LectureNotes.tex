@@ -2658,7 +2658,7 @@ Das folgende Monotonielemma zeigt, da\ss\ die L\"ange der augmentierenden Pfade,
 	Sei $u$ der letzte Knoten vor $v$ in $p$.
 	Dann gilt $(u,v)\in N_{f_{i+1}}$ und $\dist_{N_{f_{i+1}}}(s,u)+1=\dist_{N_{f_{i+1}}}(s,v)$.
 	Ferner gilt $\dist_{N_{f_{i+1}}}(s,u)\geq\dist_{N_{f_{i}}}(s,u)$ nach Wahl von $v$.
-	Angenommen $(u,v)\in N_f$; dann gilt
+	Angenommen $(u,v)\in N_{f_i}$; dann gilt
 	\begin{align*}
 		\dist_{N_{f_{i}}}(s,v)&\leq\dist_{N_{f_{i}}}(s,u)+1\leq\dist_{N_{f_{i+1}}}(s,u)+1=\dist_{N_{f_{i+1}}}(s,v),
 	\end{align*}
@@ -2720,7 +2720,7 @@ Sei $G=(V,E)$ ein ungerichteter Graph.
 			\end{align*}
 		\item Mit $\nu(G)$ wird die maximale Gr\"o\ss e eines Matchings in $G$ bezeichnet (``Matchingzahl von $G$'').
 		\item $G$ hei\ss t \alert{bipartit}, falls $\chi(G)=2$
-		\item Eine \alert{Bipartition} von $G$ ist ein Paar $(S,T)$ von stabilen Mengen, so da\ss\ $S\cup T=V(G)$.
+		\item Eine \alert{Bipartition} von $G$ ist ein Paar $(S,T)$ von stabilen Mengen, so da\ss\ $S\cup T=V(G)$ und $S\cap T=\emptyset$.
 	\end{itemize}
 \end{definition}
 
