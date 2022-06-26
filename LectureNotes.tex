@@ -17,6 +17,8 @@
 
 \numberwithin{equation}{section}
 
+\newcommand\red{\mathtt{red}}
+\newcommand\black{\mathtt{black}}
 \newcommand\Ae{\"A}
 \newcommand\Oe{\"O}
 \newcommand\Ue{\"U}
@@ -252,6 +254,7 @@
 \newcommand{\Luczak}{\L uczak}
 \newcommand{\Kucera}{Ku\v{c}era}
 \newcommand{\Szemeredi}{Szemer\'edi}
+\newcommand\Def{Definition}
 \newcommand\Lem{Lemma}
 \newcommand\Prop{Proposition}
 \newcommand\Thm{Satz}
@@ -2765,6 +2768,314 @@ Wir wenden auf dieses Netzwerk einfach {\tt FordFulkerson} an.
 Da alle Kapazit\"aten $\{0,1\}$ sind, ist der optimale Flu\ss\ auch $\{0,1\}$-wertig.
 Wiederum gibt es effizientere Algorithmen f\"ur dieses Problem; mehr dazu z.B.\ in der VL Effiziente Algorithmen.
 
+\section{Bin\"are Suchb\"aume}\label{sec_binary}
+
+\subsection{Sinn und Zweck}\label{sec_binary_purpose}
+Ein bin\"arer Suchbaum dient der Speicherung von Daten anhand vergleichbarer Schl\"ussel.
+Im Gegensatz zu einer Hashfunktion nehmen wir also an, da\ss\ f\"ur je zwei Schl\"usselwerte $\sigma,\tau$ entweder gilt $\sigma<\tau$ oder $\sigma=\tau$ oder $\sigma>\tau$.
+Unser Ziel ist, Daten anhand dieser Schl\"usselwerte zu speiechern, um hinterher schnell darauf zugreifen zu k\"onnen.
+Dabei nehmen wir an, da\ss\ die zu speiechernden Schl\"ussel eindeutig bestimmt sind; d.h.\ zu jedem m\"oglichen Schl\"usselwert gibt es h\"ochstens ein Objekt in unserer Datenstruktur.
+
+Wir werden die Operationen {\tt Insert}, {\tt Delete}, {\tt Search}, {\tt Minimum}, {\tt Maximum}, {\tt Predecessor}, {\tt Successor} kennenlernen.
+Diese dienen dem Einf\"ugen, Entfernen und Aufsuchen von Elementen, dem Auffinden der Elemente mit dem minimalen und maximalen Schl\"ussel sowie dem Bestimmen des Vorg\"angers und Nachfolgers anhand des Schl\"usselwertes eines gegebenen Elementes.
+Diese Operationen lie\ss en sich nat\"urlich auch problemlos mittels einer verketteten Liste implementieren.
+Jedoch ist dabei z.B.\ zum Auffinden eines Elementes mit einem gegebenen Schl\"usselwerte eine lineare Suche \"uber die gesamte Liste erforderlich.
+Wir werden sehen, da\ss\ bin\"are Suchb\"aume drastisch bessere Laufzeiten erm\"oglichen.
+Bestenfalls kann jede der vorgenannten Operationen l\"a\ss t in Zeit $O(\log n)$ ausgef\"uhrt werden, wobei $n$ die Zahl der Elemente ist.
+
+\subsection{Bin\"arb\"aume}\label{sec_binary_trees}
+
+Bin\"arb\"aume bilden den Ausgangspunkt f\"ur die Konstruktion bin\"arer Suchb\"aume.
+
+\begin{definition}\label{def_binary_tree}
+	Ein \emph{Bin\"arbaum} ist ein Baum $T$ mit einer ausgezeichneten \emph{Wurzel} $r\in V(T)$, der folgende Bedingungen erf\"ullt.
+\begin{itemize}
+			\item die Wurzel hat Grad $d_T(r)\leq2$.
+			\item jeder Knoten $v\in V(T)\setminus\{r\}$ hat Grad $\leq3$.
+		\end{itemize}
+\end{definition}
+
+Die \alert{Kinder} eines Knotens $v$ sind die Nachbarn $w\in\partial v$, die nicht auf dem k\"urzsten Pfad von $v$ nach $r$ liegen. 
+Alle Nachbarn der Wurzel $r$ sind Kinder von $r$.
+Jeder Knoten hat also h\"ochstens zwei Kinder.
+
+Der \alert{Elternknoten} eines Knotens $v\in V(T)\setminus\{r\}$ ist der unmittelbare Nachbar von $v$ auf dem k\"urzesten Pfad zu $r$.
+Die Wurzel $r$ hat keinen Elternknoten.
+Da ein nicht vorhandener Knoten durch das Symbol $\emptyset$ gekennzeichnet wird, kann man aber auch formal sagen, da\ss\ $\emptyset$ der Elternknoten von $r$ ist.
+Umgekehrt nennen wir einen Knoten $w$ einen \emph{Nachkommen} eines Knotens $v$, falls $v$ auf dem k\"urzesten Pfad von $w$ zur Wurzel $r$ liegt.
+Insbesondere ist $w=v$ ein Nachkomme von $v$.
+
+Die \emph{H\"ohe} $H(T)$ eines Bin\"arbaums $T$ ist der maximale Abstand von der Wurzel zu einem Blatt.
+Nat\"urlich gilt allgemein $H(T)\leq n$.
+Andererseits zeigt eine einfache Induktion, da\ss\ $H(T)=\Omega(\log n)$.
+
+\subsection{Suchb\"aume}\label{sec_search_trees}
+
+Sei $\Sigma$ eine Menge paarweise vergleichbarer Schl\"ussel $\sigma$.
+
+\begin{definition}\label{def_binary_tree}
+	Ein \emph{bin\"arer Suchbaum} ist ein Bin\"arbaum $T$ mit einer ausgezeichneten \emph{Wurzel} $r\in V(T)$, der folgende Bedingungen erf\"ullt.
+	\begin{itemize}
+		\item jeder Knoten $v$ hat einen ausgezeichneten Schl\"ussel $s(v)\in\Sigma$.
+		\item die Schl\"ussel $(s(v))_{v\in V(T)}$ sind paarweise verschieden.
+		\item jeder Knoten $v$ hat h\"ochstens ein Kind $x$ mit $s(x)<s(v)$ und h\"ochstens ein Kind $y$ mit $s(y)>s(v)$; wir nennen $x$ das \emph{linke Kind} von $v$ und $y$ das \emph{rechte Kind}.
+		\item wenn ein Knoten $v\in V(T)$ ein linkes Kind $x$ besitzt und $z$ ein Nachkomme von $x$ ist, dann gilt $s(z)<s(v)$.
+		\item wenn ein Knoten $v\in V(T)$ ein rechtes Kind $y$ besitzt und $z$ ein Nachkomme von $y$ ist, dann gilt $s(z)>s(v)$.
+	\end{itemize}
+\end{definition}
+
+Wir bezeichnen den Elternknoten eines Knotens $v$ mit $\pi(v)$.
+Das linke Kind von $v$ wird durch $\lambda(v)$ bezeichnet, das rechte Kind durch $\rho(v)$.
+
+F\"ur einen Knoten $v$ eines bin\"aren Suchbaums, der ein linkes Kind $\lambda(v)\neq\emptyset$ besitzt, nennen wir den auf der Menge der Nachkommen von $\lambda(v)$ induzierten Unterbaum den \emph{linken Unterbaum}.
+Falls $v$ ein rechtes Kind $\rho(v)\neq\emptyset$ besitzt, nennen wir entsprechend den auf der Menge der Nachkommen von $\rho(v)$ induzierten Unterbaum den \emph{rechten Unterbaum}.
+Aus \Def~\ref{def_binary_tree} folgt, da\ss\ die Schl\"ussel der Knoten im linken Unterbaum von $v$ stets kleiner sind als der Schl\"ussel von $v$.
+Entsprechend sind die Schl\"ussel der Knoten im rechten Unterbaum von $v$ stets gr\"o\ss er als der Schl\"ussel von $v$ (``Suchbaumeigenschaft'').
+
+Wir k\"onnen bin\"are Suchb\"aume durch eine Datenstruktur implementieren, die f\"ur jeden Knoten neben dem Schl\"usselwert drei Zeiger enth\"alt: einen Zeiger auf den Elternknoten, einen auf das linke sowie einen auf das rechte Kind.
+Falls die entsprechenden Knoten nicht existieren, wird der Zeiger auf einen Dummywert $\emptyset$ gesetzt.
+
+Die Suchbaumeigenschaft erm\"oglicht unmittelbar einige wichtige Opterationen.
+Zun\"achst k\"onnen wir die Schl\"usselwerte geordnet ausgeben.
+
+\begin{algorithm}\upshape {\tt PrintOrdered}. {\em Eingabe:} ein bin\"arer Suchbaum $(T,r)$.\label{alg_print}
+	{\em Ausgabe:} die Elemente in aufsteigender Reihenfolge.
+	\begin{enumerate}
+		\item falls $r\neq\emptyset$
+		\item $\quad$wende {\tt PrintOrdered} auf den linken Unterbaum von $r$ an
+		\item $\quad$gib $s(r)$ aus
+		\item $\quad$wende {\tt PrintOrdered} auf den rechten Unterbaum von $r$ an
+	\end{enumerate}
+\end{algorithm}
+
+Obiges Verfahren durchl\"auft den Baum in \"ahnlicher Weise wie Tiefensuche, beginnend mit jeweils dem linken Kind.
+Der Schl\"ussel von $r$ wird dabei zwischen den Schl\"usseln der Kinder ausgegeben.
+Die Suchbaumeigenschaft stellt sich, da\ss\ so genau die geordnete Liste der Schl\"ussel ausgegeben wird.
+
+Ebenso einfach ist es, das Element mit minimalem oder maximalem Schl\"usselwert zu finden.
+Um ersteres zu finden, folgen wir den Zeigern auf das linke Kind, bis einer dieser Zeiger $\emptyset$ ist.
+Der erste Knoten mit dieser Eigenschaft tr\"agt den minimalen Schl\"usselwert.
+F\"ur das Maximum gehen wir analog vor.
+
+Ein \"ahnliches Verfahren findet ein Element mit einem gegebenen Schl\"ussel in dem Baum, falls eines existiert.
+
+\begin{algorithm}\upshape {\tt Search}. {\em Eingabe:} ein bin\"arer Suchbaum $(T,r)$ und ein Schl\"ussel $\sigma$.\label{alg_print}
+	{\em Ausgabe:} ein Knoten $v\in V(T)$ mit $s(v)=\sigma$, falls einer existiert
+	\begin{enumerate}
+		\item falls $s(r)=\sigma$, gib $r$ aus und halte.
+		\item falls $s(r)>\sigma$
+		\item \quad falls $r$ ein linkes Kind $\lambda(r)\neq\emptyset$ hat
+		\item \qquad f\"uhre {\tt Search} rekursiv auf dem linken Teilbaum von $r$ aus
+		\item \quad sonst gib $\emptyset$ aus
+		\item falls $s(r)<\sigma$
+		\item \quad falls $r$ ein rechtes Kind $\rho(r)$ hat
+		\item \qquad f\"uhre {\tt Search} rekursiv auf dem rechten Teilbaum von $r$ aus
+		\item \quad sonst gib $\emptyset$ aus
+	\end{enumerate}
+\end{algorithm}
+
+Wir durchlaufen also den Baum von der Wurzel aus und biegen jeweils nach links ab, wenn $\sigma$ kleiner ist als der aktuelle Schl\"usselwert, und andernfalls nach rechts.
+Wenn es nicht mehr weitergeht und wir $\sigma$ nicht gefunden haben, ist kein Knoten mit Schl\"usselwert $\sigma$ vorhanden und wir geben $\emptyset$ aus.
+
+Eine weitere Aufgabe besteht darin, den \emph{Nachfolger} eines Knotens $v$ in $T$ zu finden.
+Der Nachfolger ist der Knoten $w$, so da\ss\  $s(w)>s(v)$ und $s(w)\leq s(z)$ f\"ur alle $z\in V(T)$ mit $s(z)>s(v)$.
+In Worten: $w$ ist der Knoten mit dem kleinsten Schl\"usselwert, der gr\"o\ss er ist als der Schl\"usselwert von $v$.
+Falls $v$ den maximalen Schl\"usselwert in $T$ besitzt, definieren wir $w=\emptyset$.
+Der \emph{Vorg\"anger} eines Knotens $v$ ist entsprechend definiert als der Knoten $u$ mit dem gr\"o\ss ten Schl\"usselwert, der kleiner ist als der Schl\"usselwert von $v$, bzw.\ $\emptyset$, falls kein solcher Knoten existiert.
+
+\begin{algorithm}\upshape {\tt Successor}. {\em Eingabe:} ein bin\"arer Suchbaum $(T,r)$ und ein Knoten $v$.\label{alg_print}
+	{\em Ausgabe:} der Nachfolger von $v$.
+	\begin{enumerate}
+		\item falls $v$ ein rechtes Kind $\rho(v)$ hat.
+		\item $\quad$finde das Minimum im rechten Teilbaum von $v$ und halte.
+		\item solange $\pi(v)\neq\emptyset$ und $v$ das rechte Kind von $\pi(v)$ ist, setze $v=\pi(v)$.
+		\item gib $\pi(v)$ aus.
+	\end{enumerate}
+\end{algorithm}
+
+Falls $v$ ein rechtes Kind hat, ist der Nachfolger von $v$ nach der Suchbaumeigenschaft im rechten Teilbaum zu finden.
+Andernfalls steigen wir von $v$ aus zur Wurzel hin auf, bis wir dabei den Elternknoten $\pi(v)$ ``von links'' betreten.
+Der Elternknoten $\pi(v)$ ist dann der Nachfolger von $v$.
+Falls wir keinen solchen Elternknoten finden, ist  $v$ das Maximum und hat somit keinen Nachfolger.
+Analog finden wir den Vorg\"anger eines Knotens:
+
+\begin{algorithm}\upshape {\tt Predecessor}. {\em Eingabe:} ein bin\"arer Suchbaum $(T,r)$ und ein Knoten $v$.\label{alg_print}
+	{\em Ausgabe:} der Vorg\"anger von $v$.
+	\begin{enumerate}
+		\item falls $v$ ein linkes Kind $\rho(v)$ hat.
+		\item $\quad$finde das Maximum im linken Teilbaum von $v$ und halte.
+		\item solange $\pi(v)\neq\emptyset$ und $v$ das linke Kind von $\pi(v)$ ist, setze $v=\pi(v)$.
+		\item gib $\pi(v)$ aus.
+	\end{enumerate}
+\end{algorithm}
+
+Die Laufzeit von {\tt PrintOrdered} ist $O(|V(T)|)$, weil jeder Knoten genau einmal besucht wird.
+Die anderen Operationen {\tt Search}, {\tt Minimum}, {\tt Maximum}, {\tt Successor}, {\tt Predecessor} haben Laufzeit $O(H(T))$.
+
+\subsection{Einf\"ugen und Entfernen}\label{sec_binary_insert}
+
+Die Operationen, die neue Elemente einf\"ugen oder existierende Elemente l\"oschen, sind ein wenig aufwendiger.
+Zum Einf\"ugen eines neuen Schl\"ussels $\sigma$ gehen wir im Prinzip genauso vor, als w\"urden wir $\sigma$ suchen.
+An der Stelle im Baum, wo wir beim Suchen auf einen $\emptyset$-Zeiger sto\ss en w\"urden, f\"ugen wir den neuen Knoten ein.
+
+\begin{algorithm}\upshape {\tt Insert}. {\em Eingabe:} ein bin\"arer Suchbaum $(T,r)$ und ein Schl\"ussel $\sigma\in\Sigma$.\label{alg_insert}
+	\begin{enumerate}
+		\item lege einen neuen Knoten $z$ an mit $s(z)=\sigma$
+		\item setze $x=r$ und $y=\emptyset$.
+		\item solange $x\neq\emptyset$
+		\item $\quad$setze $y=x$
+		\item $\quad$falls $\sigma<s(x)$ setze $x=\lambda(x)$, sonst $x=\rho(x)$
+		\item f\"uge Knoten $z$ als Kind von $y$ ein, falls $y\neq\emptyset$, bzw.\ mache $z$ zur Wurzel, falls $y=\emptyset$
+	\end{enumerate}
+\end{algorithm}
+
+Noch etwas komplizierter ist das L\"oschen eines gegebenen Knotens $v$.
+Dabei m\"ussen wir nach der Zahl der Kinder von $v$ unterscheiden.
+Falls $v$ gar keine Kinder hat, k\"onnen wir $v$ einfach l\"oschen (und nat\"urlich den entsprechenden Kind-Zeiger seines Elternknotens $\pi(v)$ auf $\emptyset$ setzen).
+Falls $v$ genau ein Kind hat, tritt einfach dieses Kind an die Stelle von $v$.
+Falls schlie\ss lich $v$ zwei Kinder hat, tritt der Nachfolger von $v$ an die Stelle von $v$.
+Der Nachfolger $y$ ist im rechten Unterbaum von $v$ zu finden (weil $v$ zwei Kinder hat) und hat selbst kein linkes Kind (aufgrud der Suchbaumeigenschaft).
+Also nimmt $y$ die Stelle von $v$ ein, und das (rechte) Kind von $y$ tritt an die Position, an der vormals $y$ stand.
+
+\begin{algorithm}\upshape {\tt Delete}. {\em Eingabe:} ein bin\"arer Suchbaum $(T,r)$ und ein zu l\"oschender Knoten $v$.\label{alg_del}
+	\begin{enumerate}
+		\item falls $\lambda(v)=\emptyset$ oder $\rho(v)=\emptyset$ setze $y=v$; sonst setze $y=\mbox{\tt Successor}(T,r,v)$
+		\item falls $\lambda(y)\neq\emptyset$ setze $x=\lambda(y)$ sonst $x=\rho(y)$
+		\item falls $x\neq\emptyset$ setze $p(x)=p(y)$
+		\item falls $p(y)=\emptyset$ setze $r=x$ als die neue Wurzel
+		\item falls $p(y)\neq\emptyset$ und $y$ ein linkes Kind ist, setze $\lambda(p(y))=x$
+		\item falls $p(y)\neq\emptyset$ und $y$ ein rechtes Kind ist, setze $\rho(p(y))=x$
+		\item setze $s(v)=s(y)$ und l\"osche $y$
+	\end{enumerate}
+\end{algorithm}
+
+Zur Implementation beachte man, da\ss\ der Speicherplatz f\"ur den Knoten $y$ freizugeben ist, {\em nicht} der des Knotens $v$, der eigentlich gel\"oscht werden sollte (es sei denn, $v=y$, was der Fall ist, wenn $v$ weniger als zwei Kinder hatte).
+Dies liegt daran, da\ss\ wir in dem Schl\"usselwert des Knotens $v$ den Wert von $y$ speichern (Zeile 6) und somit $v$ in die Rolle von $y$ schl\"upft.
+{\tt Insert} und {\tt Delete} haben Laufzeit $O(H(T))$.
+
+Die in diesem Abschnitt vorgestellte Konstruktion bin\"arer Suchb\"aume stellt {\em nicht} sicher, da\ss\ $H(T)=O(\log |V(T)|)$.
+Betrachte beispielsweise den Fall $\Sigma=\NN$.
+Wenn wir die Zahlen $1,\ldots,n\in\NN$ in dieser Reihenfolge mittels {\tt Insert} einf\"ugen, degeneriert $T$ zu einem Pfad auf $n$ Knoten und hat somit H\"ohe $n-1$.
+
+\section{Rot-Schwarz-B\"aume}\label{sec_redblack}
+
+\noindent
+Bin\"are Suchb\"aume sind im allegemeinen nicht von optimaler H\"ohe $H(T)=O(\log|V(T)|)$, vgl.\ das Beispiel am Ende von Abschitt~\ref{sec_binary}.
+Rot-schwarz-B\"aume hingegen stellen durch modifizierte {\tt Insert} und {\tt Delete}-Operationen sicher, da\ss\ $H(T)=O(\log|V(T)|)$.
+Zu diesem Zweck erh\"alt jeder Knoten als weiteres Attribut eine Farbe (rot oder schwarz).
+Wir stellen weiterhin gewisse Bedingungen an die erlaubten F\"arbungen.
+Dieser Abschnitt ist angelehnt an \cite{Cormen}.
+
+\subsection{Rot-Schwarz-Bedingungen}\label{sec_rb_cond}
+
+Wir beginnen mit der Definition eines rot-schwarz-Baums (``red black tree'').
+
+\begin{definition}\label{def_rb}
+	Ein rot-schwarz-Baum ist ein bin\"arer Suchbaum $T$, dessen Knoten $v\in V(T)$ als zust\"atzliches Attribut eine Farbe $c(v)$ haben, so da\ss\ die Farben die folgenden Bedingungen erf\"ullen.
+	\begin{description}
+		\item[RB1] jeder Knoten ist entweder rot oder schwarz gef\"arbt: $c(v)\in\{\red,\black\}$ f\"ur alle $v\in V(G)$.
+		\item[RB2] die Wurzel ist schwarz: $c(r)=\black$
+		\item[RB3] jeder $\emptyset$-Zeiger auf ein Kind z\"ahlt als schwarzer Knoten (Blatt)
+		\item[RB4] rote Knoten haben nur schwarze Kinder
+		\item[RB5] jeder Pfad von der Wurzel zu einem Blatt enth\"ahlt dieselbe Zahl schwarzer Knoten
+	\end{description}
+\end{definition}
+
+Wir k\"onnen rot-schwarz-B\"aume implementieren, indem jeder Knoten ein Bit f\"ur die Farbe mitf\"uhrt.
+Au\ss erdem speichern wir {\em einen} zus\"atzlichen Knoten, um $\emptyset$-Zeiger zu repr\"asentieren.
+Dieser Knoten dient als Repr\"asentant der Bl\"atter f\"ur {\bf RB3}.
+Nat\"urlich k\"onnte man prinzipiell f\"ur jeden $\emptyset$-Zeiger des eigentlichen bin\"aren Suchbaums einen eigenen Hilfsknoten einf\"uhren; dies w\"urde jedoch den Speicherbedarf erheblich steigern.
+Zu beachten ist, da\ss\ der Elternzeiger des $\emptyset$-Knotens im allgemeinen nicht korrekt gesetzt ist.
+
+\begin{figure}
+	\includegraphics[height=50mm]{./images/redblack1.pdf}
+	\caption{Ein rot-schwarz-Baum. Die rechteckigen Knoten repr\"asentieren die $\emptyset$-Zeiger f\"ur {\bf RB3}.}
+\end{figure}
+
+\begin{lemma}\label{lem_rb}
+	Ein rot-schwarz-Baum mit $n$ Knoten hat H\"ohe $O(\log n)$.
+\end{lemma}
+\begin{proof}
+	Dies folgt unmittelbar aus {\bf RB4} und {\bf RB5}.
+\end{proof}
+
+\subsection{Rotationen}\label{sec_rb_rot}
+Rotationen sind eine Hilfsoperation, die wir f\"ur die {\tt Insert} und {\tt Delete}-Operationen auf rot-schwarz-B\"aumen ben\"otigen.
+Rotationen erhalten {\em nicht unbedingt} die Eigenschaften {\bf RB1}--{\bf RB5}.
+Abbildung~\ref{fig_rotate} stellt die Operationen dar.
+Rotationen k\"onnen in Zeit $O(1)$ ausgef\"uhrt werden, weil nur einige Zeiger auf Kind/Elternknoten ``umgeh\"angt'' werden m\"ussen.
+
+\begin{figure}
+	\includegraphics[height=30mm]{./images/rotate1.pdf}
+	\caption{Eine Linksrotation um $v$ und eine Rechtsrotation um $w$}\label{fig_rotate}
+\end{figure}
+
+\subsection{Einf\"ugen neuer Knoten}\label{sec_rb_insert}
+
+Zun\"achst wird der neue Knoten genau wie in einem gew\"ohnlichen bin\"aren Suchbaum eingef\"ugt (s.\ Abschnitt~\ref{sec_binary_insert}).
+Der neu eingef\"ugte Knoten wird {\em rot} gef\"arbt.
+Dadurch k\"onnen Eigenschaften {\bf RB2} oder {\bf RB4} verletzt werden.
+Daher ist anschlie\ss end die folgende ``Aufr\"aumaktion'' notwendig.
+
+\begin{algorithm}\upshape {\tt InsertCleanup}. {\em Eingabe:} $(T,r)$ und der eingef\"ugte Knoten $z$.
+	\begin{enumerate}
+		\item solange $\pi(z)$ rot ist
+		\item $\quad$wenn $\pi(z)$ ein linkes Kind ist
+		\item $\qquad$sei $y$ das rechte Kind von $\pi(\pi(z))$
+		\item $\qquad$falls $y$ rot ist, f\"arbe $y$ und $\pi(z)$ schwarz und $\pi(\pi(z))$ rot; setze $z=\pi(\pi(z))$
+		\item $\qquad$sonst:
+		\item $\quad\qquad$falls $z$ ein rechtes Kind ist, setze $z=\pi(z)$ und f\"uhre dann eine Linksrotation um $z$ aus
+		\item $\quad\qquad$f\"arbe $\pi(z)$ schwarz und $\pi(\pi(z))$ rot
+		\item $\quad\qquad$f\"uhre eine Rechtsrotation um $\pi(\pi(z))$ aus
+		\item $\quad$sonst (wenn also $\pi(z)$ ein rechtes Kind ist) \hfill // symmetrisch, mit links/rechts vertauscht
+		\item $\qquad$sei $y$ das linke Kind von $\pi(\pi(z))$
+		\item $\qquad$falls $y$ rot ist, f\"arbe $y$ und $\pi(z)$ schwarz und $\pi(\pi(z))$ rot; setze $z=\pi(\pi(z))$
+		\item $\qquad$sonst:
+		\item $\quad\qquad$falls $z$ ein linkes Kind ist, setze $z=\pi(z)$ und f\"uhre dann eine Rechtsrotation um $z$ aus
+		\item $\quad\qquad$f\"arbe $\pi(z)$ schwarz und $\pi(\pi(z))$ rot
+		\item $\quad\qquad$f\"uhre eine Linksrotation um $\pi(\pi(z))$ aus
+		\item f\"arbe die Wurzel des Baums schwarz
+	\end{enumerate}
+\end{algorithm}
+
+Die Operationen hat Laufzeit $O(\log n)$ und stellt sicher, da\ss\ anschlie\ss end die Bedingungen {\bf RB1--RB5} erf\"ullt sind.
+Auf den Folien zur Vorlesung sind einige Beispiele zu finden.
+
+\subsection{Entfernen von Knoten}\label{sec_rb_delete}
+
+Ebenso wie beim Einf\"ugen wird auch beim Entfernen zun\"achst wie im Fall gew\"ohnlicher bin\"arer Suchb\"aume verfahren.
+Allerdings ist wiederum eine Aufr\"aumaktion notwendig. 
+Die folgende Operationen wird aufgerufen f\"ur den Knoten $x$ aus Algorithmus~\ref{alg_del}.
+
+\begin{algorithm}\upshape {\tt DeleteCleanup}. {\em Eingabe:} $(T,r)$ und der Knoten $x$.
+	\begin{enumerate}
+		\item solange $x$ nicht die Wurzel von $T$ ist und $x$ schwarz ist
+		\item $\quad$falls $x$ ein linkes Kind ist
+		\item $\qquad$setze $w=\rho(\pi(x))$ \hfill//Geschwisterkonten von $x$
+		\item $\qquad$falls $w$ rot ist
+		\item $\quad\qquad$f\"arbe $w$ schwarz und $\pi(x)$ rot
+		\item $\quad\qquad$f\"uhre eine Linksrotation um $\pi(x)$ aus und setze dann $w=\rho(\pi(x))$
+		\item $\qquad$falls $\lambda(w)$ und $\rho(w)$ beide schwarz sind, f\"arbe $w$ rot und setze $x=\pi(x)$
+		\item $\qquad$sonst
+		\item $\quad\qquad$falls $\rho(w)$ schwarz ist
+		\item $\qquad\qquad$f\"arbe $\lambda(w)$ schwarz und $w$ rot 
+		\item $\qquad\qquad$f\"uhre eine Rechtsrotation um $w$ aus
+		\item $\qquad\qquad$setze $w=\rho(\pi(x))$
+		\item $\quad\qquad$f\"arbe $w$ mit derselben Farbe wie $\pi(x)$
+		\item $\quad\qquad$f\"arbe $\pi(x)$ und $\rho(w)$ schwarz
+		\item $\quad\qquad$f\"uhre eine Linksrotation um $\pi(x)$ aus
+		\item $\quad\qquad$setze $x$ auf die Wurzel von $T$ (und breche somit die ``solange''-Schleife ab)
+		\item $\quad$sonst (falls $x$ ein rechtes) Kind ist
+		\item $\qquad${\em wie Schritte (2)--(16) mit ``links'' und ``rechts'' vertauscht}
+		\item f\"arbe $x$ schwarz
+	\end{enumerate}
+\end{algorithm}
+
+Auch die {\tt DeleteCleanup}-Operation hat Laufzeit $O(\log n)$.
+Sie stellt die Bedingungen {\bf RB1--RB5} wieder her.
+Auf den Folien zur Vorlesung sind einige Beispiele zu finden.
+
+
 \begin{thebibliography}{99}
 	\bibitem{Cormen}T.~Cormen, C.~Leiserson, R.~Rivest, C.~Stein: Introduction to algorithms. MIT Press.
 	\bibitem{Diestel}R.~Diestel: Graphentheorie. Springer.
@@ -2773,4 +3084,182 @@ Wiederum gibt es effizientere Algorithmen f\"ur dieses Problem; mehr dazu z.B.\ 
 	\bibitem{Papadimitriou}C.~Papadimitriou: Computational complexity. Addison Wesley.
 \end{thebibliography}
 
+
 \end{document}
+
+\begin{frame}\frametitle{\mytitle}
+	\includegraphics[height=30mm]{./images/redblack1.pdf}
+	\hfill\includegraphics[height=30mm]{./images/redblack2.pdf}
+	\begin{exampleblock}{{\tt Insert}: Einf\"ugen eines neuen Knotens}
+		\begin{itemize}
+			\item zun\"achst verfahren wir genau wie bei ``gew\"ohnlichen'' bin\"aren Suchb\"aumen
+			\item der neue Knoten wird rot gef\"arbt
+			\item die $\emptyset$-pointer werden auf das $\emptyset$-Objekt gesetzt
+			\item \alert{Vorsicht:} RB2 oder RB4 k\"onnten verletzt sein!
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{exampleblock}{Wiederherstellen von RB2 und RB4}
+		\begin{itemize}
+			\item solange der Elternknoten des eingef\"ugten Knotens $v$ rot, ist, betrachten wir drei F\"alle
+			\item \alert{Fall 1:} die ``Tante'' $w$ von $v$ ist rot
+			\item \alert{Fall 2:} $w$ ist schwarz und $v$ ist ein rechtes Kind
+			\item \alert{Fall 3:} $w$ ist schwarz und $v$ ist ein linkes Kind
+		\end{itemize}
+		\itshape die drei F\"alle lassen sich am besten anhand von Beispielen erkl\"aren; dabei nehmen wir an, da\ss\ der Elternknoten von $v$ ein linkes Kind ist; sonst sind ``links'' und ``rechts'' jeweils zu vertauschen!
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\includegraphics[height=30mm]{./images/redblack_insert1.pdf}\hfill\includegraphics[height=30mm]{./images/redblack_insert1a.pdf}
+	\begin{exampleblock}{Fall 1: roter Elternknoten und rote Tante}
+		\begin{itemize}
+			\item f\"arbe Elternknoten und die Tante schwarz
+			\item f\"arbe den Gro\ss elternknoten $u$ rot
+			\item f\"uhre die Wiederherstellung rekursiv f\"ur $u$ aus
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\includegraphics[height=30mm]{./images/redblack_insert2.pdf}\hfill\includegraphics[height=30mm]{./images/redblack_insert2a.pdf}
+	\begin{exampleblock}{Fall 2: roter Elternknoten, schwarze Tante, rechtes Kind}
+		\begin{itemize}
+			\item f\"uhre eine Linksrotation um $v$ durch
+			\item weiter mit Fall 3
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\includegraphics[height=30mm]{./images/redblack_insert2a.pdf}\hfill\includegraphics[height=30mm]{./images/redblack_insert3a.pdf}
+	\begin{exampleblock}{Fall 3: roter Elternknoten, schwarze Tante, linkes Kind}
+		\begin{itemize}
+			\item f\"arbe den Elternknoten von $v$ schwarz und den Gro\ss elternknoten $u$ rot
+			\item dann Rechtsrotation um den Gro\ss elternknoten $u$
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{exampleblock}{Abschlu\ss\ Wiederherstellung}
+		\begin{itemize}
+			\item am Ende der Wiederherstellungsoperation wird die Wurzel schwarz gef\"arbt
+			\item dadurch wird RB2 garantiert
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{block}{Proposition}
+Die Einf\"ugeoperation inkl.\ Wiederherstellung hat Laufzeit $O(\log n)$ und stellt die Eigenschaften RB1--RB5 her.
+	\end{block}
+\begin{exampleblock}{Beweis}
+		\begin{itemize}
+			\item in den F\"allen 2 und 3 ist die Gesamtlaufzeit $O(1)$
+			\item in Fall 1 bewegt sich $v$ auf die Wurzel zu
+			\item wir stoppen also nach $O(\log n)$ Schritten
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{overprint}
+		\onslide<1>
+		\begin{exampleblock}{Entfernen eines Knotens $z$}
+			\begin{itemize}
+				\item verfahre wie beim L\"oschen von $z$ in einem bin\"aren Suchbaum
+				\item sei $y$ der Knoten, der die Stelle von $z$ einnimmt
+				\item $y$ \"ubernimmt die Farbe von $z$
+				\item sei $v$ das Kind von $y$, bzw.\ $\emptyset$, falls $y$ kein Kind hat
+				\item \itshape dabei identifizieren wir $\emptyset$ mit dem $\emptyset$-Objekt des Baums
+			\end{itemize}
+		\end{exampleblock}
+		\onslide<2>
+		\begin{exampleblock}{Wenn $y$ schwarz war, k\"onnen Verletzungen von RB1--RB5 eintreten}
+			\begin{itemize}
+				\item m\"oglicherweise war $y$ die Wurzel; das Kind $v$ tritt an die Stelle von $y$, wird somit die neue Wurzel, ist aber wom\"oglich rot; also RB2 verletzt
+				\item wenn $v$ und der Elternknoten $u$ von $z$ rot sind, ist RB4 verletzt
+				\item die Pfade, die vormals $y$ enthalten haben, enthalten jetzt einen schwarzen Knoten weniger; somit RB5 verletzt
+				\item wir k\"onnen uns $v$, der an die Stelle von $y$ tritt, als einen ``doppelt schwarzen'' Knoten vorstellen
+				\item \itshape wir unterscheiden vier F\"alle, die nach der Farbe des Schwesterknotens $w$ von $v$ und den Farben der Kinder von $w$ unterscheiden
+				\item \itshape dabei nehmen wir an, da\ss\ $v$ ein linkes Kind ist; andernfalls sind ``links'' und ``rechts'' zu vertauschen
+			\end{itemize}
+		\end{exampleblock}
+	\end{overprint}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\includegraphics[height=30mm]{./images/rbtree_del_1.pdf}\hfill\includegraphics[height=30mm]{./images/rbtree_del_1a.pdf}
+	\begin{exampleblock}{Fall 1: roter Schwesterknoten $w$}
+		\begin{itemize}
+			\item vertausche die Farben von $w$ und $u$
+			\item f\"uhre eine Linksrotation um $u$ aus
+			\item fahre mit Fall 2/3/4 fort, wobei nun $w=b$ der neue Schwesterknoten ist
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\includegraphics[height=30mm]{./images/rbtree_del_2.pdf}\hfill\includegraphics[height=30mm]{./images/rbtree_del_2a.pdf}
+	\begin{exampleblock}{Fall 2: schwarzer Schwesterknoten $w$, beide Kinder von $w$ sind schwarz}
+		\begin{itemize}
+			\item f\"arbe den Schwesterknoten $w$ rot
+			\item fahre rekursiv mit $v=u$ fort
+			\item (der Knoten $u$ kann rot oder schwarz sein)
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\includegraphics[height=30mm]{./images/rbtree_del_3.pdf}\hfill\includegraphics[height=30mm]{./images/rbtree_del_3a.pdf}
+	\begin{exampleblock}{Fall 3: schwarzer Schwesterknoten $w$, linkes Kind von $w$ rot, rechtes Kind schwarz}
+		\begin{itemize}
+			\item vertausche die Farben von $w$ und seinem linken Kind
+			\item Rechtsrotation um $w$
+			\item fahre fort mit Fall 4, mit neuem Schwesterknoten $w=a$
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\includegraphics[height=30mm]{./images/rbtree_del_4.pdf}\hfill\includegraphics[height=30mm]{./images/rbtree_del_4a.pdf}
+	\begin{exampleblock}{Fall 4: schwarzer Schwesterknoten $w$, rechtes Kind von $w$ rot}
+		\begin{itemize}
+			\item Linksrotation um $u$
+			\item Farben anpassen $\leadsto$ Bedingung RB5 nun erf\"ullt; setze $v$ auf die Wurzel des Baums
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{exampleblock}{Abschlu\ss}
+		\begin{itemize}
+			\item sobald der aktuelle Knoten $v$ schwarz gef\"arbt ist, sind wir fertig
+			\item wenn $v$ die Wurzel ist, f\"arben wir $v$ schwarz und sind dann ebenfalls fertig
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{block}{Proposition}
+		Die Laufzeit zum Entfernen eines Knotens ist $O(\log n)$.
+	\end{block}
+	\begin{exampleblock}{Beweis}
+		\begin{itemize}
+			\item in den F\"allen 1,3 und 4 h\"alt der Algorithmus nach $O(1)$ Schritten
+			\item in Fall 2 bewegen wir uns auf die Wurzel zu
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{\mytitle}
+	\begin{exampleblock}{Zusammenfassung}
+		\begin{itemize}
+			\item red black trees sind extrem effiziente selbstbalancierende bin\"are Suchb\"aume
+			\item \alert{Beispielanwendung:} Prozessorscheduling im Linux-Kern
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
