@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.25">
-<info created="D:20220620084021" modified="D:20220620132522"/>
+<info created="D:20220620084021" modified="D:20220705162648"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -322,31 +322,31 @@ h
 128.014 640.679 m
 102.738 580.297 l
 </path>
-<path stroke="black" pen="fat">
+<path stroke="black" dash="dashed" pen="fat">
 128.716 640.679 m
 150.482 581.351 l
 </path>
-<path matrix="1 0 0 1 -149.972 -72.6892" stroke="black" pen="fat">
+<path matrix="1 0 0 1 -149.972 -72.6892" stroke="black" dash="dashed" pen="fat">
 254.043 639.275 m
 231.575 575.734 l
 </path>
-<path matrix="1 0 0 1 -149.972 -72.6892" stroke="black" pen="fat">
+<path matrix="1 0 0 1 -149.972 -72.6892" stroke="black" dash="dashed" pen="fat">
 254.043 638.923 m
 276.51 574.33 l
 </path>
-<path stroke="black" pen="fat">
+<path stroke="black" dash="dashed" pen="fat">
 351.987 636.466 m
 325.307 575.734 l
 </path>
-<path stroke="black" pen="fat">
+<path stroke="black" dash="dashed" pen="fat">
 352.338 638.572 m
 371.646 571.872 l
 </path>
-<path stroke="black" pen="fat">
+<path stroke="black" dash="dashed" pen="fat">
 447.122 637.519 m
 427.814 572.574 l
 </path>
-<path stroke="black" pen="fat">
+<path stroke="black" dash="dashed" pen="fat">
 446.771 639.275 m
 475.909 570.819 l
 </path>
@@ -355,7 +355,7 @@ h
 193.661 703.517 l
 125.557 638.221 l
 </path>
-<path stroke="0" pen="fat">
+<path stroke="0" dash="dashed" pen="fat">
 192.608 703.517 m
 255.447 635.764 l
 </path>
@@ -392,70 +392,6 @@ h
 <path matrix="1 0 0 1 303.918 -131.942" stroke="black" fill="black" pen="fat">
 22.6274 0 0 22.6274 144 768 e
 </path>
-<path matrix="1 0 0 1 178.68 51.5312" stroke="black" fill="black" pen="fat">
-64.4734 595.042 m
-64.4734 564.851 l
-93.2598 564.851 l
-93.2598 595.042 l
-h
-</path>
-<text matrix="1 0 0 1 133.043 144.912" transformations="translations" pos="118.887 478.492" stroke="white" type="label" width="12.394" height="18.597" depth="1.37" valign="baseline" size="Huge" style="math">\emptyset</text>
-<path matrix="1 0 0 1 70.211 -1.40414" stroke="black" fill="black" pen="fat">
-64.4734 595.042 m
-64.4734 564.851 l
-93.2598 564.851 l
-93.2598 595.042 l
-h
-</path>
-<text matrix="1 0 0 1 24.574 91.9763" transformations="translations" pos="118.887 478.492" stroke="white" type="label" width="12.394" height="18.597" depth="1.37" valign="baseline" size="Huge" style="math">\emptyset </text>
-<path matrix="1 0 0 1 1.33185 -77.6037" stroke="black" fill="black" pen="fat">
-64.4734 595.042 m
-64.4734 564.851 l
-93.2598 564.851 l
-93.2598 595.042 l
-h
-</path>
-<text matrix="1 0 0 1 -44.3051 15.7766" transformations="translations" pos="118.887 478.492" stroke="white" type="label" width="12.394" height="18.597" depth="1.37" valign="baseline" size="Huge" style="math">\emptyset </text>
-<path matrix="1 0 0 1 46.6179 -78.6568" stroke="black" fill="black" pen="fat">
-64.4734 595.042 m
-64.4734 564.851 l
-93.2598 564.851 l
-93.2598 595.042 l
-h
-</path>
-<text matrix="1 0 0 1 0.980853 14.7236" transformations="translations" pos="118.887 478.492" stroke="white" type="label" width="12.394" height="18.597" depth="1.37" valign="baseline" size="Huge" style="math">\emptyset </text>
-<path matrix="1 0 0 1 247.844 -5.61665" stroke="black" fill="black" pen="fat">
-64.4734 595.042 m
-64.4734 564.851 l
-93.2598 564.851 l
-93.2598 595.042 l
-h
-</path>
-<text matrix="1 0 0 1 202.207 87.7637" transformations="translations" pos="118.887 478.492" stroke="white" type="label" width="12.394" height="18.597" depth="1.37" valign="baseline" size="Huge" style="math">\emptyset</text>
-<path matrix="1 0 0 1 293.4 -6.93996" stroke="black" fill="black" pen="fat">
-64.4734 595.042 m
-64.4734 564.851 l
-93.2598 564.851 l
-93.2598 595.042 l
-h
-</path>
-<text matrix="1 0 0 1 247.763 86.4405" transformations="translations" pos="118.887 478.492" stroke="white" type="label" width="12.394" height="18.597" depth="1.37" valign="baseline" size="Huge" style="math">\emptyset </text>
-<path matrix="1 0 0 1 349.299 -7.72298" stroke="black" fill="black" pen="fat">
-64.4734 595.042 m
-64.4734 564.851 l
-93.2598 564.851 l
-93.2598 595.042 l
-h
-</path>
-<text matrix="1 0 0 1 303.662 85.6574" transformations="translations" pos="118.887 478.492" stroke="white" type="label" width="12.394" height="18.597" depth="1.37" valign="baseline" size="Huge" style="math">\emptyset</text>
-<path matrix="1 0 0 1 394.585 -8.77606" stroke="black" fill="black" pen="fat">
-64.4734 595.042 m
-64.4734 564.851 l
-93.2598 564.851 l
-93.2598 595.042 l
-h
-</path>
-<text matrix="1 0 0 1 348.948 84.6044" transformations="translations" pos="118.887 478.492" stroke="white" type="label" width="12.394" height="18.597" depth="1.37" valign="baseline" size="Huge" style="math">\emptyset </text>
 <text matrix="1 0 0 1 185.006 262.94" transformations="translations" pos="62.016 495.693" stroke="white" type="label" width="22.736" height="15.978" depth="0" valign="baseline" size="Huge">10</text>
 <text matrix="1 0 0 1 60.7165 136.033" transformations="translations" pos="62.016 495.693" stroke="white" type="label" width="11.368" height="15.978" depth="0" valign="baseline" size="Huge">5</text>
 <text matrix="1 0 0 1 34.0361 73.1391" transformations="translations" pos="62.016 495.693" stroke="white" type="label" width="11.368" height="15.978" depth="0" valign="baseline" size="Huge">4</text>
@@ -464,13 +400,5 @@ h
 <text matrix="1 0 0 1 278.386 134.805" transformations="translations" pos="62.016 495.693" stroke="white" type="label" width="22.736" height="15.978" depth="0" valign="baseline" size="Huge">11</text>
 <text matrix="1 0 0 1 374.575 131.996" transformations="translations" pos="62.016 495.693" stroke="white" type="label" width="22.736" height="15.978" depth="0" valign="baseline" size="Huge">16</text>
 <text matrix="1 0 0 1 20.5368 -25.6709" transformations="translations" pos="62.7153 661.975" stroke="black" type="label" width="12.623" height="10.672" depth="0" valign="baseline" size="Huge" style="math">v</text>
-<path matrix="1 0 0 1 178.68 51.5312" stroke="black" fill="black" pen="fat">
-64.4734 595.042 m
-64.4734 564.851 l
-93.2598 564.851 l
-93.2598 595.042 l
-h
-</path>
-<text matrix="1 0 0 1 133.043 144.912" transformations="translations" pos="118.887 478.492" stroke="white" type="label" width="12.394" height="18.597" depth="1.37" valign="baseline" size="Huge" style="math">\emptyset</text>
 </page>
 </ipe>

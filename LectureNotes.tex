@@ -3075,6 +3075,124 @@ Auch die {\tt DeleteCleanup}-Operation hat Laufzeit $O(\log n)$.
 Sie stellt die Bedingungen {\bf RB1--RB5} wieder her.
 Auf den Folien zur Vorlesung sind einige Beispiele zu finden.
 
+\section{Binomial heaps}\label{sec_binomial}
+
+\noindent
+Binomial heaps sind eine alternative Umsetzung von priority queues.
+Mit ihnen l\"a\ss t sich beispielsweise der Dijkstra-Algorithmus recht gut implementieren.
+Der Flaschenhals dabei ist ja jeweils die Berechnung des Knotens mit dem minimalen Abstand.
+Der binomial heap beschleunigt diese Operation.
+
+Binomial heaps unterst\"utzen die folgenden Operationen:
+\begin{description}
+	\item[einf\"ugen:] neues Element mit gegebenen Gewicht hinzuf\"ugen
+	\item[Minimum:] auffinden des Elements mit minimalen Gewicht
+	\item[Minimum entnehmen:] auffinden und entfernen
+	\item[Vereinigung:] zwei Heaps zu einem vereinigen
+	\item[verringern:] das Gewicht eines Elements verringern
+	\item[l\"oschen:] ein Element aus der Datenstruktur entfernen
+\end{description}
+Wir werden sehen, da\ss\ alle diese Operationen Laufzeit $O(\log n)$ haben.
+
+\subsection{Binomialb\"aume}\label{sec_binomial_trees}
+Da binomial heaps aus Binomialb\"aumen zusammengesetzt sind, befassen wir uns zun\"achst mit letzteren.
+
+\begin{definition}\label{def_binomial_tree}
+	Ein Binomialbaum ist ein geordneter, gewurzelter Baum, d.h.\ ein Knoten ist als Wurzel ausgezeichnet.
+	Ferner sind die Kinder jedes Knotens geordnet.
+	Zu jeder \alert{Ordnung} $k\geq0$ gibt es genau einen Binomialbaum (bis auf Isomorphie):
+	\begin{itemize}
+		\item der Binomialbaum der Ordnung $0$ besteht nur aus einem Knoten.
+		\item der Baum der Ordnung $k\geq1$ entsteht aus zwei B\"aumen der Ordnung $k-1$, wobei der erste Baum links an die Wurzel des zweiten Baums angeh\"angt wird.
+	\end{itemize}
+\end{definition}
+
+\noindent
+In einem Binomialbaum der Ordnung $k$ h\"angt an der Wurzel also jeweils ein Baum der Ordnung $0,1,\ldots,k-1$.
+
+\begin{lemma}\label{lem_binomial_tree}
+	Der Binomialbaum $B_k$ der Ordnung $k\geq0$ hat folgende Eigenschaften
+	\begin{itemize}
+		\item die Zahl der Knoten ist $2^k$
+		\item die H\"ohe des Baums ist $k$
+		\item es gibt genau $\binom kh$ Knoten auf Tiefe $h$ f\"ur $h=0,\ldots,k$
+		\item die Wurzel hat Grad $k=\Delta(B_k)$
+	\end{itemize}
+	\itshape Die Tiefe eines Knotens ist definiert als der Abstand von der Wurzel.
+\end{lemma}
+\begin{proof}
+	Wir f\"uhren Induktion nach $k$.
+	Item im Fall $k=0$ gelten die gew\"unschten Eigenschaften.
+	F\"ur $k>0$ folgen die Behauptungen zu Knotenzahl, H\"ohe und Grad der Wurzel unmittelbar aus der Induktionsvoraussetzung
+	Die Zahl der Knoten auf Tiefe $0\leq h\leq k$ berechnet sich nach Induktion zu
+	$$\binom kh+\binom k{h-1}=\binom{k+1}h$$
+	Es gibt genau einen Knoten auf Tiefe $k+1$
+\end{proof}
+
+\subsection{Konstruktion von binomial heaps}\label{sec_binomial_heaps}
+
+Ein binomial heap besteht aus binomial trees verschiedener Ordnungen.
+
+\begin{definition}\label{def_binomial_heap}
+	Ein binomial heap ist eine verkettete Liste von Binomialb\"aumen.
+	Genauer sei $n\ge1$ eine ganze Zahl mit Bin\"ardarstellung 
+	\begin{align*}
+		n&=\sum_{j=0}^\ell b_j2^j&&\mbox{ mit }&&b_j\in\{0,1\},\ b_\ell=1.
+	\end{align*}
+	Dann enth\"alt der binomial heap der Ordnung $n$ genau $b_j$ Binomialb\"aume der Ordnung $j$ f\"ur $j=0,\ldots,\ell$
+	Diese Binomialb\"aume bilde eine der Ordnung nach aufsteigend geordnete verkettete Liste.
+	Jeder einzelne Binomialbaum besteht aus einem Zeiger auf die Wurzel.
+	Jeder Knoten ausser der Wurzel verf\"ugt \"uber einen Zeiger auf seinen Elternknoten.
+	Ferner besitzt jeder Knoten einen Zeiger auf den n\"achsten Geschwisterknoten.
+\end{definition}
+
+Der binomial heap besteht also aus $O(\log n)$ B\"aumen mit maximaler Tiefe $O(\log n)$.
+Innerhalb jedes Baumes ist das Gewicht des Elternknotens immer kleiner oder gleich dem Gewicht jedes Kindknotens.
+Insbesondere hat der Wurzelknoten das geringste Gewicht.
+Allerdings sind die Gewichte der Wurzelknoten im binomial heap sind nicht notwendigerweise geordnet.
+
+\subsection{Operationen auf binomial heaps}\label{sec_binomial_heaps_ops}
+Die oben genannten Operationen lassen sich nun leicht implementieren.
+Die gr\"o\ss te Umsicht ist bei der Vereinigungsoperation geboten, die als Helfer bei den anderen Operationen fungiert.
+
+\subsubsection{Minimum finden}
+Das Element minimalen Gewichts finden wir, indem wir einfach die Wurzelknoten der B\"aume des binomial heap durchsuchen.
+Das funktioniert, weil in jedem einzelen binomial tree die Wurzel das Element minimalen Gewichts ist.
+Der Zeitbedarf bel\"auft sich auf $O(\log n)$.
+
+\subsubsection{Vereinigung}
+
+Um zwei binomial heaps $B_1,B_2$ zu vereinigen, f\"ugen wir zun\"achst die Listen der Binomialb\"aume zusammen.
+Beim Zusammenf\"ugen wird die Ordnung beibehalten.
+Es treten also zu jeder Ordnung $j$ h\"ochsts {\em zwei} B\"aume der Ordnung $j$ auf; beim Vereinigungsprozess kann zeitweilig ein dritter Baum einer gegebenen Ordnung entstehen.
+
+Um die binomial heap-Struktur wiederherzustellen,  gehen wir die vereinige Liste der B\"aume durch.
+Wenn von einer Ordnung genau zwei B\"aume vorkommen, vereinigen wir sie.
+Wenn von einer Ordnung drei B\"aume vorkommen, behalten wir den ersten bei und vereinigen die beiden anderen.
+Dabei stellen wir sicher, da\ss\ die Wurzel das Element geringsten Gewichtes bleibt.
+Die Laufzeit f\"ur den Vereinigungsprozess liegt somit bei $O(\log n)$.
+
+\subsubsection{Einf\"ugen}
+Zum Einf\"ugen eines neuen Elementes in eine binomial heap $H$ legen wir einen binomial heap $H'$ der Ordnung $0$ an, der \emph{nur} das neue Element enth\"alt.
+Dann bilden wir die Vereinigung von $H$ und $H'$.
+Die Laufzeit betr\"agt $O(\log n)$.
+
+\subsubsection{Minimum entnehmen}
+
+Finde zun\"achst das Element $x$ minimalen Gewichts in $H$.
+Nach Konstruktion ist dieses Element ist Wurzel eines Binomialbaums $T$.
+Bilde nun einen neuen binomial heap $H'$, dessen Elemente die Kinder von $T$ (in umgekehrter Reihenfolge) sind und vereinige $H'$ mit dem binomial heap $H''=H-T$ .
+Die Laufzeit betr\"agt $O(\log n)$.
+
+\subsubsection{Gewicht verringern}
+
+Um das Gewicht eines Elements $x$ zu verringern, m\"ussen nur die Elemente des Baums, dem $x$ angeh\"ort, neu angeordnet werden.
+Genauer lassen wir $x$ in Richtung Wurzel aufsteigen, bis alle Kinder von $x$ mindestens das Gewicht von $x$ haben.
+Die Laufzeit betr\"agt $O(\log n)$, weil die Tiefe des Baums $O(\log n)$ ist.
+
+\subsubsection{L\"oschen}
+Wir setzen das Gewicht des zu l\"oschenden Elements auf $-\infty$ und entfernen anschlie\ss end das Minimum.
+Damit kommen wir auf Laufzeit $O(\log n)$.
 
 \begin{thebibliography}{99}
 	\bibitem{Cormen}T.~Cormen, C.~Leiserson, R.~Rivest, C.~Stein: Introduction to algorithms. MIT Press.
@@ -3084,182 +3202,4 @@ Auf den Folien zur Vorlesung sind einige Beispiele zu finden.
 	\bibitem{Papadimitriou}C.~Papadimitriou: Computational complexity. Addison Wesley.
 \end{thebibliography}
 
-
 \end{document}
-
-\begin{frame}\frametitle{\mytitle}
-	\includegraphics[height=30mm]{./images/redblack1.pdf}
-	\hfill\includegraphics[height=30mm]{./images/redblack2.pdf}
-	\begin{exampleblock}{{\tt Insert}: Einf\"ugen eines neuen Knotens}
-		\begin{itemize}
-			\item zun\"achst verfahren wir genau wie bei ``gew\"ohnlichen'' bin\"aren Suchb\"aumen
-			\item der neue Knoten wird rot gef\"arbt
-			\item die $\emptyset$-pointer werden auf das $\emptyset$-Objekt gesetzt
-			\item \alert{Vorsicht:} RB2 oder RB4 k\"onnten verletzt sein!
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\begin{exampleblock}{Wiederherstellen von RB2 und RB4}
-		\begin{itemize}
-			\item solange der Elternknoten des eingef\"ugten Knotens $v$ rot, ist, betrachten wir drei F\"alle
-			\item \alert{Fall 1:} die ``Tante'' $w$ von $v$ ist rot
-			\item \alert{Fall 2:} $w$ ist schwarz und $v$ ist ein rechtes Kind
-			\item \alert{Fall 3:} $w$ ist schwarz und $v$ ist ein linkes Kind
-		\end{itemize}
-		\itshape die drei F\"alle lassen sich am besten anhand von Beispielen erkl\"aren; dabei nehmen wir an, da\ss\ der Elternknoten von $v$ ein linkes Kind ist; sonst sind ``links'' und ``rechts'' jeweils zu vertauschen!
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\includegraphics[height=30mm]{./images/redblack_insert1.pdf}\hfill\includegraphics[height=30mm]{./images/redblack_insert1a.pdf}
-	\begin{exampleblock}{Fall 1: roter Elternknoten und rote Tante}
-		\begin{itemize}
-			\item f\"arbe Elternknoten und die Tante schwarz
-			\item f\"arbe den Gro\ss elternknoten $u$ rot
-			\item f\"uhre die Wiederherstellung rekursiv f\"ur $u$ aus
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\includegraphics[height=30mm]{./images/redblack_insert2.pdf}\hfill\includegraphics[height=30mm]{./images/redblack_insert2a.pdf}
-	\begin{exampleblock}{Fall 2: roter Elternknoten, schwarze Tante, rechtes Kind}
-		\begin{itemize}
-			\item f\"uhre eine Linksrotation um $v$ durch
-			\item weiter mit Fall 3
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\includegraphics[height=30mm]{./images/redblack_insert2a.pdf}\hfill\includegraphics[height=30mm]{./images/redblack_insert3a.pdf}
-	\begin{exampleblock}{Fall 3: roter Elternknoten, schwarze Tante, linkes Kind}
-		\begin{itemize}
-			\item f\"arbe den Elternknoten von $v$ schwarz und den Gro\ss elternknoten $u$ rot
-			\item dann Rechtsrotation um den Gro\ss elternknoten $u$
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\begin{exampleblock}{Abschlu\ss\ Wiederherstellung}
-		\begin{itemize}
-			\item am Ende der Wiederherstellungsoperation wird die Wurzel schwarz gef\"arbt
-			\item dadurch wird RB2 garantiert
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\begin{block}{Proposition}
-Die Einf\"ugeoperation inkl.\ Wiederherstellung hat Laufzeit $O(\log n)$ und stellt die Eigenschaften RB1--RB5 her.
-	\end{block}
-\begin{exampleblock}{Beweis}
-		\begin{itemize}
-			\item in den F\"allen 2 und 3 ist die Gesamtlaufzeit $O(1)$
-			\item in Fall 1 bewegt sich $v$ auf die Wurzel zu
-			\item wir stoppen also nach $O(\log n)$ Schritten
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\begin{overprint}
-		\onslide<1>
-		\begin{exampleblock}{Entfernen eines Knotens $z$}
-			\begin{itemize}
-				\item verfahre wie beim L\"oschen von $z$ in einem bin\"aren Suchbaum
-				\item sei $y$ der Knoten, der die Stelle von $z$ einnimmt
-				\item $y$ \"ubernimmt die Farbe von $z$
-				\item sei $v$ das Kind von $y$, bzw.\ $\emptyset$, falls $y$ kein Kind hat
-				\item \itshape dabei identifizieren wir $\emptyset$ mit dem $\emptyset$-Objekt des Baums
-			\end{itemize}
-		\end{exampleblock}
-		\onslide<2>
-		\begin{exampleblock}{Wenn $y$ schwarz war, k\"onnen Verletzungen von RB1--RB5 eintreten}
-			\begin{itemize}
-				\item m\"oglicherweise war $y$ die Wurzel; das Kind $v$ tritt an die Stelle von $y$, wird somit die neue Wurzel, ist aber wom\"oglich rot; also RB2 verletzt
-				\item wenn $v$ und der Elternknoten $u$ von $z$ rot sind, ist RB4 verletzt
-				\item die Pfade, die vormals $y$ enthalten haben, enthalten jetzt einen schwarzen Knoten weniger; somit RB5 verletzt
-				\item wir k\"onnen uns $v$, der an die Stelle von $y$ tritt, als einen ``doppelt schwarzen'' Knoten vorstellen
-				\item \itshape wir unterscheiden vier F\"alle, die nach der Farbe des Schwesterknotens $w$ von $v$ und den Farben der Kinder von $w$ unterscheiden
-				\item \itshape dabei nehmen wir an, da\ss\ $v$ ein linkes Kind ist; andernfalls sind ``links'' und ``rechts'' zu vertauschen
-			\end{itemize}
-		\end{exampleblock}
-	\end{overprint}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\includegraphics[height=30mm]{./images/rbtree_del_1.pdf}\hfill\includegraphics[height=30mm]{./images/rbtree_del_1a.pdf}
-	\begin{exampleblock}{Fall 1: roter Schwesterknoten $w$}
-		\begin{itemize}
-			\item vertausche die Farben von $w$ und $u$
-			\item f\"uhre eine Linksrotation um $u$ aus
-			\item fahre mit Fall 2/3/4 fort, wobei nun $w=b$ der neue Schwesterknoten ist
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\includegraphics[height=30mm]{./images/rbtree_del_2.pdf}\hfill\includegraphics[height=30mm]{./images/rbtree_del_2a.pdf}
-	\begin{exampleblock}{Fall 2: schwarzer Schwesterknoten $w$, beide Kinder von $w$ sind schwarz}
-		\begin{itemize}
-			\item f\"arbe den Schwesterknoten $w$ rot
-			\item fahre rekursiv mit $v=u$ fort
-			\item (der Knoten $u$ kann rot oder schwarz sein)
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\includegraphics[height=30mm]{./images/rbtree_del_3.pdf}\hfill\includegraphics[height=30mm]{./images/rbtree_del_3a.pdf}
-	\begin{exampleblock}{Fall 3: schwarzer Schwesterknoten $w$, linkes Kind von $w$ rot, rechtes Kind schwarz}
-		\begin{itemize}
-			\item vertausche die Farben von $w$ und seinem linken Kind
-			\item Rechtsrotation um $w$
-			\item fahre fort mit Fall 4, mit neuem Schwesterknoten $w=a$
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\includegraphics[height=30mm]{./images/rbtree_del_4.pdf}\hfill\includegraphics[height=30mm]{./images/rbtree_del_4a.pdf}
-	\begin{exampleblock}{Fall 4: schwarzer Schwesterknoten $w$, rechtes Kind von $w$ rot}
-		\begin{itemize}
-			\item Linksrotation um $u$
-			\item Farben anpassen $\leadsto$ Bedingung RB5 nun erf\"ullt; setze $v$ auf die Wurzel des Baums
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\begin{exampleblock}{Abschlu\ss}
-		\begin{itemize}
-			\item sobald der aktuelle Knoten $v$ schwarz gef\"arbt ist, sind wir fertig
-			\item wenn $v$ die Wurzel ist, f\"arben wir $v$ schwarz und sind dann ebenfalls fertig
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\begin{block}{Proposition}
-		Die Laufzeit zum Entfernen eines Knotens ist $O(\log n)$.
-	\end{block}
-	\begin{exampleblock}{Beweis}
-		\begin{itemize}
-			\item in den F\"allen 1,3 und 4 h\"alt der Algorithmus nach $O(1)$ Schritten
-			\item in Fall 2 bewegen wir uns auf die Wurzel zu
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}\frametitle{\mytitle}
-	\begin{exampleblock}{Zusammenfassung}
-		\begin{itemize}
-			\item red black trees sind extrem effiziente selbstbalancierende bin\"are Suchb\"aume
-			\item \alert{Beispielanwendung:} Prozessorscheduling im Linux-Kern
-		\end{itemize}
-	\end{exampleblock}
-\end{frame}
