@@ -1,3 +1,6 @@
+/* a good way to invoke is : seq 32 | shuf | (while read x; do echo i $x; done; echo d 1; echo d 2; echo d 3) | ./redblack | sage */
+
+
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -236,7 +239,7 @@ void print_tree(void) { /* export tree in sagemath format */
 	print_colors(root,red); /* list red vertices */
 	printf("],");
 	printf("'#8080FF': [%d]}\n",root->key); /* light blue colour for the root */
-	printf("g.plot(vertex_colors=cols).save('tree.pdf')\n");
+	printf("g.plot(vertex_colors=cols)\n");
 }
 
 void read_instructions(void) { /* read instructions from standard input; instructions are 'i <key>' and 'd <key>' for insertion/deletion and 'p' for print */
