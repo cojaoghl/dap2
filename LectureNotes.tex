@@ -3094,6 +3094,9 @@ Binomial heaps unterst\"utzen die folgenden Operationen:
 \end{description}
 Wir werden sehen, da\ss\ alle diese Operationen Laufzeit $O(\log n)$ haben.
 
+Bemerkenswert ist, da\ss\ auch die Vereinigung zweier binomial heaps in Zeit $O(\log n)$ m\"oglich ist (wobei $n$ die Zahl der Elemente der Vereinigung ist)!
+Allerdings werden dabei die beiden zu vereinigenden Heaps ``zerst\"ort''.
+
 \subsection{Binomialb\"aume}\label{sec_binomial_trees}
 Da binomial heaps aus Binomialb\"aumen zusammengesetzt sind, befassen wir uns zun\"achst mit letzteren.
 
@@ -3194,6 +3197,7 @@ Die Laufzeit betr\"agt $O(\log n)$, weil die Tiefe des Baums $O(\log n)$ ist.
 Wir setzen das Gewicht des zu l\"oschenden Elements auf $-\infty$ und entfernen anschlie\ss end das Minimum.
 Damit kommen wir auf Laufzeit $O(\log n)$.
 
+
 \begin{thebibliography}{99}
 	\bibitem{Cormen}T.~Cormen, C.~Leiserson, R.~Rivest, C.~Stein: Introduction to algorithms. MIT Press.
 	\bibitem{Diestel}R.~Diestel: Graphentheorie. Springer.
@@ -3203,3 +3207,80 @@ Damit kommen wir auf Laufzeit $O(\log n)$.
 \end{thebibliography}
 
 \end{document}
+\section{AVL-B\"aume}\label{sec_avl}
+
+\noindent
+Bei AVL-B\"aumen, benannt nach ihren Erfindern Adelson, Velsky und Landis, handelt es sich um eine weitere Variante selbstbalancierender bin\"arer Suchb\"aume.
+Sie stellen somit eine Alternative zu rot-schwarz-B\"aumen dar.
+Allerdings sind AVL-B\"aume strikter balanciert.
+
+\begin{definition}\label{def_avl}
+	Ein AVL-Baum ist ein gewurzelter bin\"arer Suchbaum, in dem sich f\"ur jeden Knoten $v$ die H\"ohe des linken und des rechten Teilbaums um h\"ochstens eins unterscheidet.
+\end{definition}
+
+Alle Operationen f\"ur bin\"are Suchb\"aume haben auch auf AVL-B\"aumen Laufzeit $O(\log n)$.
+Wie im Fall von rot-schwarz-B\"aumen m\"ussen wir uns lediglich \"uber die Operationen zum Einf\"ugen und Entfernen von Elementen Gedanken machen, da die folgende Aussage die H\"ohe von AVL-B\"aumen beschr\"ankt.
+
+\begin{proposition}\label{prop_avl}
+	Ein AVL-Baum mit $n$ Elementen hat H\"ohe $O(\log n)$.
+\end{proposition}
+\begin{proof}
+	Dies folgt mit einer einfachen Induktion aus der Definition.
+\end{proof}
+
+Wie im Fall der rot-schwarz-B\"aume verwenden wir Rotationen, um den Baum nach dem Einf\"ugen oder L\"oschen eines Elements zu rebalancieren.
+Zu diesem Zweck statten wir jeden Knoten $v$ des Baums mit einem zus\"atzlichen Eintrag $\beta(v)$ aus, n\"amlich
+\begin{align*}
+	\beta(v)&=\mbox{H\"ohe des rechten Teilbaums von $v$}-\mbox{H\"ohe des linken Teilbaums von $v$}.
+\end{align*}
+In einem AVL-Baum gilt offenbar $\beta(v)\in\{-1,0,1\}$.
+Im Zuge des Einf\"ugens und Entfernens werden wir diese Eintr\"age entsprechend aktualisieren.
+
+\subsection{Einf\"ugen}\label{sec_avl_insert}
+Wir f\"ugen zun\"achst einen neuen Knoten $z$ wie in einen gew\"ohnlichen bin\"aren Suchbaum ein (Abschnitt~\ref{sec_binary_insert}).
+Dadurch kann nat\"urlich die AVL-Eigenschaft zerst\"ort werden.
+Um diese wiederherzustellen, f\"uhren wir folgende Operation aus.
+Dabei bezieht sich $\beta$ stets auf den Balancewert {\em vor} dem Einf\"ugen des neuen Knotens $z$.
+
+\begin{algorithm}\upshape {\tt InsertRebalance}. {\em Eingabe:} $(T,r)$ und der Knoten $z$.
+	\begin{enumerate}
+		\item falls $z$ die Wurzel ist, halte.
+		\item sei $p$ der Elternknoten von $z$.
+		\item falls $z$ das rechte Kind von $p$ ist
+		\item $\quad$falls $\beta(p)>0$
+		\item $\qquad$falls $\beta(z)<0$
+		\item $\quad\qquad$f\"uhre eine Rechtsrotation um $z$ und anschlie\ss end eine Linksrotation um $p$ aus
+		\item $\qquad$sonst f\"uhre eine Linksrotation um $p$ aus
+		\item $\quad$sonst
+		\item $\qquad$falls $\beta(p)<0$, setze $\beta(p)=0$ und halte
+		\item $\qquad$sonst setze $\beta(p)=1$ und rufe rekursiv {\tt InsertRebalance}$(T,r,p)$ auf
+		\item sonst verfahre analog wie oben mit links/rechts vertauscht
+	\end{enumerate}
+\end{algorithm}
+
+Bei den Rotationsoperationen m\"ussen jeweils die $\beta$-Eintr\"age der Knoten aktualisiert werden.
+Abgesehen davon sind die Rotationen identisch zu denen, die wir bei den rot-schwarz-B\"aumen kennengelernt haben.
+
+\subsection{Entfernen}\label{sec_avl_delete}
+Zum Entfernen einens Knotens verfahren wir zun\"achst wiederum wie im Fall gew\"ohnlicher bin\"arer Suchb\"aume.
+Dabei verringert sich die H\"ohe eines Kindes $z$ um eins.
+Uns von diesem Knoten aus auf die Wurzel zubewegend, f\"uhren wir wiederum Rotationen aus, um die AVL-Eigenschaft wiederherzustellen.
+
+\begin{algorithm}\upshape {\tt DeleteRebalance}. {\em Eingabe:} $(T,r)$ und der Knoten $z$.
+	\begin{enumerate}
+		\item falls $z$ die Wurzel ist, halte.
+		\item sei $p$ der Elternknoten von $z$ und $y$ der Schwesterkonten von $z$ (bzw.\ $y=\emptyset$)
+		\item falls $z$ das linke Kind von $p$ ist
+		\item $\quad$falls $\beta(p)>0$
+		\item $\qquad$falls $\beta(y)<0$
+		\item $\quad\qquad$f\"uhre eine Rechtsrotation um $y$ und anschlie\ss end eine Linksrotation um $p$ aus
+		\item $\qquad$sonst f\"uhre eine Linksrotation um $p$ aus
+		\item $\quad$sonst
+		\item $\qquad$falls $\beta(p)=0$, setze $\beta(p)=1$ und halte
+		\item $\qquad$sonst setze $\beta(p)=0$ und rufe rekursiv {\tt DeleteRebalance}$(T,r,p)$ auf
+		\item sonst verfahre analog wie oben mit links/rechts vertauscht
+	\end{enumerate}
+\end{algorithm}
+
+Wie beim Einf\"ugen sind bei den Rotationsoperationen jeweils die $\beta$-Eintr\"age zu aktualisieren.
+
