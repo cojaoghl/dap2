@@ -134,7 +134,8 @@ void delete_cleanup(struct node *x) { /* cleanup helper for delete */
 				w=x->parent->right; /* update w */
 			}
 			if(w->left->col==black&&w->right->col==black) /* case 2 */
-				w->col=red,x=x->parent; /* colour w red and move on to x's parent */
+			{
+				w->col=red,x=x->parent;} /* colour w red and move on to x's parent */
 			else {
 				if(w->right->col==black) { /* case 3 */
 					w->left->col=black; /*  color w's left child black */
@@ -159,7 +160,8 @@ void delete_cleanup(struct node *x) { /* cleanup helper for delete */
 				w=x->parent->left; /* update w */
 			}
 			if(w->right->col==black&&w->left->col==black) /* case 2 */
-				w->col=red,x=x->parent; /* colour w red and move on to x's parent */
+			{w->col=red,x=x->parent;
+			} /* colour w red and move on to x's parent */
 			else {
 				if(w->left->col==black) { /* case 3 */
 					w->right->col=black; /*  color w's right child black */
