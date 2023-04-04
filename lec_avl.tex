@@ -233,6 +233,7 @@
 			\item wir f\"ugen zun\"achst einen neuen Knoten $z$ wie in einen gew\"ohnlichen bin\"aren Suchbaum ein
 			\item dadurch kann allerdings die AVL-Eigenschaft zerst\"ort werden
 			\item um sie wiederherzustellen, f\"uhren wir geeignete \alert{Rotationen}
+			\item diese werden \alert{rekursiv} von unten nach oben auf dem Pfad zur Wurzel ausgef\"uhrt
 			\item dabei bezeichnet $\beta$ auf die Balance {\em vor} dem Einf\"ugen des neuen Knotens $z$
 		\end{itemize}
 	\end{exampleblock}
@@ -249,7 +250,7 @@
 			\item $\qquad$sonst Linksrotation um $p$
 			\item $\quad$sonst
 			\item $\qquad$falls $\beta(p)<0$, setze $\beta(p)=0$ und halte
-			\item $\qquad$sonst setze $\beta(p)=1$ und balanciere rekursiv $(T,r,p)$
+			\item $\qquad$sonst setze $\beta(p)=1$
 			\item \itshape sonst verfahre analog wie oben mit links/rechts vertauscht
 		\end{enumerate}
 	\end{exampleblock}
@@ -289,7 +290,7 @@
 			\item $\qquad$sonst Linksrotation um $p$
 			\item $\quad$sonst
 			\item $\qquad$falls $\beta(p)=0$, setze $\beta(p)=1$ und halte
-			\item $\qquad$sonst setze $\beta(p)=0$ und balanciere rekursiv $(T,r,p)$
+			\item $\qquad$sonst setze $\beta(p)=0$ %und balanciere rekursiv $(T,r,p)$
 			\item \itshape sonst verfahre analog wie oben mit links/rechts vertauscht
 		\end{enumerate}	
 	\end{exampleblock}

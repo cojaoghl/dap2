@@ -3243,13 +3243,14 @@ Dabei bezieht sich $\beta$ stets auf den Balancewert {\em vor} dem Einf\"ugen de
 		\item $\qquad$sonst f\"uhre eine Linksrotation um $p$ aus
 		\item $\quad$sonst
 		\item $\qquad$falls $\beta(p)<0$, setze $\beta(p)=0$ und halte
-		\item $\qquad$sonst setze $\beta(p)=1$ und rufe rekursiv {\tt InsertRebalance}$(T,r,p)$ auf
+		\item $\qquad$sonst setze $\beta(p)=1$ %und rufe rekursiv {\tt InsertRebalance}$(T,r,p)$ auf
 		\item sonst verfahre analog wie oben mit links/rechts vertauscht
 	\end{enumerate}
 \end{algorithm}
 
 Bei den Rotationsoperationen m\"ussen jeweils die $\beta$-Eintr\"age der Knoten aktualisiert werden.
 Abgesehen davon sind die Rotationen identisch zu denen, die wir bei den rot-schwarz-B\"aumen kennengelernt haben.
+Die obige Prozedur wird rekursiv auf dem Weg bis zur Wurzel durchgef\"uhrt, wenn die AVL-Eigenschaft verletzt ist.
 
 \subsection{Entfernen}\label{sec_avl_delete}
 Zum Entfernen einens Knotens verfahren wir zun\"achst wiederum wie im Fall gew\"ohnlicher bin\"arer Suchb\"aume.
@@ -3267,12 +3268,13 @@ Uns von diesem Knoten aus auf die Wurzel zubewegend, f\"uhren wir wiederum Rotat
 		\item $\qquad$sonst f\"uhre eine Linksrotation um $p$ aus
 		\item $\quad$sonst
 		\item $\qquad$falls $\beta(p)=0$, setze $\beta(p)=1$ und halte
-		\item $\qquad$sonst setze $\beta(p)=0$ und rufe rekursiv {\tt DeleteRebalance}$(T,r,p)$ auf
+		\item $\qquad$sonst setze $\beta(p)=0$ %und rufe rekursiv {\tt DeleteRebalance}$(T,r,p)$ auf
 		\item sonst verfahre analog wie oben mit links/rechts vertauscht
 	\end{enumerate}
 \end{algorithm}
 
 Wie beim Einf\"ugen sind bei den Rotationsoperationen jeweils die $\beta$-Eintr\"age zu aktualisieren.
+Ferner wird die Prozedur rekursiv entlang des Weges zur Wurzel wiederholt, wenn die AVL-Eigenschaft verletzt ist.
 
 
 \begin{thebibliography}{99}
