@@ -296,6 +296,7 @@ Mit $\NN=\{1,2,3,\ldots\}$ bezeichnen wir die Menge der nat\"urlichen Zahlen, $\
 Die rationalen Zahlen werden mit $\QQ$ bezeichnet, die reellen mit $\RR$ und die komplexen Zahlen mit $\CC$.
 F\"ur $x\in\RR$ verwenden wir die Schreibweise $\lfloor x\rfloor$ f\"ur die gr\"o\ss te Zahl $z\in\ZZ$ mit $z\leq x$.
 Analog ist $\lceil x\rceil$ die kleinste Zahl $z\in\ZZ$ mit $z\geq x$ gemeint.
+Schlie\ss lich bezeichnet $\RRpos$ die Menge aller nicht-negativen reellen Zahlen.
 
 \section{Quicksort}\label{sec_qs}
 Wir beginnen mit einem einf\"uhrenden Beispiel, dem Quicksort-Algorithmus.
@@ -1398,6 +1399,580 @@ Weniger offensichtlich ist m\"oglicherweise, da\ss\ der Algorithmus Laufzeit $O(
 	sofern $C'$ hinreichend gro\ss\ gew\"ahlt ist.
 \end{proof}
 
+\section{Rekurrenzen und das Mastertheorem}\label{sec_rec}
+
+In der Analyse der Sortieralgorithmen haben wir zun\"achst Rekurrenzen f\"ur die Laufzeit hergeleitet und diese dann mit Hilfe des $O$-Kalk\"uls abgsch\"atzt.
+In diesem Abschnitt befassen wir uns systematischer mit Rekurrenzen und lernen eine allgemeine Methode kennen, um deren Gr\"o\ss enordung zu bestimmen.
+Der Abschnitt folgt~\cite{Cormen}.
+
+\subsection{Das Mastertheorem}\label{sec_master}
+Das folgende Ergebnis erm\"oglicht die Absch\"atzung relativ allgemeiner Rekurrenzen.
+Dabei \"ubertragen wir den $O(\nix)$-Kalk\"ul auf reelle Zahlen $x$ und den Grenzwert $x\to\infty$.
+
+\begin{theorem}\label{thm_master}
+	Seien $a>0$, $b>1$ reelle Zahlen und seien $T:\RRpos\to\RRpos$ und $f:\RRpos\to\RRpos$ Funktionen, so da\ss
+	\begin{align*}
+		T(x)=aT(x/b)+f(x)\qquad\mbox{f\"ur alle }x\in\RRpos.
+	\end{align*}
+	\begin{enumerate}[(i)]
+		\item falls $f(x)=O(x^{\log_b(a)-\eps})$ f\"ur ein $\eps>0$, dann gilt $T(x)=\Theta(x^{\log_ba})$.
+		\item falls $f(x)=\Theta(x^{\log_ba}\log^kx)$ f\"ur ein $k\geq0$, dann gilt $T(x)=\Theta(x^{\log_ba}\log^{k+1}x)$.
+		\item falls $f(x)=\Omega(x^{\log_ba+\eps}$ f\"ur ein $\eps>0$ und falls au\ss erdem  Zahlen $c<1$, $x_0>0$ existieren, so da\ss
+			\begin{align*}
+				af(x/b)\leq cf(x)\qquad\mbox{f\"ur alle }x>x_0,
+			\end{align*}
+			dann gilt $T(x)=\Theta(f(x))$.
+	\end{enumerate}
+\end{theorem}
+
+Zum Beweis von \Thm~\ref{thm_master} ben\"otigen wir mehrere Schritte.
+
+\begin{lemma}\label{lem_master1}
+	Seien $a>0$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine Funktion und sei $T:\RRpos\to\RRpos$ eine Funktion, so da\ss
+	\begin{align}\label{eqlem_master1_1}
+		T(x)&=\begin{cases}\Theta(1)&\mbox{falls }0\leq x1,\\ aT(x/b)+f(x)&\mbox{ sonst.}\end{cases}
+	\end{align}
+	Dann gilt
+	\begin{align}\label{eqlem_master1}
+		T(x)&=\Theta(x^{\log_ba})+\sum_{0\leq j\leq\log_bx}a^jf(x/b^j).
+	\end{align}
+\end{lemma}
+\begin{proof}
+	Die $J$-fache Anwendung der Rekurrenz \eqref{eqlem_master1_1} f\"ur ein nat\"urliches $J\leq\log_bx$ zeigt, da\ss
+	\begin{align}\label{eqlem_master1_2}
+		T(x)&=a^J T(x/b^J)+\sum_{0\leq j\leq J}a^jf(x/b^j),
+	\end{align}
+	wie man mit einer einfachen Induktion nach $J$ nachpr\"uft.	
+	Setzen wir $J=\lfloor\log_bx\rfloor$ in \eqref{eqlem_master1_2} ein, erhalten wir die Behauptung.
+\end{proof}
+
+Als n\"achstes untersuchen wir das Wachstum der Summe aus \eqref{eqlem_master1}.
+
+\begin{lemma}\label{lem_master2}
+	Seien $a>0$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine und sei
+	\begin{align}\label{eqlem_master2_1}
+		g(x)&=\sum_{0\leq j\leq\log_bx}a^jf(x/b^j)&&(x\geq1).
+	\end{align}
+	\begin{enumerate}[(i)]
+		\item falls $f(x)=O(x^{\log_b(a)-\eps})$ f\"ur ein $\eps>0$, dann gilt $g(x)=\Theta(x^{\log_ba})$.
+		\item falls $f(x)=\Theta(x^{\log_ba}\log^kx)$ f\"ur ein $k\geq0$, dann gilt $g(x)=\Theta(x^{\log_ba}\log^{k+1}x)$.
+		\item falls $f(x)=\Omega(x^{\log_ba+\eps}$ f\"ur ein $\eps>0$ und falls au\ss erdem  Zahlen $c<1$, $x_0>0$ existieren, so da\ss
+			\begin{align}\label{eqlem_master2_c}
+				af(x/b)\leq cf(x)\qquad\mbox{f\"ur alle }x>x_0,
+			\end{align}
+			dann gilt $g(x)=\Theta(f(x))$.
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	Wir behandeln die drei Faelle getrennt voneinander.
+	Im ersten Fall sehen wir durch Einsetzen der Schranke $f(x)=O(x^{\log_b(a)-\eps})$ in \eqref{eqlem_master2_1}, da\ss
+	\begin{align*}
+		g(x)&=\sum_{j\leq\log_bx}a^jO((x/b^j)^{\log_b(a)-\eps})
+			=O(x^{\log_b(a)-\eps})\sum_{j\leq\log_bx}\bcfr a{b^{\log_b(a)-\eps}}^j\\
+			&=O(x^{\log_b(a)-\eps})\sum_{j\leq\log_bx}a^{\eps\log(b) j}
+			=O(x^{\log_b(a)-\eps})\cdot\exp\bc{\eps\log(b)\log_bx}=O(x^{\log_b(a)}).
+	\end{align*}
+
+	Im zweiten Fall zeigt unsere Annahme, da\ss\ $f(x/b^j)=\Theta((x/b^j)^{\log_ba}\log^k(x/b^j))$.
+	Daher erhalten wir
+	\begin{align*}
+		g(x)&=\Theta\bc{\sum_{j\leq\log_bx}a^j\bcfr x{b^j}^{\log_ba}\log^k(x/b^j)}
+		=\Theta\bc{x^{\log_ba}}\sum_{j\leq\log_bx}\bcfr{a}{b^{\log_ba}}^j(\log(x)-j\log(b))^k\\
+			&=\Theta\bc{x^{\log_ba}}\sum_{j\leq\log_bx}(\log(x)-j\log(b))^k
+			=\Theta\bc{x^{\log_ba}}\sum_{j\leq\log_bx}(\log_b(x)-j)^k
+			=\Theta\bc{x^{\log_ba}}\sum_{j\leq\log_bx}j^k.
+	\end{align*}
+	Indem wir die letzte Summe durch ein Integral absch\"atzen, erhalten wir die Behauptung.
+
+	Im dritten Fall bemerken wir, da\ss\ $g(x)=\Omega(f(x))$, weil $f(x)$ als Summand f\"ur $j=0$ in \eqref{eqlem_master2_1} auftritt.
+	F\"ur die umgekehrte Schranke rechnen wir mit Hilfe der Annahme \eqref{eqlem_master2_c}, da\ss
+	\begin{align*}
+		g(x)&=O(f(x))\sum_{j\log_bx}c^j=O(f(x)),
+	\end{align*}
+	weil $c<1$.
+\end{proof}
+
+\begin{proof}[Beweis von \Thm~\ref{thm_master}]
+	Der Satz folgt aus \Lem s~\ref{lem_master1}--\ref{lem_master2}.
+\end{proof}
+
+\subsection{Anwendung: der Strassen-Algorithmus}\label{sec_master}
+Aus der Linearen Algebra ist die Matrixmultiplikation bekannt: gegeben zwei Matrizen $A=(a_{ij})_{1\leq i,j\leq n}$ und $B=(b_{ij})_{1\leq i,j\leq n}$, soll die Matrix $C=A\cdot B$ mit Eintr\"agen
+\begin{align*}
+	c_{ij}&=\sum_{k=1}^na_{ik}b_{kj}
+\end{align*}
+berechnet werden.
+Offenbar kann diese Aufgabe mit $O(n^3)$ Multiplikationen reeller Zahlen gel\"ost werden.
+Geht es schneller?
+
+Eine naheliegende Idee w\"are ein ``divide and conquer''-Verfahren.
+Wenn wir der Einfachheit halber annehmen, da\ss\ $n=2^j$ f\"ur ein $j>0$, k\"onnten wir die Matrizen $A,B$ in vier Bl\"ocke
+\begin{align*}
+	A&=\begin{pmatrix}A_{11}&A_{12}\\A_{21}&A_{22}\end{pmatrix}&
+	B&=\begin{pmatrix}B_{11}&B_{12}\\B_{21}&B_{22}\end{pmatrix}
+\end{align*}
+der Gr\"o\ss e jeweils $(n/2)\times(n/2)$ zerlegen.
+Die Bl\"ocke des Produkts berechnen sich dann zu
+\begin{align*}
+	C&=\begin{pmatrix} A_{11}B_{11}+A_{12}B_{21}&A_{11}B_{12}+A_{12}B_{22}\\ A_{21}B_{11}+A_{22}B_{21}&A_{21}B_{12}+A_{22}B_{22} \end{pmatrix}.
+\end{align*}
+Wir m\"ussen also acht Matrixmultiplikationen der Gr\"o\ss e $(n/2)\times(n/2)$ durchf\"uhren, und dann summieren.
+Wir erhalten die Rekurrenz
+\begin{align*}
+	T(n)=8T(n/2)+O(n^2).
+\end{align*}
+\Thm~\ref{thm_master} zeigt, da\ss\ $T(n)=\Theta(n^3)$.
+Wir erzielen also keine Verbesserung gegen\"uber der naiven Methode.
+
+Der elegante Strassen-Algorithmus zeigt jedoch, da\ss\ wir mit sieben statt acht Matrixmultiplikationen auskommen k\"onnen.
+Genauer berechnen wir rekursiv die Produkte
+\begin{align*}
+	P_1&=(A_{11}+A_{22})(B_{11}+B_{22})\\
+	P_2&=(A_{21}+A_{22})B_{11}\\
+	P_3&=A_{11}(B_{12}-B_{22})\\
+	P_4&=A_{22}(B_{21}-B_{11})\\
+	P_5&=(A_{11}+A_{12})B_{22}\\
+	P_6&=(A_{21}-A_{11})(B_{11}+B_{12})\\
+	P_7&=(A_{12}-A_{22})(B_{21}+B_{22}).
+\end{align*}
+Die Bl\"ocke der Produktmatrix berechnen sich dann zu
+\begin{align*}
+	C_{11}&=P_1+P_4-P_5+P_7\\
+	C_{12}&=P_3+P_5\\
+	C_{21}&=P_2+P_4\\
+	C_{22}&=P_1+P_3-P_2+P_6.
+\end{align*}
+Die neue Rekurrenz f\"ur die Laufzeit lautet
+\begin{align*}
+	T(n)=7T(n/2)+O(n^2).
+\end{align*}
+Nach \Thm~\ref{thm_master} erhalten wir somit $T(n)=\Theta(n^{\log_27})$.
+Da $\log_27\approx2.8$, haben wir eine deutliche Laufzeitverbesserung erzielt.
+Die {\em optimale} Laufzeit f\"ur Matrixmultiplikation zu bestimmen, ist ein bekanntes offenes Forschungsproblem.
+
+\section{Arithmetik}\label{sec_arith}
+
+Wir befassen uns mit der algorithmischen Umsetzung einiger grundlegender Konzepte aus der Arithmetik (``Zahlentheorie'').
+Dieser Abschnitt ist angelehnt an~\cite{Cormen,Knuth}.
+
+\subsection{Elementare Operationen}\label{sec_elem}
+Ganze Zahlen $x,y\in\ZZ$ k\"onnen addiert, subtrahiert und multipliziert werden.
+Das Ergebnis $x+y$, $x-y$ und $x\cdot y$ ist dabei jeweils eine ganze Zahl.\footnote{Wir verwenden die Schreibweise $x-y$ f\"ur die Subtraktion anstelle der sonst teils gebr\"auchlichen Schreibweise $x./.y$\enspace.}
+Bei der Division ganzer Zahlen ist das Ergebnis jedoch nicht notwendigerweise eine ganze Zahl.
+Wir erinnern uns aber an die {\em Division mit Rest}.
+F\"ur je zwei ganze Zahlen $a,b\in\ZZ$, $b\neq0$, existieren $q\in\ZZ$ und $r\in\{0,1,2,\ldots,|b|-1\}$, so da\ss
+	\begin{align*}
+		a&=q\cdot b+r.
+	\end{align*}
+Wir nennen $r$ den {\em Rest} von $a$ bei Division durch $b$ und schreiben $r=a\mod b$ (``modulo'').
+Ferner sagen wir, $b$ {\em teilt} $a$, falls $r=0$.
+In diesem Fall schreiben wir $b|a$.
+Anderfalls schreibt man $b\nmid a$.
+
+Jede ganze Zahl $z\in\ZZ$ besitzt eine {\em Bin\"ardarstellung}
+	\begin{align*}
+		z&=\pm\sum_{i=0}^\ell b_i2^i\qquad\mbox{mit}\qquad \ell>0,b_1,\ldots,b_\ell\in\{0,1\}.
+	\end{align*}
+Der kleinste Wert $\ell$, f\"ur den $z$ so dargestellt werden kann, hei\ss t die {\em Darstellungsl\"ange} von $z$.
+Die Darstellungsl\"ange ist von der Gr\"o\ss enordnung $O(\log|z|)$ f\"ur $|z|\to\infty$.
+
+Die Bin\"ardarstellung kann durch wiederholte Division mit Rest durch zwei bestimmt werden.
+Dazu d\"urfen wir annehmen, da\ss\ $z\geq0$.
+Falls $z=0$ ist, lautet die Bin\"ardarstellung einfach $0$.
+Andernfalls ergibt Division mit Rest $z=2q+r$ mit $r\in\{0,1\}$ und $q\in\NN_0$.
+Der Rest $r$ ist das geringwertigste ``Bit'' $b_0$ von $z$.
+Die \"ubrigen Bits stimmen mit der Bin\"ardarstellung des Quotienten $q$ \"uberein und k\"onnen somit rekursiv bestimmt werden.
+Weil die Darstellungsl\"ange von $z$ logarithmisch in $|z|$ skaliert, ist es unser Ziel, arithmetische Aufgaben in einer Laufzeit zu l\"osen, die polynomiell in $\log|z|$ ist, nicht etwa polynomiell in $|z|$ selbst!
+
+Die elementaren Operationen Plus, Minus, Mal sowie die Division mit Rest k\"onnen in diesem Sine effizient implementiert werden.
+Dazu verwenden wir einfach die Rechenoperationen aus der Grundschule.
+Den gr\"o\ss ten Aufwand erfordert dabei die Multiplikation.
+
+\subsection{Teilbarkeit}\label{sec_div}
+Der {\em gr\"o\ss te gemeinsame Teiler} von $a,b\in\NN$, bezeichnet durch $\ggt(a,b)$, ist die gr\"o\ss te Zahl $c\in\NN$, so da\ss\ $c\mid a$ und $c\mid b$.
+Der folgende Algorithmus bestimmt den gr\"o\ss ten gemeinsamen Teiler zweier Zahlen $a,b$.
+
+\begin{algorithm}
+	{\tt Euclid}$(a,b)$
+	\begin{enumerate}
+		\item falls $a<b$, vertausche $a$ und $b$
+		\item setze $a_0=a$, $a_1=b$, $i=1$.
+		\item solange $a_i>0$
+		\item $\quad$berechne $q_i\in\ZZ$, $a_{i+1}\in\{0,1,\ldots,a_i\}$, so da\ss\ $a_{i-1}=q_ia_i+a_{i+1}$.
+		\item $\quad$erh\"ohe $i$ um $1$
+		\item gib $a_{i-1}$ aus
+	\end{enumerate}
+\end{algorithm}
+
+\begin{proposition}\label{prop_euclid}
+	{\tt Euclid} gibt $\ggt(a,b)$ aus. %und hat Laufzeit $O(\log(|a|+|b|))$.
+\end{proposition}
+\begin{proof}
+	Wir beweisen mit Induktion, da\ss\ $\ggt(a_{i-1},a_{i})=ggt(a_{i},a_{i+1})$ f\"ur alle $i\geq1$.
+	Denn angenomen $c=\ggt(a_{i-1},a_i)$.
+	Dann teilt $c$ auch
+		$$a_{i+1}=a_{i-1}-q_ia_i.$$
+	Also $\ggt(a_i,a_{i-1})|\ggt(a_i,a_{i+1})$.
+	Wenn umgekehrt $d=\ggt(a_i,a_{i+1})$, dann teilt $d$ auch $a_{i-1}=q_ia_i+a_{i+1}$; somit $\ggt(a_i,a_{i+1})|\ggt(a_i,a_{i-1})$ und somit $\ggt(a_i,a_{i+1})=\ggt(a_i,a_{i-1})$.
+	Weil f\"ur den letzten Index $i$, mit dem die ``solange''-Schleife abbricht, gilt $a_i=0$, folgt schlie\ss lich $\ggt(a_i,a_{i-1})=a_{i-1}$.
+%	In Bezug auf die Laufzeit behaupten wir, da\ss\
+%	\begin{align}\label{eqprop_euclid}
+%		a_{i+1}\leq a_{i-1}/2.
+%	\end{align}
+%	Denn wenn $a_i<a_{i-1}/2$, dann folgt \eqref{eqprop_euclid} aus $a_{i+1}<a_i$.
+%	Wenn andererseits $a_i\geq a_{i-1}/2$, dann folgt \eqref{eqprop_euclid} aus $a_{i-1}=q_ia_i+a_{i+1}$ und $a_{i+1}<a_i$.
+\end{proof}
+
+Zur Laufzeitanalyse ben\"otigen wir die {\em Fibonaccizahlen} $(F_n)_{n\in\NN_0}$, welche definiert sind durch die Rekurrenz
+\begin{align*}
+	F_n&=\begin{cases}i&\mbox{ falls }n\leq1\\F_{n-1}+F_{n-2}&\mbox{ falls }n\geq2.\end{cases}
+\end{align*}
+Mit Induktion zeigt man, da\ss
+\begin{align}\label{eq_golden}
+	F_n&=\frac{((1+\sqrt5)/2)^n-((1-\sqrt5)/2)^n}{\sqrt5}.
+\end{align}
+Daraus folgt insbesondere die Asymptotik $F_n=\exp(\Omega(n))$, weil $|1-\sqrt5|/2<1<(1+\sqrt5)/2$.
+
+\begin{theorem}\label{thm_euclid}
+	Angenommen $1\leq b<a<F_{k+1}$.
+	Dann f\"uhrt {\tt Euclid} h\"ochstens $k$ Division aus.
+\end{theorem}
+\begin{proof}
+	Wir nehmen an, da\ss\ $1\leq b<a$ und da\ss\ mindestens $k$ Divisionen ausgef\"uhrt werden.
+	Mit Induktion nach $k$ zeigen wir dann, da\ss\ $a\geq F_{k+2}$ und $b\geq F_{k+1}$.
+	Im Fall $k=1$ ist nichts zu zeigen.
+
+	Nehme also an, da\ss\ $k>1$.
+	Dann erfordert {\tt Euclid} auf Eingabe $b,a\mod b$ mindestens $k-1$ Divisionen, weshalb nach Induktion gilt
+	\begin{align*}
+		b\geq F_{k+1}&&a\mod b\geq F_{k}.
+	\end{align*}
+	Weil $a>b$, gilt ferner $\lfloor a/b\rfloor\geq1$ und folglich
+	\begin{align*}
+		a\geq b+(a\mod b)\geq F_{k+1}+F_k=F_{k+2},
+	\end{align*}
+	wie behauptet.
+\end{proof}
+
+Zusammen mit \eqref{eq_golden} zeigt \Thm~\ref{thm_euclid}, da\ss\ der Euklidische Algorithmus den gr\"o\ss ten gemeinsamen Teiler von $a,b$ effizient berechnet.
+Durch R\"uckverfolgen der Schritte des Algorithmus' erhalten wir folgende Aussage.
+
+\begin{corollary}\label{cor_euclid}
+	F\"ur je zwei Zahlen $a,b\in\NN$ gibt es Zahlen $u,v\in\ZZ$, so da\ss\ $\ggt(a,b)=au+bv$.
+\end{corollary}
+\begin{proof}
+	Wir verfolgen die Schritte des Algorithmus' zur\"uck.
+	Wenn $a_{i+1}=0$, dann gilt $\ggt(a_i,a_{i+1})=a_{i}=1\cdot a_{i}+0\cdot a_{i+1}$.
+	Nehmen wir nun an, da\ss\
+	\begin{align*}
+		\ggt(a_i,a_{i+1})&=ua_i+va_{i+1}.
+	\end{align*}
+	Dann gilt
+	\begin{align*}
+		\ggt(a_{i-1},a_i)&=\ggt(a_i,a_{i+1})=ua_i+va_{i+1}=ua_i+v(a_{i-1}-q_ia_i)=(u-vq_i)a_i+va_{i-1},
+	\end{align*}
+	wie behauptet.
+\end{proof}
+
+Der Beweis des Korollars ist ``algorithmisch''; d.h.\ der Beweis beschreibt einen Algorithmus, wie die Zahlen $u,v$ effizient berechnet werden k\"onnen.
+
+\subsection{Primzahlen}\label{sec_prime}
+
+Die mahtmatische Definition des Primzahlbegriffs stimmt genaugenommen nicht mit der folgenden Definition \"uberein; wir werden aber im Nachgang feststellen, da\ss\ beide Begriffe \"aquivalent sind.
+
+\begin{definition}\label{def_irreducible}
+	Eine Zahl $z\in\ZZ\setminus\{-1,1\}$ hei\ss t {\em irreduzibel}, falls $y\nmid z$ f\"ur alle $1<y<|z|$.
+\end{definition}
+
+Eine Zahl $z$ ist also irreduzibel, wenn sie keine positiven Teiler au\ss er $1$ und $|z|$ besitzt.
+Der Primzahlbegriff ist hingegen folgenderma\ss en definiert.
+
+\begin{definition}\label{def_prime}
+	Eine Zahl $z\in\ZZ\setminus\{-1,0,1\}$ hei\ss t {\em Primzahl}, falls f\"ur alle $x,y\in\ZZ$ mit $z|x\cdot y$ gilt, da\ss\ $z|x$ oder $z|y$.
+\end{definition}
+
+Eine Primzahl ist also eine Zahl $z$, die stets einen der Faktoren $x$ oder $y$ teilt, sofern $z$ das Produkt $x\cdot y$ teilt.
+Wie gesagt werden wir in K\"urze feststellen, da\ss\ die Primzahlen und die irreduziblen Zahlen \"ubereinstimmen.
+Zun\"achst ist es leicht zu sehen, da\ss\ jede Primzahl irreduzibel ist.
+
+\begin{lemma}\label{lem_prime1}
+	Wenn $p$ eine Primzahl ist, dann ist $p$ irreduzibel.
+\end{lemma}
+\begin{proof}
+	Sei $p>1$ prim.
+	Wenn $x\geq1$ ein Teiler von $p$ ist, dann existiert eine Zahl $y\in\NN$, so da\ss\ $p=x\cdot y$.
+	Weil $p$ prim ist, folgt $p|x$ oder $p|y$ und somit $p=x$ oder $p=y$.
+	Daraus wiederum folgt $x\in\{1,p\}$.
+\end{proof}
+
+F\"ur die Umkehrung beobachten wir folgendes.
+
+\begin{lemma}\label{lem_irred}
+	Jede Zahl $z>1$ besitzt einen irreduziblen Teiler.
+\end{lemma}
+\begin{proof}
+	Wir f\"uhren Induktion nach $z$.
+	Im Fall $z\leq2$ ist nichts zu zeigen.
+	Wenn ferner $z$ irreduzibel ist, dann ist $z$ selbst der gesuchte irreduzibele Teiler.
+	Andernfalls gibt es eine Zahl $1<y<z$ mit $y|z$.
+	Nach Induktion besitzt $y$ einen irreduzibelen Teiler $x$, der somit auch $z$ teilt.
+\end{proof}
+
+\begin{corollary}\label{cor_irred}
+	Jede irreduzible Zahl ist eine Primzahl
+\end{corollary}
+\begin{proof}
+	Angenommen nicht.
+	Betrachte die kleinste irreduzible Zahl $p>0$, die keine Primzahl ist.
+	Dann existieren nat\"urliche Zahlen $a>1$, $b>1$ mit $p|a\cdot b$ und $p\nmid a,p\nmid b$.
+	W\"ahle $a,b$ mit diesen Eigenschaften so, da\ss\ $a+b$ kleinstm\"oglich ist.
+	Dann gilt $a<p$, weil sonst $a-p,b$ ein Gegenbeispiel mit kleinerer Summe w\"are.
+	Entsprechend gilt auch $b<p$.
+	Nach \Lem~\ref{lem_irred} hat ferner $a$ einen irreduziblen Teiler $1<q\leq a$.
+	Weil $a<p$ und $p$ die kleinste irreduzibele Zahl ist, die keine Primzahl ist, mu\ss\ $q$ eine Primzahl sein.
+	Folglich existiert eine Zahl $c\in\NN$, so da\ss
+	\begin{align*}
+		q|a|ab=cp.
+	\end{align*}
+	Weil $q$ prim ist, folgt $q|c$ oder $q|p$.
+	Da $p$ irreduzibel ist, kann letzteres nicht angehen; also $q|c$.
+	Ferner gilt $q<a$; denn andernfalls w\"are $q=a$ und aus $q|c$ und $cp=ab$ w\"urde folgen
+	\begin{align*}
+		b=\frac ca\cdot p=\frac cq\cdot p,\qquad\mbox{also}\qquad p|b.
+	\end{align*}
+	Da $q<a$ und $q|c$, schlie\ss en wir
+	\begin{align*}
+		p|\frac{cp}q=\frac{ab}q\qquad\mbox{und}\qquad a/q+b<a+b.
+	\end{align*}
+	Also ist $a/q,b$ ein kleineres Gegenbeispiel, im Widerspruch zur Wahl von $a,b$.
+\end{proof}
+
+\Lem~\ref{lem_prime1} und \Cor~\ref{cor_irred} zeigen also, da\ss\ Primzahlen und irreduzible Zahlen dasselbe sind.
+Mit $\PP$ bezeichnen wir die Menge der nicht-negativen Primzahlen.
+
+Der folgende Satz zeigt, da\ss\ sich jede nat\"urliche Zahl in ein Produkt von Primzahlen zerlegen l\"a\ss t.
+
+\begin{theorem}\label{thm_fac}
+	Zu jeder Primzahl $p\in\PP$ gibt es eine Abbildung $w_p:\NN\to\NN_0$, so da\ss\ f\"ur jede nat\"urliche Zahl $z\in\NN$ gilt
+	\begin{align}\label{eqthm_fac}
+		z&=\prod_{p\in\PP}p^{w_p(z)}.
+	\end{align}
+	Diese Abbildungen $w_p$ sind eindeutig bestimmt.
+\end{theorem}
+\begin{proof}
+	Wir beginnen mit dem Beweis der Existenz.
+	F\"ur $z=1$ definieren wir $w_p(z)=0$ f\"ur alle $p\in\PP$.
+	Nehme also an, da\ss\ $z>1$.
+	Dann gibt es eine Primzahl $q>1$, die $z$ teilt.
+	Der Quotient $y=z/q$ l\"a\ss t sich schreiben als
+	\begin{align*}
+		y&=\prod_{p\in\PP}p^{w_p(y)}.
+	\end{align*}
+	Wir definieren also $w_p(z)=w_p(y)+\vecone\{p=q\}$ f\"ur alle $p\in\PP$.
+	Dann ist \eqref{eqthm_fac} erf\"ullt.
+
+	Nehmen wir nun an, da\ss\ eine Zahl $z>1$ zwei verschiedene Zerlegungen
+	\begin{align*}
+		z&=\prod_{p\in\PP}p^{w_p(z)}=\prod_{p\in\PP}p^{v_p(z)}
+	\end{align*}
+	h\"atte; betrachte die kleinste solche Zahl $z$.
+	Sei ferner
+	\begin{align*}
+		P&=\{p\in\PP:w_p(z)>0\}&Q&=\{p\in\PP:v_p(z)>0\}.
+	\end{align*}
+	Dann gilt $P\neq\emptyset$, $Q\neq\emptyset$ und $P\cap Q=\emptyset$, weil $z$ minimal ist.
+	Allerdings gilt f\"ur jede Primzahl $p\in P$, da\ss\ $p|z=\prod_{p\in\PP}p^{v_p(z)}$.
+	Aus der Primzahleigenschaft folgt also, da\ss\ $p|q$ f\"ur ein $q\in Q$.
+	Weil $q$ unzerlegbar ist, ist dies jedoch nur m\"oglich, wenn $p=q$, im Widerspruch zu $P\cap Q=\emptyset$.
+\end{proof}
+
+Einer der ersten Algorithmen, der in einem typischen Programmierkurs zu implementieren ist, ist der naive Primzahltest.
+Dabei wird eine gegebene Zahl $n\in\NN$ sukzessive mit Rest durch alle nat\"urlichen Zahlen $1<k\leq\sqrt n$ geteilt.
+Falls ein $k$ mit $k|n$ gefunden wird, ist $n$ keine Primzahl; andernfalls ist $n$ eine Primzahl.
+Dieser naive Primzahltest ist jedoch nicht effizient, weil die Zahl der Operationen von der Ordnung $\sqrt n$ ist, und somit {\em exponentiell} in der Darstellungsl\"ange von $n$.
+Es existieren andere, effiziente Algorithmen, die bestimmen, ob eine gegebene Zahl eine Primzahl ist.
+Die Diskussion dieser Algorithmen geht jedoch \"uber den Rahmen dieser Vorlesung hinaus.
+Andererseits sind keine effizienten Algorithmen bekannt, die die Primfaktorzerlegung \eqref{eqthm_fac} einer Zahl $z\in\NN$ bestimmen.
+Auf dieser Tatsache beruht beispielsweise das bekannte RSA-Kryptosystem.
+
+\subsection{Modulare Arithmetik}\label{sec_mod}
+
+Seien $x,y\in\ZZ$ und $m\in\ZZ\setminus\cbc 0$.
+Wir schreiben
+\begin{align*}
+	x\equiv y\mod m&&\mbox{falls}&&m\mid x-y
+\end{align*}
+\emph{Sprich:} ``$x$ is kongruent zu $y$ modulo $m$''.
+Es gilt also $x\equiv y\mod m$ genau dann, wenn $x$ und $y$ denselben Rest bei Division durch $m$ lassen.
+Einige Beispiele:
+\begin{itemize}
+	\item $12\equiv -9\mod 3$, denn $3\mid 12-(-9)=21$
+	\item $0\equiv 14\mod 7$, denn $7\mid 0-14=-14$
+	\item $48\equiv 14\mod -2$, denn $-2|34$
+\end{itemize}
+
+Wir bemerken ferner, da\ss\ $x\equiv x\mod m$ f\ue r alle $x,m$, weil $m|x-x=0$.
+Au\ss erdem gilt $x\equiv x+m\mod m$ f\ue r alle $x,m$, weil $m|x-(x+m)=-m$.
+Die Kongruenzrelation ist symmetrisch, d.h.\ $x\equiv y\mod m$ genau dann, wenn $y\equiv x\mod m$.
+Die folgenden Lemmas stellen einige weitere elementare Eigenschaften zusammen.
+
+\begin{lemma}\label{lem_cong}
+	Seien $x,y,x',y'\in\ZZ$ und $m\in\ZZ\setminus\cbc 0$.
+	Wenn
+	\begin{align*}
+		x\equiv y\mod m&&\mbox{und}&&x'\equiv y'\mod m,&&\mbox{dann}\\
+		x+x'\equiv y+y'\mod m&&\mbox{und}&&x\cdot x'\equiv y\cdot y'\mod m.
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Angenommen $m|x-y$ und $m|x'-y'$.
+	Dann gilt $m|(x-y)+(x'-y')=(x+x')-(y+y')$.
+	Ferner $m|x(x'-y')+y'(x-y)=(xx'-yy')$.
+\end{proof}
+
+\begin{lemma}\label{lem_mod}
+	Angenommen $x,y\in\ZZ$, $m,n\in\ZZ\setminus\cbc 0$ und $n\mid m$.	
+	Wenn
+	\begin{align*}
+		x\equiv y\mod m&&\mbox{dann}&&x\equiv y\mod n.
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Es gilt	$n\mid m\mid x-y.$
+\end{proof}
+
+\begin{lemma}\label{lem_modgcd}
+	Angenommen $x,y\in\ZZ$, $m,n\in\ZZ\setminus\cbc 0$ und $\ggt(m,n)=1$.	
+	Wenn
+	\begin{align*}
+		x\equiv y\mod m&&\mbox{und}&&x\equiv y\mod n&&\mbox{dann}&&x\equiv y\mod m\cdot n
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Weil $\ggt(m,n)=1$, sind die Primteiler von $m,n$ verschieden.
+	Weil $m\mid x-y$, gilt $w_p(x-y)\geq w_p(m)$ f\ue r alle $p\in\PP$.
+	Weil $n\mid x-y$, gilt $w_p(x-y)\geq w_p(n)$ f\ue r alle $p\in\PP$.
+	Folglich $w_p(x-y)\geq w_p(m)+w_p(n)=w_p(mn)$ f\ue r alle $p\in\PP$.
+	Also $mn|x-y$.
+\end{proof}
+
+Die folgende wichtige Tatsache \"uber Kongruenzen ist als {\em chinesischer Restsatz} bekannt.
+Zwei Zahlen $m,n\in\ZZ$ hei\ss en {\em relativ prim} oder {\em teilerfremd}, falls $\ggt(m,n)=1$.
+
+\begin{theorem}\label{thm_chinese}
+	Angenommen $m,n\in\NN$ sind relativ prim.
+	Dann gibt es f\ue r je zwei ganze Zahlen $x,y$ eine ganze Zahl $z$, so da\ss\
+	\begin{align*}
+		z\equiv x\mod m&&\mbox{und}&&z\equiv y\mod n.
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Zu den gegebenen teilerfremden $m,n\in\NN$ und $x,y\in\ZZ$ suchen wir $z\in\ZZ$ mit $z\equiv x\mod m$ und $z\equiv y\mod n$.
+	Mit dem erweiterten Euklidischen Algorithmus finden wir $a,b$ mit
+	\begin{align*}
+	am+bn=1.
+	\end{align*}
+	Dann gilt
+	\begin{align*}
+		bn&\equiv 1\mod m&bn&\equiv0\mod n\\
+		am&\equiv 0\mod m&am&\equiv1\mod n
+	\end{align*}
+	Also erf\ue llt $z=amy+bnx$
+				\begin{align*}
+					z&\equiv x\mod m,&z&\equiv y\mod n,
+				\end{align*}
+	wie gew\"unscht.
+\end{proof}
+
+\begin{example}
+	Gegeben sind $m=7$, $n=12$, $x=2$, $y=4$
+	Wir f\"uhren den Eukldischen Algorithmus aus:
+	\begin{align*}
+		12&=1\cdot 7+5&&7=1\cdot 5+2&&7=3\cdot 2+1
+	\end{align*}
+	Mit $a=-5$ und $b=3$ erhalten wir
+	\begin{align*}
+		am+bn=-5\cdot 7+3\cdot 12=1
+	\end{align*}
+	Also lautet die (oder genauer: eine) L\oe sung
+	\begin{align*}
+		z=amy+bnx=-5\cdot 7\cdot 4+3\cdot 12\cdot 2=-68.
+	\end{align*}
+\end{example}
+
+Eine Problemstellung, die uns in Zusammenhang mit modularer Arithmetik h\"aufig begegnet, ist das Potenzieren.
+Gegeben $x\in\ZZ$ und $\ell,m\in\NN$ ist das Ziel, eine Zahl $z\in\ZZ$ mit
+				\begin{align*}
+					x^\ell\equiv z\mod m
+				\end{align*}
+zu finden.
+Ein naiver Algorithmus f\"ur dieses Problem w\"are das $\ell$-fache Aufmultiplizieren von $x$, gefolgt von Division mit Rest durch $m$.
+Dabei treten aber zwei Probleme auf.
+Erstens ist die Zahl $\ell$ der erforderlichen Multiplikationen wom\"oglich exponentiell in der Eingabel\"ange.
+Zweitens ist sogar der Speicherbedarf f\"ur die Zwischenergebnisse exponentiell in der Darstellungsl\"ange von $\ell$.
+Das Ziel ist also eine effiziente Berechnung.
+Der folgende Algorithmus, bekannt als ``schnelles Potenzieren'' erreicht dieses Ziel.
+
+\begin{algorithm}\label{alg_exp}
+		\begin{enumerate}
+			\item Bestimme die Darstellung von $\ell$ im Dualsystem:
+				\begin{align*}
+					\ell&=\sum_{i=0}^k\ell_i2^i,&\ell_i&\in\{0,1\},&\ell_k&\neq0,&k\geq0.
+				\end{align*}
+			\item Sei $y_0$ der Divisonsrest von $x$ durch $m$.
+			\item F\ue r $i=1,\ldots,k$:
+			\item $\qquad$sei $y_i$ der Divisionsrest von $y_{i-1}^2$ durch $m$.
+			\item Setze $z=1$.
+			\item F\ue r $i=0,\ldots,k$:
+			\item $\qquad$sei $r$ der Rest von $z\cdot y_i^{\ell_i}$ durch $m$.
+			\item $\qquad$setze $z$ auf den Wert $r$.
+			\item Gib $z$ aus.
+		\end{enumerate}
+	\end{algorithm}
+
+Wichtig ist, da\ss\ die Schritte 4,7 den Rest bei Division durch $m$ bilden.
+Deshalb treten nur mit Zahlen bis zu $(|x|+|m|)^2$ auf.
+Au\ss erdem ist	die Zahl der Multiplikationen durch $k\leq2(1+\log_2\ell)$ beschr\ae nkt.
+
+\begin{example}
+		Betrachte $m=7$, $\ell=29$, $x=2$.
+	\begin{itemize}
+		\item $29=2^4+2^3+2^2+2^0$
+		\item $k=4$, $\ell_0=\ell_2=\ell_3=\ell_4=1$, $\ell_1=0$
+		\item $y_0=2$, $y_1=4$, $y_2=2$, $y_3=4$, $y_4=2$ 
+		\item Folge der $z$-Werte:
+			\begin{align*}
+				1,&&2,&&2,&&4,&&2,&&4
+			\end{align*}
+		\item \emph{Ergebnis:} $z=4$
+	\end{itemize}
+\end{example}
+
+\subsection{Der Fermat-Faktorisierungsalgorithmus}\label{sec_fermat}
+Es ist (noch) kein effizienter Algorithmus zum Faktorisieren ganzer Zahlen bekannt.
+Die naive Methode (alle Faktoren bis $\sqrt n$ durchprobieren) ben\"otigt im allgemeinen $\Theta(\sqrt n)$ Operationen.
+Eine Alternative, die bemerkenswerterweise ohne Multiplikationen auskommt, ist die {\em Fermatmethode}.
+Die Idee dabei ist, Zahlen $X,Y$ zu finden, so da\ss\ sich die zu faktorisierende Zahl $n$ schreiben l\"a\ss t als
+\begin{align*}
+	n=X^2-Y^2.
+\end{align*}
+Denn dann ist $n=(X+Y)(X-Y)$.
+Die Fermatmethode funktioniert besonders gut, wenn $n$ aus zwei etwa gleichgro\ss en Zahlen zusammengesetzt ist.
+Der folgende Algorithmus ist~\cite{Knuth} entnommen.
+Die Variablen $x,y$ werden dabei f\"ur $2X+1,2Y+1$ verwendet (da wir annehmen k\"onnen, da\ss\ $n$ ungerade ist), w\"ahrend $r$ den Wert $X^2-Y^2-N$ hat.
+
+\begin{algorithm}\label{alg_fermat}
+	{\em Eingabe:} eine ungerade zusammengesetzte Zahl $n$.
+	\begin{enumerate}
+		\item Setze $x=2\lfloor\sqrt n\rfloor+1$, $y=1$, $r=\lfloor\sqrt N\rfloor^2-N$.
+		\item Solange $r\neq0$
+		\item $\quad$erh\"ohe $r$ um $x$ und anschlie\ss end $x$ um zwei
+		\item $\quad$verringere $r$ um $y$ und erh\"ohe anschlie\ss end $y$ um zwei
+		\item $\quad$falls $r>0$, gehe zur\"uck zu (4).
+		\item gib die Faktorisierung $n=\bcfr{x-y}2\bcfr{x+y-2}2$ aus
+	\end{enumerate}
+\end{algorithm}
+
 \section{Hashing}\label{sec_hash}
 
 Das Ziel ist, eine Art ``W\"orterbuch'' zu implementieren.
@@ -1450,7 +2025,7 @@ Wir ben\"otigen also eine {\em Hashfunktion}
 	\cH:\cS\to[m].
 \end{align*}
 Wir nennen $\cH(s_i)$ den {\em Hash} des Schl\"ussels $s_i$.
-Wenn $k>m$, kann diese Funktion nicht injektiv sein (``Schubfachprinzip'').
+Wenn $km$, kann diese Funktion nicht injektiv sein (``Schubfachprinzip'').
 Es gibt also notwendigerweise Werte $w\in[m]$, so da\ss\ verschiedene Schl\"ussel $i,j$ mit $\cH(s_i)=\cH(s_j)$ existieren.
 Solche Schl\"usselpaare nennt man {\em Kollisionen}.
 
@@ -1545,73 +2120,7 @@ Zuvor vergewissern wir uns, da\ss\ sie das Hashing-Problem zufriedenstellend l\"
 \end{proof}
 
 \subsection{Konstruktion universeller Hashfunktionen}\label{sec_uni_constr}
-Die Konstruktion verwendet ein wenig elementare Zahlentheorie.
-Wir erinnern uns an die {\em Division mit Rest}.
-F\"ur je zwei ganze Zahlen $a,b\in\ZZ$, $b\neq0$, existieren $q\in\ZZ$ und $r\in\{0,1,2,\ldots,|b|-1\}$, so da\ss
-	\begin{align*}
-		a&=q\cdot b+r.
-	\end{align*}
-Wir nennen $r$ den {\em Rest} von $a$ bei Division durch $b$ und schreiben $r=a\mod b$ (``modulo'').
-Ferner sagen wir, $b$ {\em teilt} $a$, falls $r=0$.
-In diesem Fall schreiben wir $b|a$.
-
-Der {\em gr\"o\ss te gemeinsame Teiler} von $a,b\in\NN$ ist die gr\"o\ss te Zahl $c\in\NN$, so da\ss\ $c\mid a$ und $c\mid b$.
-Der folgende Algorithmus bestimmt den gr\"o\ss ten gemeinsamen Teiler zweier Zahlen $a,b$.
-
-\begin{algorithm}
-	{\tt Euclid}$(a,b)$
-	\begin{enumerate}
-		\item falls $a<b$, vertausche $a$ und $b$
-		\item setze $a_0=a$, $a_1=b$, $i=1$.
-		\item solange $a_i>0$
-		\item $\quad$berechne $q_i\in\ZZ$, $a_{i+1}\in\{0,1,\ldots,a_i\}$, so da\ss\ $a_{i-1}=q_ia_i+a_{i+1}$.
-		\item $\quad$erh\"ohe $i$ um $1$
-		\item gib $a_{i-1}$ aus
-	\end{enumerate}
-\end{algorithm}
-
-\begin{proposition}\label{prop_euclid}
-	{\tt Euclid} gibt $\ggt(a,b)$ aus und hat Laufzeit $O(\log(|a|+|b|))$.
-\end{proposition}
-\begin{proof}
-	Wir beweisen mit Induktion, da\ss\ $\ggt(a_{i-1},a_{i})=ggt(a_{i},a_{i+1})$ f\"ur alle $i\geq1$.
-	Denn angenomen $c=\ggt(a_{i-1},a_i)$.
-	Dann teilt $c$ auch
-		$$a_{i+1}=a_{i-1}-q_ia_i.$$
-	Also $\ggt(a_i,a_{i-1})|\ggt(a_i,a_{i+1})$.
-	Wenn umgekehrt $d=\ggt(a_i,a_{i+1})$, dann teilt $d$ auch $a_{i-1}=q_ia_i+a_{i+1}$; somit $\ggt(a_i,a_{i+1})|\ggt(a_i,a_{i-1})$ und somit $\ggt(a_i,a_{i+1})=\ggt(a_i,a_{i-1})$.
-	Weil f\"ur den letzten Index $i$, mit dem die ``solange''-Schleife abbricht, gilt $a_i=0$, folgt schlie\ss lich $\ggt(a_i,a_{i-1})=a_{i-1}$.
-
-	In Bezug auf die Laufzeit behaupten wir, da\ss\
-	\begin{align}\label{eqprop_euclid}
-		a_{i+1}\leq a_{i-1}/2.
-	\end{align}
-	Denn wenn $a_i<a_{i-1}/2$, dann folgt \eqref{eqprop_euclid} aus $a_{i+1}<a_i$.
-	Wenn andererseits $a_i\geq a_{i-1}/2$, dann folgt \eqref{eqprop_euclid} aus $a_{i-1}=q_ia_i+a_{i+1}$ und $a_{i+1}<a_i$.
-\end{proof}
-
-Der Euklidische Algorithmus berechnet also effizient den gr\"o\ss ten gemeinsamen Teiler von $a,b$.
-Durch R\"uckverfolgen der Schritte des Algorithmus' erhalten wir folgende Aussage.
-
-\begin{corollary}\label{cor_euclid}
-	F\"ur je zwei Zahlen $a,b\in\NN$ gibt es Zahlen $u,v\in\ZZ$, so da\ss\ $\ggt(a,b)=au+bv$.
-\end{corollary}
-\begin{proof}
-	Wir verfolgen die Schritte des Algorithmus' zur\"uck.
-	Wenn $a_{i+1}=0$, dann gilt $\ggt(a_i,a_{i+1})=a_{i}=1\cdot a_{i}+0\cdot a_{i+1}$.
-	Nehmen wir nun an, da\ss\
-	\begin{align*}
-		\ggt(a_i,a_{i+1})&=ua_i+va_{i+1}.
-	\end{align*}
-	Dann gilt
-	\begin{align*}
-		\ggt(a_{i-1},a_i)&=\ggt(a_i,a_{i+1})=ua_i+va_{i+1}=ua_i+v(a_{i-1}-q_ia_i)=(u-vq_i)a_i+va_{i-1},
-	\end{align*}
-	wie behauptet.
-\end{proof}
-
-Der Beweis des Korollars ist ``algorithmisch''; d.h.\ der Beweis beschreibt einen Algorithmus, wie die Zahlen $u,v$ effizient berechnet werden k\"onnen.
-
+Die Konstruktion verwendet ein wenig elementare Zahlentheorie aus Abschnitt~\ref{sec_arith}.
 Wir verwenden die ``Modulo''-Rechnung, um eine universelle Menge von Hashfunktionen zu erzeugen.
 Sei dazu $m>1$ eine nat\"urliche Zahl und $p>m$ eine Primzahl.
 F\"ur ganze Zahlen $1\leq a<p$ und $0\leq b<p$ definieren wir
@@ -3075,6 +3584,47 @@ Auch die {\tt DeleteCleanup}-Operation hat Laufzeit $O(\log n)$.
 Sie stellt die Bedingungen {\bf RB1--RB5} wieder her.
 Auf den Folien zur Vorlesung sind einige Beispiele zu finden.
 
+\subsection{Quantile via rot-schwarz-Baum}\label{sec_rbquant}
+Mit Hilfe des rot-schwarz-Baums k\"onnen Quantile einer $n$-ele\-mentigen Menge, die durch den Baum repr\"asentiert wird, in Zeit $O(\log n)$ ermittelt werden.
+D.h.\ f\"ur jedes $i$ zwischen $1$ und $n$ ist es m\"oglich, das $i$-te Element in Zeit $O(\log n)$ zu bestimmen.
+Wir nehmen dazu an, da\ss\ die Elemente nach ihren Schl\"usseln geordnet sind, und da\ss\ die Schl\"ussel verschieden sind.
+(Diese Annahme k\"onnte vermieden werden, indem der Rang eines Elements in der Ordnung geeignet definiert wird, um mit gleichen Schl\"usselwerten umzugehen.)
+
+Um den rot-schwarz-Baum f\"ur diesen Zweck anzupassen, f\"ugen wir jedem Knoten als weiteres Attribut $g(x)$ die Zahl der Knoten hinzu, die in dem Unterbaum mit $x$ als Wurzel enthalten sind.
+Dabei werden die $\emptyset$-Zeiger nicht als Knoten mitgez\"ahlt, wohl aber $x$ selbst.
+Den $\emptyset$-Zeigern weisen wir als $g(\nix)$-Wert einfach Null zu.
+Daher ist der $g(\nix)$-Wert eines Elternkontens stets die Summe der $g(\nix)$-Werte der Kinder.
+
+Das folgende Verfahren findet das $i$-te Element in der Ordnung der Schl\"usssel anhand der $g(\nix)$-Werte.
+
+\begin{algorithm}\upshape {\tt RBSelect}. {\em Eingabe:} $(T,r)$ und gew\"unschte Rang $i$.
+	\begin{enumerate}
+		\item sei $y$ das linke Kind von $r$ und setze $j=g(y)+1$.
+		\item falls $i=j$, gib $r$ aus und halte.
+		\item falls $i<j$ rufe {\tt RBSelect}$(T,y,i)$ auf.
+		\item andernfalls rufe {\tt RBSelect}$(T,z,i-j)$ auf, wobei $z$ das rechte Kind von $r$ ist.
+	\end{enumerate}
+\end{algorithm}
+
+Umgekehrt bestimmt das folgende Verfahren den Rang eines gegebenen Elements des Baums.
+
+\begin{algorithm}\upshape {\tt RBRang}. {\em Eingabe:} $(T,x)$
+	\begin{enumerate}
+		\item sei $y$ das linke Kind von $x$ und setze $j=g(y)+1$.
+		\item setze $z=x$
+		\item solange $z$ nicht die Wurzel ist,
+		\item $\quad$falls $z$ ein rechtes Kind ist
+		\item $\qquad$erh\"ohe $j$ um $g(l)$, wobei $l$ das linke Kind des Elternknotens von $z$ ist
+		\item $\quad$setze $z$ auf seinen Elternkonten
+	\end{enumerate}
+\end{algorithm}
+
+Um die $g(\nix)$-Werte auf dem laufenden zu halten, m\"ussen die Operationen zum Einf\"ugen und Entfernen von Knoten modifiziert werden.
+Beim Einf\"ugen m\"ussen zun\"achst die $g(\nix)$-Werte der Knoten erh\"oht werden, die auf dem Pfad von dem neu eingef\"ugten Knoten zur Wurzel liegen.
+Ferner m\"ussen die $g(\nix)$-Werte bei den Rotationen geeignet modifiziert werden.
+Das ist kein Problem, da ja die $g(\nix)$-Werte der jeweiligen Teilb\"aume bekannt sind.
+Analog wird die Entfernen-Operation modifiziert.
+
 \section{Binomial heaps}\label{sec_binomial}
 
 \noindent
@@ -3085,12 +3635,12 @@ Der binomial heap beschleunigt diese Operation.
 
 Binomial heaps unterst\"utzen die folgenden Operationen:
 \begin{description}
-	\item[einf\"ugen:] neues Element mit gegebenen Gewicht hinzuf\"ugen
-	\item[Minimum:] auffinden des Elements mit minimalen Gewicht
-	\item[Minimum entnehmen:] auffinden und entfernen
-	\item[Vereinigung:] zwei Heaps zu einem vereinigen
-	\item[verringern:] das Gewicht eines Elements verringern
-	\item[l\"oschen:] ein Element aus der Datenstruktur entfernen
+	\item[einf\"ugen] neues Element mit gegebenen Gewicht hinzuf\"ugen
+	\item[Minimum] auffinden des Elements mit minimalen Gewicht
+	\item[Minimum entnehmen] auffinden und entfernen
+	\item[Vereinigung] zwei Heaps zu einem vereinigen
+	\item[verringern] das Gewicht eines Elements verringern
+	\item[l\"oschen] ein Element aus der Datenstruktur entfernen
 \end{description}
 Wir werden sehen, da\ss\ alle diese Operationen Laufzeit $O(\log n)$ haben.
 
