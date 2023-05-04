@@ -80,9 +80,11 @@ void print_list(void) { /* this function just prints the integers stored in nums
 	for(i=0;i<numbers;i++) printf("%d\n",nums[i]);
 }
 
+/* heapsort proper */
+
 int *left_child(int *x) { /* return the index of the left child, or -1 if there is none */
-	int i=x-nums;
-	int j=2*(i+1)-1;
+	int i=x-nums; /* array index of x */
+	int j=2*(i+1)-1;	/* calculate left child index */
 
 	return j<numbers ? nums+j : NULL;
 }
@@ -103,7 +105,7 @@ int *parent(int *x) { /* return the index of the parent, or -1 if there is none 
 void maxHeapify(int *i) { /* apply MaxHeapify from heap entry i */
 	int *left,*right,*max;
 
-	if(!i) return;	/* stop if i is not a valid heap entry */
+	if(i==NULL) return;	/* stop if i is not a valid heap entry */
 	left=left_child(i);	/* find left/right child of i */
 	right=right_child(i);
 
