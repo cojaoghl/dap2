@@ -145,8 +145,8 @@ int main(int argc,char **argv) {
 	numbers=convert_to_int();
 	if(numbers<0) {fputs("Error: no numbers read",stderr); return 1;}
 
-  	printf("%d\n",quantile(nums,0,numbers-1,1+numbers/2));
-/*  	super_quicksort(nums,0,numbers-1);
-	print_list();*/
+/* printf("%d\n",quantile(nums,0,numbers-1,1+numbers/2)); */  	
+  	super_quicksort(nums,0,numbers-1);
+	print_list();
 	return 0;
 }
