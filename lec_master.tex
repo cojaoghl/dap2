@@ -204,7 +204,7 @@
 	\begin{overprint}
 		\onslide<1>
 	\begin{block}{Master-Theorem}
-	Seien $a>0$, $b>1$ reelle Zahlen und seien $T:\RRpos\to\RRpos$ und $f:\RRpos\to\RRpos$ Funktionen, so da\ss
+	Seien $a\geq1$, $b>1$ reelle Zahlen und seien $T:\RRpos\to\RRpos$ und $f:\RRpos\to\RRpos$ Funktionen, so da\ss
 	\begin{align*}
 		T(x)=aT(x/b)+f(x)\qquad\mbox{f\"ur alle }x\in\RRpos.
 	\end{align*}
@@ -217,7 +217,7 @@
 	\end{block}
 		\onslide<2>
 		\begin{block}{Lemma}
-	Seien $a>0$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine Funktion und sei $T:\RRpos\to\RRpos$ eine Funktion, so da\ss
+	Seien $a\geq1$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine Funktion und sei $T:\RRpos\to\RRpos$ eine Funktion, so da\ss
 	\begin{align}\label{eqlem_master1_1}
 		T(x)&=\begin{cases}\Theta(1)&\mbox{falls }0\leq x\leq 1,\\ aT(x/b)+f(x)&\mbox{ sonst.}\end{cases}
 	\end{align}
@@ -228,7 +228,7 @@
 		\end{block}
 		\onslide<3>
 		\begin{block}{Lemma}
-	Seien $a>0$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine und sei
+	Seien $a\geq1$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine und sei
 	\begin{align}\label{eqlem_master2_1}
 		g(x)&=\sum_{0\leq j\leq\log_bx}a^jf(x/b^j)&&(x\geq1).
 	\end{align}

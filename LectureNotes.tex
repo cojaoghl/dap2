@@ -1410,7 +1410,7 @@ Das folgende Ergebnis erm\"oglicht die Absch\"atzung relativ allgemeiner Rekurre
 Dabei \"ubertragen wir den $O(\nix)$-Kalk\"ul auf reelle Zahlen $x$ und den Grenzwert $x\to\infty$.
 
 \begin{theorem}\label{thm_master}
-	Seien $a>0$, $b>1$ reelle Zahlen und seien $T:\RRpos\to\RRpos$ und $f:\RRpos\to\RRpos$ Funktionen, so da\ss
+	Seien $a\geq1$, $b>1$ reelle Zahlen und seien $T:\RRpos\to\RRpos$ und $f:\RRpos\to\RRpos$ Funktionen, so da\ss
 	\begin{align*}
 		T(x)=aT(x/b)+f(x)\qquad\mbox{f\"ur alle }x\in\RRpos.
 	\end{align*}
@@ -1428,7 +1428,7 @@ Dabei \"ubertragen wir den $O(\nix)$-Kalk\"ul auf reelle Zahlen $x$ und den Gren
 Zum Beweis von \Thm~\ref{thm_master} ben\"otigen wir mehrere Schritte.
 
 \begin{lemma}\label{lem_master1}
-	Seien $a>0$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine Funktion und sei $T:\RRpos\to\RRpos$ eine Funktion, so da\ss
+	Seien $a\geq1$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine Funktion und sei $T:\RRpos\to\RRpos$ eine Funktion, so da\ss
 	\begin{align}\label{eqlem_master1_1}
 		T(x)&=\begin{cases}\Theta(1)&\mbox{falls }0\leq x\leq 1,\\ aT(x/b)+f(x)&\mbox{ sonst.}\end{cases}
 	\end{align}
@@ -1449,7 +1449,7 @@ Zum Beweis von \Thm~\ref{thm_master} ben\"otigen wir mehrere Schritte.
 Als n\"achstes untersuchen wir das Wachstum der Summe aus \eqref{eqlem_master1}.
 
 \begin{lemma}\label{lem_master2}
-	Seien $a>0$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine und sei
+	Seien $a\geq1$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine und sei
 	\begin{align}\label{eqlem_master2_1}
 		g(x)&=\sum_{0\leq j\leq\log_bx}a^jf(x/b^j)&&(x\geq1).
 	\end{align}
@@ -1487,7 +1487,7 @@ Als n\"achstes untersuchen wir das Wachstum der Summe aus \eqref{eqlem_master1}.
 	Im dritten Fall bemerken wir, da\ss\ $g(x)=\Omega(f(x))$, weil $f(x)$ als Summand f\"ur $j=0$ in \eqref{eqlem_master2_1} auftritt.
 	F\"ur die umgekehrte Schranke rechnen wir mit Hilfe der Annahme \eqref{eqlem_master2_c}, da\ss
 	\begin{align*}
-		g(x)&=O(f(x))\sum_{j\log_bx}c^j=O(f(x)),
+		g(x)&=O(f(x))\sum_{j\leq\log_bx}c^j=O(f(x)),
 	\end{align*}
 	weil $c<1$.
 \end{proof}
