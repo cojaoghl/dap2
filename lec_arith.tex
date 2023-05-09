@@ -1,0 +1,402 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\documentclass[aspectratio=1610, 11pt]{beamer}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usetheme{tudo}
+
+\title{Datenstrukturen, Algorithmen und Programmierung~2}
+\author[A.~Coja-Oghlan]{Amin Coja-Oghlan}
+\institute[DAP2]{Lehrstuhl Informatik 2\\Fakult\"at f\"ur Informatik}
+
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand\dd{\mathrm d}
+\newcommand\eul{\mathrm e}
+\newcommand\cA{\mathcal A}
+\newcommand\cB{\mathcal B}
+\newcommand\cC{\mathcal C}
+\newcommand\cD{\mathcal D}
+\newcommand\cE{\mathcal E}
+\newcommand\cF{\mathcal F}
+\newcommand\cG{\mathcal G}
+\newcommand\cH{\mathcal H}
+\newcommand\cI{\mathcal I}
+\newcommand\cJ{\mathcal J}
+\newcommand\cK{\mathcal K}
+\newcommand\cL{\mathcal L}
+\newcommand\cM{\mathcal M}
+\newcommand\cN{\mathcal N}
+\newcommand\cO{\mathcal O}
+\newcommand\cP{\mathcal P}
+\newcommand\cQ{\mathcal Q}
+\newcommand\cR{\mathcal R}
+\newcommand\cS{\mathcal S}
+\newcommand\cT{\mathcal T}
+\newcommand\cU{\mathcal U}
+\newcommand\cV{\mathcal V}
+\newcommand\cW{\mathcal W}
+\newcommand\cX{\mathcal X}
+\newcommand\cY{\mathcal Y}
+\newcommand\cZ{\mathcal Z}
+\newcommand\fA{\mathfrak A}
+\newcommand\fB{\mathfrak B}
+\newcommand\fC{\mathfrak C}
+\newcommand\fD{\mathfrak D}
+\newcommand\fE{\mathfrak E}
+\newcommand\fF{\mathfrak F}
+\newcommand\fG{\mathfrak G}
+\newcommand\fH{\mathfrak H}
+\newcommand\fI{\mathfrak I}
+\newcommand\fJ{\mathfrak J}
+\newcommand\fK{\mathfrak K}
+\newcommand\fL{\mathfrak L}
+\newcommand\fM{\mathfrak M}
+\newcommand\fN{\mathfrak N}
+\newcommand\fO{\mathfrak O}
+\newcommand\fP{\mathfrak P}
+\newcommand\fQ{\mathfrak Q}
+\newcommand\fR{\mathfrak R}
+\newcommand\fS{\mathfrak S}
+\newcommand\fT{\mathfrak T}
+\newcommand\fU{\mathfrak U}
+\newcommand\fV{\mathfrak V}
+\newcommand\fW{\mathfrak W}
+\newcommand\fX{\mathfrak X}
+\newcommand\fY{\mathfrak Y}
+\newcommand\fZ{\mathfrak Z}
+\newcommand\fa{\mathfrak a}
+\newcommand\fb{\mathfrak b}
+\newcommand\fc{\mathfrak c}
+\newcommand\fd{\mathfrak d}
+\newcommand\fe{\mathfrak e}
+\newcommand\ff{\mathfrak f}
+\newcommand\fg{\mathfrak g}
+\newcommand\fh{\mathfrak h}
+%\newcommand\fi{\mathfrak i}
+\newcommand\fj{\mathfrak j}
+\newcommand\fk{\mathfrak k}
+\newcommand\fl{\mathfrak l}
+\newcommand\fm{\mathfrak m}
+\newcommand\fn{\mathfrak n}
+\newcommand\fo{\mathfrak o}
+\newcommand\fp{\mathfrak p}
+\newcommand\fq{\mathfrak q}
+\newcommand\fr{\mathfrak r}
+\newcommand\fs{\mathfrak s}
+\newcommand\ft{\mathfrak t}
+\newcommand\fu{\mathfrak u}
+\newcommand\fv{\mathfrak v}
+\newcommand\fw{\mathfrak w}
+\newcommand\fx{\mathfrak x}
+\newcommand\fy{\mathfrak y}
+\newcommand\fz{\mathfrak z}
+\newcommand\vA{\vec A}
+\newcommand\vB{\vec B}
+\newcommand\vC{\vec C}
+\newcommand\vD{\vec D}
+\newcommand\vE{\vec E}
+\newcommand\vF{\vec F}
+\newcommand\vG{\vec G}
+\newcommand\vH{\vec H}
+\newcommand\vI{\vec I}
+\newcommand\vJ{\vec J}
+\newcommand\vK{\vec K}
+\newcommand\vL{\vec L}
+\newcommand\vM{\vec M}
+\newcommand\vN{\vec N}
+\newcommand\vO{\vec O}
+\newcommand\vP{\vec P}
+\newcommand\vQ{\vec Q}
+\newcommand\vR{\vec R}
+\newcommand\vS{\vec S}
+\newcommand\vT{\vec T}
+\newcommand\vU{\vec U}
+\newcommand\vV{\vec V}
+\newcommand\vW{\vec W}
+\newcommand\vX{\vec X}
+\newcommand\vY{\vec Y}
+\newcommand\vZ{\vec Z}
+\newcommand\va{\vec a}
+\newcommand\vb{\vec b}
+\newcommand\vc{\vec c}
+\newcommand\vd{\vec d}
+\newcommand\ve{\vec e}
+\newcommand\vf{\vec f}
+\newcommand\vg{\vec g}
+\newcommand\vh{\vec h}
+\newcommand\vi{\vec i}
+\newcommand\vj{\vec j}
+\newcommand\vk{\vec k}
+\newcommand\vl{\vec l}
+\newcommand\vm{\vec m}
+\newcommand\vn{\vec n}
+\newcommand\vo{\vec o}
+\newcommand\vp{\vec p}
+\newcommand\vq{\vec q}
+\newcommand\vr{\vec r}
+\newcommand\vs{\vec s}
+\newcommand\vt{\vec t}
+\newcommand\vu{\vec u}
+%\newcommand\vv{\vec v}
+\newcommand\vw{\vec w}
+\newcommand\vx{\vec x}
+\newcommand\vy{\vec y}
+\newcommand\vz{\vec z}
+\renewcommand\AA{\mathbb A}
+\newcommand\NN{\mathbb N}
+\newcommand\ZZ{\mathbb Z}
+\newcommand\PP{\mathbb P}
+\newcommand\QQ{\mathbb Q}
+\newcommand\RR{\mathbb R}
+\newcommand\RRpos{\mathbb R_{\geq0}}
+\renewcommand\SS{\mathbb S}
+\newcommand\CC{\mathbb C}
+\newcommand{\ord}{\mathrm{ord}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\pr}{\mathrm{P}}
+\newcommand{\Vol}{\mathrm{vol}}
+\newcommand\norm[1]{\left\|{#1}\right\|} 
+\newcommand\sign{\mathrm{sign}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand\bc[1]{\left({#1}\right)} 
+\newcommand\cbc[1]{\left\{{#1}\right\}} 
+\newcommand\bcfr[2]{\bc{\frac{#1}{#2}}} 
+\newcommand{\bck}[1]{\left\langle{#1}\right\rangle} 
+\newcommand\brk[1]{\left\lbrack{#1}\right\rbrack} 
+\newcommand\scal[2]{\bck{{#1},{#2}}} 
+\newcommand{\vecone}{\mathbb{1}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\ggt}{\mathrm{ggT}}
+\newcommand{\kgv}{\mathrm{kgV}}
+\newcommand{\trans}{\top}
+\newcommand{\Karonski}{Karo\'nski}
+\newcommand{\Erdos}{Erd\H{o}s}
+\newcommand{\Renyi}{R\'enyi}
+\newcommand{\Lovasz}{Lov\'asz}
+\newcommand{\Juhasz}{Juh\'asz}
+\newcommand{\Bollobas}{Bollob\'as}
+\newcommand{\Furedi}{F\"uredi}
+\newcommand{\Komlos}{Koml\'os}
+\newcommand{\Luczak}{\L uczak}
+\newcommand{\Kucera}{Ku\v{c}era}
+\newcommand{\Szemeredi}{Szemer\'edi}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Arithmetik}
+	\begin{exampleblock}{Motivation}
+		\begin{itemize}
+			\item das Rechnen mit ganzen oder rationalen Zahlen ist ein Grundbaustein vieler Algorithmen
+			\item wir stellen die Werkzeuge daf\"ur bereit
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Arithmetik}
+	\begin{exampleblock}{Zahldarstellungen im Rechner}
+		\begin{itemize}
+			\item Datentypen {\tt int}, {\tt unsigned int}
+			\item Flie\ss kommazahlen
+			\item rationale Zahlen
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Arithmetik}
+	\begin{exampleblock}{Elementare Rechenoperationen}
+		\begin{itemize}
+			\item die {\em Darstellungl\"ange} einer Zahl $n\in\NN$ ist $O(\log n)$
+			\item Addition/Subtraktion
+			\item Division mit Rest
+			\item Multiplikation (!)
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Arithmetik}
+	\begin{exampleblock}{Teilbarkeit}
+		Seien $x,y\in\ZZ$, $x\neq0$
+		\begin{itemize}
+			\item $y\mod x$ ist der Divisionsrest
+			\item $x$ \emph{teilt} $y$, falls $y\mod x=0$
+			\item \emph{Schreibweise:} $x\mid y$
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Arithmetik}
+	\begin{exampleblock}{Gr\"o\ss ter gemeinsamer Teiler}
+		Der ggT von $x,y\in\ZZ$, $x\neq0$, ist die gr\"o\ss te Zahl $z\in\NN$, mit $z\mid x$ und $z\mid y$.
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Arithmetik}
+	\begin{exampleblock}{Euklidischer Algorithmus {\tt Euclid}$(a,b)$}
+		\begin{enumerate}
+			\item falls $a<b$, vertausche $a$ und $b$
+			\item setze $a_0=a$, $a_1=b$, $i=1$.
+			\item solange $a_i>0$
+			\item $\quad$berechne $q_i\in\ZZ$, $a_{i+1}\in\{0,1,\ldots,a_i\}$, so da\ss\ $a_{i-1}=q_ia_i+a_{i+1}$.
+			\item $\quad$erh\"ohe $i$ um $1$
+			\item gib $a_{i-1}$ aus
+		\end{enumerate}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Arithmetik}
+	\begin{block}{Satz}
+		{\tt Euclid}$(a,b)$ gibt $\ggt(a,b)$ aus und f\"uhrt $O(\log(|a|+|b|))$ Division aus.
+	\end{block}
+	\begin{block}{Korollar}
+		F\"ur je zwei Zahlen $a,b\in\NN$ gibt es Zahlen $u,v\in\ZZ$, so da\ss\ $\ggt(a,b)=au+bv$.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Arithmetik}
+	\begin{overprint}
+		\onslide<1>
+		\begin{block}{Definition}
+			\begin{itemize}
+				\item eine Zahl $z\in\ZZ\setminus\{-1,1\}$ hei\ss t {\em irreduzibel}, falls $y\nmid z$ f\"ur alle $1<y<|z|$.
+				\item eine Zahl $z\in\ZZ\setminus\{-1,0,1\}$ hei\ss t {\em Primzahl}, falls f\"ur alle $x,y\in\ZZ$ mit $z|x\cdot y$ gilt, da\ss\ $z|x$ oder $z|y$.
+				\item mit $\PP$ wird die Menge aller Primzahlen bezeichnet
+			\end{itemize}
+		\end{block}
+		\onslide<2>
+		\begin{block}{Lemma}
+			Jede Primzahl ist irreduzibel.
+		\end{block}
+		\onslide<3>
+		\begin{block}{Lemma}
+			Jede Zahl $z>1$ besitzt einen irreduziblen Teiler.
+		\end{block}
+		\begin{block}{Lemma}
+			Jede irreduzibele Zahl ist eine Primzahl.
+		\end{block}
+		\onslide<4>
+		\begin{theorem}
+			Zu jeder Primzahl $p\in\PP$ gibt es eine Abbildung $w_p:\NN\to\NN_0$, so da\ss\ f\"ur jede nat\"urliche Zahl $z\in\NN$ gilt
+			\begin{align*}
+				z&=\prod_{p\in\PP}p^{w_p(z)}.
+			\end{align*}
+			Diese Abbildungen $w_p$ sind eindeutig bestimmt.
+		\end{theorem}
+	\end{overprint}
+\end{frame}
+
+\begin{frame}{Arithmetik}
+	\begin{overprint}
+		\onslide<1>
+\begin{exampleblock}{Modulare Arithmetik}
+		Seien $x,y\in\ZZ$ und $m\in\ZZ\setminus\cbc 0$.
+		Wir schreiben
+		\begin{align*}
+			x\equiv y\mod m&&\mbox{falls}&&m\mid x-y
+		\end{align*}
+		\emph{Sprich:} ``$x$ is kongruent zu $y$ modulo $m$''.
+	\end{exampleblock}
+\onslide<2>
+\begin{block}{Lemma}
+	Seien $x,y,x',y'\in\ZZ$ und $m\in\ZZ\setminus\cbc 0$.
+	Wenn
+	\begin{align*}
+		x\equiv y\mod m&&\mbox{und}&&x'\equiv y'\mod m,&&\mbox{dann}\\
+		x+x'\equiv y+y'\mod m&&\mbox{und}&&x\cdot x'\equiv y\cdot y'\mod m.
+	\end{align*}
+\end{block}
+\onslide<3>
+\begin{block}{Lemma}
+	Angenommen $x,y\in\ZZ$, $m,n\in\ZZ\setminus\cbc 0$ und $n\mid m$.	
+	Wenn
+	\begin{align*}
+		x\equiv y\mod m&&\mbox{dann}&&x\equiv y\mod n.
+	\end{align*}
+\end{block}
+\onslide<4>
+\begin{block}
+	Angenommen $x,y\in\ZZ$, $m,n\in\ZZ\setminus\cbc 0$ und $\ggt(m,n)=1$.	
+	Wenn
+	\begin{align*}
+		x\equiv y\mod m&&\mbox{und}&&x\equiv y\mod n&&\mbox{dann}&&x\equiv y\mod m\cdot n
+	\end{align*}
+\end{block}
+\onslide<5>
+\begin{block}{Chinesischer Restsatz}
+	Angenommen $m,n\in\NN$ sind relativ prim.
+	Dann gibt es f\"ur je zwei ganze Zahlen $x,y$ eine ganze Zahl $z$, so da\ss\
+	\begin{align*}
+		z\equiv x\mod m&&\mbox{und}&&z\equiv y\mod n.
+	\end{align*}
+\end{block}
+	\end{overprint}
+\end{frame}
+
+\begin{frame}{Arithmetik}
+	\begin{overprint}
+		\onslide<1>
+		\begin{exampleblock}{Schnelles Potzenzieren}
+			\begin{itemize}
+				\item gegeben $x\in\ZZ$ und $\ell,m\in\NN$ suchen wir $z\in\ZZ$ mit
+					\begin{align*}
+						x^\ell\equiv z\mod m
+					\end{align*}
+				\item es w\"are offenbar \emph{nicht} effizient, $x^\ell$ durch $\ell$-faches Multiplizieren zu berechnen
+			\end{itemize}
+		\end{exampleblock}
+		\onslide<2>
+		\begin{exampleblock}{Algorithmus Schnelles Potenzieren}
+			\begin{enumerate}
+				\item Bestimme die Darstellung von $\ell$ im Dualsystem: $\ell=\sum_{i=0}^k\ell_i2^i$
+				\item Sei $y_0$ der Divisonsrest von $x$ durch $m$.
+				\item F\"ur $i=1,\ldots,k$:
+				\item $\qquad$sei $y_i$ der Divisionsrest von $y_{i-1}^2$ durch $m$.
+				\item Setze $z=1$.
+				\item F\"ur $i=0,\ldots,k$:
+				\item $\qquad$sei $r$ der Rest von $z\cdot y_i^{\ell_i}$ durch $m$.
+				\item $\qquad$setze $z$ auf den Wert $r$.
+				\item Gib $z$ aus.
+			\end{enumerate}
+		\end{exampleblock}
+	\end{overprint}
+\end{frame}
+
+\begin{frame}{Arithmetik}
+	\begin{overprint}
+		\onslide<1>
+		\begin{exampleblock}{Faktorisieren}
+			\begin{itemize}
+				\item gegeben $x\in\ZZ$ ist es unser Ziel, die Primfaktorzerlegung von $x$ zu bestimmen
+				\item daf\"ur ist derzeit kein effizienter Algorithmus bekannt
+				\item wir lernen aber einen Algorithmus kennen, der f\"ur Zahlen $x=pq$ mit $p,q$ prim und $|p-q|$ ``klein'' gut funktioniert
+			\end{itemize}
+		\end{exampleblock}
+		\onslide<2>
+		\begin{exampleblock}{Fermat-Faktorisierung}
+	{\em Eingabe:} eine ungerade zusammengesetzte Zahl $n>1$.
+	\begin{enumerate}
+		\item Setze $x=2\lfloor\sqrt n\rfloor+1$, $y=1$, $r=\lfloor\sqrt N\rfloor^2-N$.
+		\item Solange $r\neq0$
+		\item $\quad$erh\"ohe $r$ um $x$ und anschlie\ss end $x$ um zwei
+		\item $\quad$verringere $r$ um $y$ und erh\"ohe anschlie\ss end $y$ um zwei
+		\item $\quad$falls $r>0$, gehe zur\"uck zu (4).
+		\item gib die Faktorisierung $n=\bcfr{x-y}2\bcfr{x+y-2}2$ aus
+	\end{enumerate}
+		\end{exampleblock}
+	\end{overprint}
+\end{frame}
+
+\begin{frame}{Arithmetik}
+	\begin{exampleblock}{Zusammenfassung}
+		\begin{itemize}
+			\item wir haben einige grundlegende Konzepte aus der Zahlentheorie kennengelernt
+			\item modulare Arithmetik, euklidischer Algorithmus, chinesischer Restsatz
+			\item schnelles Potzenzieren, Fermat-Faktorisierung
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+ \end{document}
