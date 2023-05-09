@@ -201,7 +201,9 @@
 \end{frame}
 
 \begin{frame}{Rekurrenzen}
-	\begin{exampleblock}{Master-Theorem}
+	\begin{overprint}
+		\onslide<1>
+	\begin{block}{Master-Theorem}
 	Seien $a>0$, $b>1$ reelle Zahlen und seien $T:\RRpos\to\RRpos$ und $f:\RRpos\to\RRpos$ Funktionen, so da\ss
 	\begin{align*}
 		T(x)=aT(x/b)+f(x)\qquad\mbox{f\"ur alle }x\in\RRpos.
@@ -210,13 +212,33 @@
 	\begin{enumerate}[(i)]
 		\item falls $f(x)=O(x^{\log_b(a)-\eps})$ f\"ur ein $\eps>0$, dann gilt $T(x)=\Theta(x^{\log_ba})$.
 		\item falls $f(x)=\Theta(x^{\log_ba}\log^kx)$ f\"ur ein $k\geq0$, dann gilt $T(x)=\Theta(x^{\log_ba}\log^{k+1}x)$.
-		\item falls $f(x)=\Omega(x^{\log_ba+\eps}$ f\"ur ein $\eps>0$ und falls au\ss erdem  Zahlen $c<1$, $x_0>0$ existieren, so da\ss
-			\begin{align*}
-				af(x/b)\leq cf(x)\qquad\mbox{f\"ur alle }x>x_0,
-			\end{align*}
-			dann gilt $T(x)=\Theta(f(x))$.
+		\item falls $f(x)=\Omega(x^{\log_ba+\eps})$ f\"ur ein $\eps>0$ und falls au\ss erdem  Zahlen $c<1$, $x_0>0$ existieren, so da\ss\ $ af(x/b)\leq cf(x)\mbox{ f\"ur alle }x>x_0$, dann gilt $T(x)=\Theta(f(x))$.
 	\end{enumerate}
-	\end{exampleblock}
+	\end{block}
+		\onslide<2>
+		\begin{block}{Lemma}
+	Seien $a>0$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine Funktion und sei $T:\RRpos\to\RRpos$ eine Funktion, so da\ss
+	\begin{align}\label{eqlem_master1_1}
+		T(x)&=\begin{cases}\Theta(1)&\mbox{falls }0\leq x\leq 1,\\ aT(x/b)+f(x)&\mbox{ sonst.}\end{cases}
+	\end{align}
+	Dann gilt
+	\begin{align}\label{eqlem_master1}
+		T(x)&=\Theta(x^{\log_ba})+\sum_{0\leq j\leq\log_bx}a^jf(x/b^j).
+	\end{align}
+		\end{block}
+		\onslide<3>
+		\begin{block}{Lemma}
+	Seien $a>0$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine und sei
+	\begin{align}\label{eqlem_master2_1}
+		g(x)&=\sum_{0\leq j\leq\log_bx}a^jf(x/b^j)&&(x\geq1).
+	\end{align}
+	\begin{enumerate}[(i)]
+		\item falls $f(x)=O(x^{\log_b(a)-\eps})$ f\"ur ein $\eps>0$, dann gilt $g(x)=\Theta(x^{\log_ba})$.
+		\item falls $f(x)=\Theta(x^{\log_ba}\log^kx)$ f\"ur ein $k\geq0$, dann gilt $g(x)=\Theta(x^{\log_ba}\log^{k+1}x)$.
+		\item falls $f(x)=\Omega(x^{\log_ba+\eps})$ f\"ur ein $\eps>0$ und falls au\ss erdem  Zahlen $c<1$, $x_0>0$ existieren, so da\ss\ $af(x/b)\leq cf(x)\mbox{ f\"ur alle }x>x_0$, dann gilt $g(x)=\Theta(f(x))$.
+	\end{enumerate}
+		\end{block}
+	\end{overprint}
 \end{frame}
 
 \begin{frame}{Rekurrenzen}

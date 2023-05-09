@@ -1417,7 +1417,7 @@ Dabei \"ubertragen wir den $O(\nix)$-Kalk\"ul auf reelle Zahlen $x$ und den Gren
 	\begin{enumerate}[(i)]
 		\item falls $f(x)=O(x^{\log_b(a)-\eps})$ f\"ur ein $\eps>0$, dann gilt $T(x)=\Theta(x^{\log_ba})$.
 		\item falls $f(x)=\Theta(x^{\log_ba}\log^kx)$ f\"ur ein $k\geq0$, dann gilt $T(x)=\Theta(x^{\log_ba}\log^{k+1}x)$.
-		\item falls $f(x)=\Omega(x^{\log_ba+\eps}$ f\"ur ein $\eps>0$ und falls au\ss erdem  Zahlen $c<1$, $x_0>0$ existieren, so da\ss
+		\item falls $f(x)=\Omega(x^{\log_ba+\eps})$ f\"ur ein $\eps>0$ und falls au\ss erdem  Zahlen $c<1$, $x_0>0$ existieren, so da\ss
 			\begin{align*}
 				af(x/b)\leq cf(x)\qquad\mbox{f\"ur alle }x>x_0,
 			\end{align*}
@@ -1430,7 +1430,7 @@ Zum Beweis von \Thm~\ref{thm_master} ben\"otigen wir mehrere Schritte.
 \begin{lemma}\label{lem_master1}
 	Seien $a>0$ und $b>1$ reelle Zahlen, sei $f:\RRpos\to\RRpos$ eine Funktion und sei $T:\RRpos\to\RRpos$ eine Funktion, so da\ss
 	\begin{align}\label{eqlem_master1_1}
-		T(x)&=\begin{cases}\Theta(1)&\mbox{falls }0\leq x1,\\ aT(x/b)+f(x)&\mbox{ sonst.}\end{cases}
+		T(x)&=\begin{cases}\Theta(1)&\mbox{falls }0\leq x\leq 1,\\ aT(x/b)+f(x)&\mbox{ sonst.}\end{cases}
 	\end{align}
 	Dann gilt
 	\begin{align}\label{eqlem_master1}
@@ -1456,7 +1456,7 @@ Als n\"achstes untersuchen wir das Wachstum der Summe aus \eqref{eqlem_master1}.
 	\begin{enumerate}[(i)]
 		\item falls $f(x)=O(x^{\log_b(a)-\eps})$ f\"ur ein $\eps>0$, dann gilt $g(x)=\Theta(x^{\log_ba})$.
 		\item falls $f(x)=\Theta(x^{\log_ba}\log^kx)$ f\"ur ein $k\geq0$, dann gilt $g(x)=\Theta(x^{\log_ba}\log^{k+1}x)$.
-		\item falls $f(x)=\Omega(x^{\log_ba+\eps}$ f\"ur ein $\eps>0$ und falls au\ss erdem  Zahlen $c<1$, $x_0>0$ existieren, so da\ss
+		\item falls $f(x)=\Omega(x^{\log_ba+\eps})$ f\"ur ein $\eps>0$ und falls au\ss erdem  Zahlen $c<1$, $x_0>0$ existieren, so da\ss
 			\begin{align}\label{eqlem_master2_c}
 				af(x/b)\leq cf(x)\qquad\mbox{f\"ur alle }x>x_0,
 			\end{align}
