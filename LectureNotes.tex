@@ -1598,7 +1598,7 @@ Der folgende Algorithmus bestimmt den gr\"o\ss ten gemeinsamen Teiler zweier Zah
 		\item falls $a<b$, vertausche $a$ und $b$
 		\item setze $a_0=a$, $a_1=b$, $i=1$.
 		\item solange $a_i>0$
-		\item $\quad$berechne $q_i\in\ZZ$, $a_{i+1}\in\{0,1,\ldots,a_i\}$, so da\ss\ $a_{i-1}=q_ia_i+a_{i+1}$.
+		\item $\quad$berechne $q_i\in\ZZ$, $a_{i+1}\in\{0,1,\ldots,a_i-1\}$, so da\ss\ $a_{i-1}=q_ia_i+a_{i+1}$.
 		\item $\quad$erh\"ohe $i$ um $1$
 		\item gib $a_{i-1}$ aus
 	\end{enumerate}
@@ -2025,7 +2025,7 @@ Wir ben\"otigen also eine {\em Hashfunktion}
 	\cH:\cS\to[m].
 \end{align*}
 Wir nennen $\cH(s_i)$ den {\em Hash} des Schl\"ussels $s_i$.
-Wenn $km$, kann diese Funktion nicht injektiv sein (``Schubfachprinzip'').
+Wenn $k>m$, kann diese Funktion nicht injektiv sein (``Schubfachprinzip'').
 Es gibt also notwendigerweise Werte $w\in[m]$, so da\ss\ verschiedene Schl\"ussel $i,j$ mit $\cH(s_i)=\cH(s_j)$ existieren.
 Solche Schl\"usselpaare nennt man {\em Kollisionen}.
 
@@ -2066,11 +2066,11 @@ Die Hashfunktion lautet dann
 Wir multiplizieren also $s$ mit $\alpha$ und ``werfen die Stellen vor dem Komma'' weg.
 Dabei kommt eine Zahl zwischen $0$ und $1$ heraus.
 Diese multiplizieren wir mit $m$.
-Eine gute Wahl von $\alpha$ scheint beispielsweise
+Eine gute Wahl von $\alpha$ scheint beispielsweise die Zahl
 \begin{align*}
 	\alpha=\frac{\sqrt 5-1}2
 \end{align*}
-zu sein.
+zu sein, die uns schon bei den Fibonaccizahlen begegnet ist.
 
 Die Multiplikationsmethode ist ``heuristisch'', d.h.\ sie ist nicht beweisbar gut.
 Allerdings ist sie leicht zu implementieren.
@@ -2097,7 +2097,7 @@ Zuvor vergewissern wir uns, da\ss\ sie das Hashing-Problem zufriedenstellend l\"
 
 \begin{theorem}\label{thm_hash}
 	Angenommen $\fH$ ist eine universelle Folge von Hashfunktionen und $\cH$ ist ein zuf\"alliges Element der Folge.
-	Dann hat f\"ur jeden Schl\"ussel $k\in\cS$ die Liste $L_{h(k)}$ erwartete L\"ange $\frac nm+O(1)$.
+	Dann hat f\"ur jeden Schl\"ussel $k\in\cS$ die Liste $L_{h(k)}$ erwartete L\"ange $\leq\frac nm+O(1)$.
 \end{theorem}
 
 \begin{remark}\label{rem_hash}

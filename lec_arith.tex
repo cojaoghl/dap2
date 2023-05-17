@@ -240,7 +240,7 @@
 			\item falls $a<b$, vertausche $a$ und $b$
 			\item setze $a_0=a$, $a_1=b$, $i=1$.
 			\item solange $a_i>0$
-			\item $\quad$berechne $q_i\in\ZZ$, $a_{i+1}\in\{0,1,\ldots,a_i\}$, so da\ss\ $a_{i-1}=q_ia_i+a_{i+1}$.
+			\item $\quad$berechne $q_i\in\ZZ$, $a_{i+1}\in\{0,1,\ldots,a_i-1\}$, so da\ss\ $a_{i-1}=q_ia_i+a_{i+1}$.
 			\item $\quad$erh\"ohe $i$ um $1$
 			\item gib $a_{i-1}$ aus
 		\end{enumerate}
@@ -317,7 +317,7 @@
 	\end{align*}
 \end{block}
 \onslide<4>
-\begin{block}
+\begin{block}{Lemma}
 	Angenommen $x,y\in\ZZ$, $m,n\in\ZZ\setminus\cbc 0$ und $\ggt(m,n)=1$.	
 	Wenn
 	\begin{align*}
