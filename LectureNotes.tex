@@ -1964,7 +1964,7 @@ Die Variablen $x,y$ werden dabei f\"ur $2X+1,2Y+1$ verwendet (da wir annehmen k\
 \begin{algorithm}\label{alg_fermat}
 	{\em Eingabe:} eine ungerade zusammengesetzte Zahl $n$.
 	\begin{enumerate}
-		\item Setze $x=2\lfloor\sqrt n\rfloor+1$, $y=1$, $r=\lfloor\sqrt N\rfloor^2-N$.
+		\item Setze $x=2\lfloor\sqrt n\rfloor+1$, $y=1$, $r=\lfloor\sqrt n\rfloor^2-n$.
 		\item Solange $r\neq0$
 		\item $\quad$erh\"ohe $r$ um $x$ und anschlie\ss end $x$ um zwei
 		\item $\quad$verringere $r$ um $y$ und erh\"ohe anschlie\ss end $y$ um zwei
@@ -2379,13 +2379,13 @@ Positiv schl\"agt hingegen zu Buche, da\ss\ wir in Zeit $O(1)$ pr\"ufen k\"onnen
 \noindent
 Breiten- und Tiefensuche sind fundamentale Algorithmen, mit denen ein Graph durchsucht werden kann.
 Beide Algorithmen k\"onnen insbesondere verwendet werden, um die Zusammenhangskomponenten eines Graphen zu bestimmen.
-Breitensuche bestimmt ferner ungewichteten Abst\"ande.
+Breitensuche bestimmt ferner ungewichtete Abst\"ande.
 Dieser Abschnitt folgt~\cite{Cormen}.
 Wie \"ublich nehmen wir an, da\ss\ die Graphen als Adjazenzlisten gegeben sind.
 
 \subsection{Breitensuche}\label{sec_bfs}
 Ausgehend von einem Startknoten $s$ findet Breitensuche alle Knoten in der Zusammehangskomponente von $s$ im gegebenen Graphen $G$.
-Dabei durchk\"ammt Breitensuche den Graphen ``zuerste in die Breite''.
+Dabei durchk\"ammt Breitensuche den Graphen ``zuerst in die Breite''.
 D.h.\ die Reihenfolge, in der die Knoten besucht werden, entspricht ihrem Abstand von $s$.
 W\"ahrnd Breitensuche l\"auft, ist jeder der Knoten entweder rot ($\mathtt r$), gelb ($\mathtt y$) oder gr\"un ($\mathtt g$) gef\"arbt.
 %Die Farbe eines Knotens wird in einem Array $c(\nix)$ gespeichert.
@@ -2453,8 +2453,8 @@ Der Beweis dieser Aussage kann z.B.\ per Induktion nach der Zahl der Kanten gef\
 \begin{proof}
 	Wir f\"uhren Induktion nach der Zahl der Iterationen der Hauptschleife (5)--(12).
 	Anfangs gilt $d(v)=\infty$ f\"ur alle $v\in V(G)\setminus\cbc s$, weshalb \eqref{eqlem_bfs1_1} trivial erf\"ullt ist.
-	Betrachte nun den n\"achsten Knoten $v$, der aus $Q$ entnommen wird, sowie einen Nachbarn $u$ von $v$
-	Dann gilt $d(v)=d(u)+1$.
+	Betrachte nun den n\"achsten Knoten $v$, der aus $Q$ entnommen wird, sowie einen gr\"unen Nachbarn $u$ von $v$.
+	Dann gilt $d(u)=d(v)+1$.
 	Andererseits gilt offensichtlich $\dist_G(s,u)\leq\dist_G(s,v)+1$, weil ein Pfad von $s$ nach $v$ um eine Kante nach $u$ verl\"angert werden kann.
 	Weil $d(v)\geq\dist_G(s,v)$ nach Induktionsvoraussetzung, schlie\ss en wir, da\ss\ $d(u)\geq\dist_G(s,u)$ f\"ur alle gr\"unen $u\in\partial_Gv$.
 \end{proof}
@@ -2483,7 +2483,7 @@ Der Beweis dieser Aussage kann z.B.\ per Induktion nach der Zahl der Kanten gef\
 	Die behauptete Laufzeit ergibt sich unmittelbar aus \Lem~\ref{lem_bfs0}.
 
 	Wir beweisen nun Aussage (ii), aus der Aussage (i) unmittelbar folgt.
-Nach \Lem~\ref{lem_bfs1} gen\"ugt es zu zeigen, da\ss\ bei Beendigung von {\tt BFF} $d(u)\leq\dist_G(s,u)$ f\"ur alle $u$.
+Nach \Lem~\ref{lem_bfs1} gen\"ugt es zu zeigen, da\ss\ bei Beendigung von {\tt BFS} gilt $d(u)\leq\dist_G(s,u)$ f\"ur alle $u$.
 	Wir nehmen daher zum Widerspruch an, es g\"abe einen Knoten $u$ mit $d(u)>\dist_G(s,u)$.
 	Unter all diesen Knoten w\"ahle $u\neq s$ so, da\ss\ $\dist_G(s,u)$ kleinstm\"oglich ist.
 

@@ -499,8 +499,8 @@ u&\sim_G v\mbox{ und }v\sim_G w\ \Rightarrow\ u\sim_G w&&\mbox{f\"ur alle }u,v,w
 			\begin{itemize}
 				\item Wir f\"uhren Induktion nach der Zahl der Iterationen der Hauptschleife (5)--(9).
 				\item Anfangs gilt $d(v)=\infty$ f\"ur alle $v\in V(G)\setminus\cbc s$, weshalb die Behauptung trivial erf\"ullt ist.
-				\item Betrachte nun den n\"achsten Knoten $v$, der aus $Q$ entnommen wird, sowie einen Nachbarn $u$ von $v$
-				\item	Dann gilt $d(v)=d(u)+1$.
+				\item Betrachte nun den n\"achsten Knoten $v$, der aus $Q$ entnommen wird, sowie einen gr\"unen Nachbarn $u$ von $v$
+				\item	Dann gilt $d(u)=d(v)+1$.
 				\item Andererseits gilt offensichtlich $\dist_G(s,u)\leq\dist_G(s,v)+1$, weil ein Pfad von $s$ nach $v$ um eine Kante nach $u$ verl\"angert werden kann.
 				\item Weil $d(v)\geq\dist_G(s,v)$ nach Induktionsvoraussetzung, schlie\ss en wir, da\ss\ $d(u)\geq\dist_G(s,u)$ f\"ur alle gr\"unen $u\in\partial_Gv$.
 			\end{itemize}
