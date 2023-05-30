@@ -2734,7 +2734,7 @@ Jedoch ben\"otigt der {\tt BHK}-Algorithmus nicht nur exponentiell viel Zeit, so
 
 \noindent
 Gegeben ist ein zusammenh\"angender gewichteter Graph $G,w$.
-Die Aufgabenstellung ist, einen spannenden Baum zu finden (welche nach \Cor~\ref{Cor_spannend} existiert), der minimales Gewicht hat.
+Die Aufgabenstellung ist, einen spannenden Baum zu finden (welcher nach \Cor~\ref{Cor_spannend} existiert), der minimales Gewicht hat.
 Das {\em Gewicht} eines spannenden Baums $T$ von $G$ ist dabei definiert als
 \begin{align}\label{eqmst}
 	w(T)&=\sum_{e\in E(T)}w(e).
@@ -2772,11 +2772,12 @@ Wir beweisen zun\"achst, da\ss\ {\tt Prim} einen minimalen Spannbaum ausgibt.
 \end{proposition}
 \begin{proof}
 	Weil in jedem Schleifendurchlauf ein Knoten aus $Q$ entfernt wird, h\"alt der Algorithmus nach $|V(G)|$ Iterationen.
-	Wir zeigen, da\ss\ in jedem Schleifendurchlauf mit Ausnahme des ersten Durchlaufs der Menge $\cE$ eine weitere Kante hinzugef\"ugt wird.
-	Wir zeigen ferner, da\ss\ nach jeder Iteration der Schleife (3)--(6) ein minimaler Spannbaum existiert, der die Kantenmenge
-	\begin{align*}
+	Wir zeigen, da\ss\ in jedem Schleifendurchlauf mit Ausnahme des ersten Durchlaufs der Menge 
+\begin{align*}
 		\cE&=\cbc{\{v,p(v)\}:p(v)\neq\emptyset}
 	\end{align*}
+eine weitere Kante hinzugef\"ugt wird.
+	Wir zeigen ferner, da\ss\ nach jeder Iteration der Schleife (3)--(6) ein minimaler Spannbaum existiert, der die Kantenmenge $\cE$
 	enth\"alt.
 	Aus \Prop~\ref{Lemma_Baum} folgt dann die Behauptung.
 
