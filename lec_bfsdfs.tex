@@ -526,6 +526,30 @@ u&\sim_G v\mbox{ und }v\sim_G w\ \Rightarrow\ u\sim_G w&&\mbox{f\"ur alle }u,v,w
 				\item Die zweite Behauptung folgt unmittelbar aus der Ungleichung.
 			\end{itemize}
 		\end{exampleblock}
+		\onslide<9>
+		\begin{exampleblock}{Beweis}
+			\begin{itemize}
+				\item Die behauptete Laufzeit ergibt sich unmittelbar aus Lemma~1
+				\item Wir zeigen (ii), woraus (i) direkt folgt
+				\item Nach Lemma~2 gen\"ugt zu zeigen, da\ss\ $d(u)\leq\dist_G(s,u)$ f\"ur alle $u$ bei Beendigung von {\tt BFS}
+				\item \emph{Beweis durch Widerspruch:} nimm an, es g\"abe ein $u$ mit
+					$$d(u)>\dist_G(s,u)$$
+			\end{itemize}
+		\end{exampleblock}
+		\onslide<10>
+		\begin{exampleblock}{Beweis}
+			\begin{itemize}
+				\item W\"ahle $u\neq s$ so, da\ss\ $\dist_G(s,u)$ kleinstm\"oglich
+				\item Da $d(u)>\dist_G(s,u)$ gilt $\dist_G(s,u)<\infty$
+				\item Also gibt es einen k\"urzesten Pfad $P$ von $s$ nach $u$
+				\item Sei $v$ der letzte vor $u$ auf $P$; dann $\dist_G(u)=\dist_G(v)+1$
+				\item Da $\dist_G(s,v)<\dist_G(s,u)$, folgt $d(v)=\dist_G(v)$
+				\item In Schritten (8)--(12) bei Entnahme von $v$ mu\ss\ $u$ gelb oder rot gef\"arbt sein
+				\item Daher zeigt Lemma~3, da\ss\ $d(u)\leq d(v)+1\leq\dist_G(u)$
+				\item Dies ist ein Widerspruch, also ist (ii) bewiesen
+				\item Aussage (iii) ergibt sich direkt aus (i) und (ii)
+			\end{itemize}
+		\end{exampleblock}
 	\end{overprint}
 \end{frame}
 
