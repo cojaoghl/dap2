@@ -2560,7 +2560,7 @@ Genauer kann man auch von einem {\em Kantengewichteten} Graphen sprechen.
 
 Sofern wir vorhaben, einen gewichteten Graphen als Eingabe an einen Algorithmus zu \"ubergeben, stellt sich die Frage, in welcher Form die Gewichte eingegeben werden.
 Wir nehmen dabei grunds\"atzlich an, da\ss\ die Gewichte {\em rationale} Zahlen sind.
-Diese werden als Br\"uche, also mit anderen Worten als Paare ganzer Zahlen $(z,n)$ aus Z\"ahler und Nenner eingebegen.
+Diese werden als Br\"uche, also mit anderen Worten als Paare ganzer Zahlen $(z,n)$ aus Z\"ahler und Nenner eingegeben.
 
 Die gew\"ohnlichen Rechenoperationen auf rationalen Zahlen k\"onnen mit den ``Schulmethoden'' effizient durchgef\"uhrt werden.
 Da wir auch den gr\"o\ss ten gemeinsamen Teiler zweier Zahlen effizient berechnen k\"onnen, ist es effizient m\"oglich, Br\"uche nach jeder Operation zu k\"urzen.
@@ -2615,9 +2615,9 @@ Die Berechnung des Minimums in Schritt (4) erfolgt einfach, indem $Q$ komplett d
 
 	Zum Beweis der Korrektheit zeigen wir per Induktion, da\ss\ stets $D(v)$ die L\"ange eines k\"urzesten $s$-$v$-Pfades ist, dessen interne Knoten nur aus Knoten in $V\setminus Q$ bestehen.
 	Der Induktionsanfang ist klar, weil $s$ Abstand $0$ von sich selbst hat.
-	Zum Induktionsschritt betrachte einen Knoten $v\in\partial_G u$.
+	Zum Induktionsschritt betrachte einen Knoten $v\in\partial_G u$, wobei $u$ der Knoten aus Schritt (4) ist.
 	Entweder der k\"urzeste $s$-$v$-Pfad vermeidet $u$; dann hat $D(v)$ nach Induktion bereits diesen Wert.
-	Oder es gibt einen k\"urzeren Pfad via $u$, in diesem Fall ist der korrekte Abstand $D(u)+w(\{u,v\})$.
+	Oder es gibt einen k\"urzeren Pfad via $u$; in diesem Fall ist der korrekte Abstand $D(u)+w(\{u,v\})$.
 \end{proof}
 
 \subsection{K\"urzeste Pfade mit priority queues}\label{sec_dijkstra_priority}
@@ -2652,7 +2652,7 @@ Man kommt dann auf $O(|V(G)|\log|V(G)|+|E(G)|)$.
 \end{remark}
 
 \subsection{Travelling salesman}\label{sec_tsp}
-Im \emph{travelling salesman}-Problem (`TSP') ist ein gewichteter vollsta\"andiger Graph $G,w$ auf $n$ Knoten gegeben.
+Im \emph{travelling salesman}-Problem (`TSP') ist ein gewichteter vollst\"andiger Graph $G,w$ auf $n$ Knoten gegeben.
 Die Zielsetzung ist, die L\"ange einer k\"urzesten Tour zu bestimmen, die alle Knoten von $G$ genau einmal besucht.
 Eine {\em Tour} ist dabei eine bijektive Abbildung $\sigma:[n]\to V(G)$.
 Die Knoten werden also in der Reihenfolge $\sigma(1),\sigma(2),\ldots,\sigma(n),\sigma(1)$ besucht.
@@ -2670,20 +2670,20 @@ Nach Satz~\ref{thm_stirling} ist die Laufzeit also mindestens
 	\Omega(n!)=\Omega((n/\eul)^n)=\Omega(n^{n+o(n)}).
 \end{align}
 Unser Ziel ist es, mit der Methode der dynamischen Programmierung einen schnelleren Algorithmus zu entwickeln.
-Dieser Algorithmus ist als {\em Bellmann-Held-Karp-Algorithmus} bekannt.
+Dieser Algorithmus ist als {\em Bellman-Held-Karp-Algorithmus} bekannt.
 
 Viele Algorithmen, die auf dynamischer Programmierung beruhen, bauen eine Art Tabelle auf.
 Diese Tabelle enth\"alt die L\"osungen von Teilproblemen und wird nach und nach bef\"ullt, beginnend mit den kleinsten Teilproblemen.
 Dabei wird zur Bestimmung eines neuen Tabelleneintrags auf die bereits ausgef\"ullten Eintr\"age zur\"uckgegriffen.
 
-Der Bellmann-Held-Karp-Algorithmus folgt diesem Muster.
+Der Bellman-Held-Karp-Algorithmus folgt diesem Muster.
 Wir w\"ahlen einen beliebigen Knoten $s\in V(G)$ als Startknoten aus.
 Die Tabelle enth\"alt nun f\"ur jede Teilmenge $U\subseteq V(G)\setminus\cbc s$ und jeden Knoten $u\neq s$, $u\not\in U$ einen Eintrag $T(u,U)$.
 Dieser Eintrag soll schlie\ss lich die L\"ange eines k\"urzesten Pfades enthalten, der im Knoten $s$ startet, alle Knoten aus $U$ besucht und in $u$ endet.
 Wir werden sehen wie die L\"ange einer optimalen TSP-Tour leicht bestimmt werden kann, wenn alle Eintr\"age $T(u,U)$ bekannt sind.
 
 \begin{lemma}\label{lemma_tsp}
-	F\"ur alle $s\in V(G)$, $\emptyset\neq U\subseteq V(G)\setminus\cbc s$, $u\in V(G)\setminus\cbc s\cup U$ gilt
+	F\"ur alle $s\in V(G)$, $\emptyset\neq U\subseteq V(G)\setminus\cbc s$, $u\in V(G)\setminus(\cbc s\cup U)$ gilt
 	\begin{align*}
 		T(u,U)&=\min_{v\in U}T(v,U\setminus\cbc v)+w(\{u,v\}),&T(u,\emptyset)&=w(\{s,u\}).
 	\end{align*}
