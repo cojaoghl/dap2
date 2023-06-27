@@ -18,6 +18,7 @@ long fermat(long n) {
 		do {
 			r-=y;
 			y+=2;
+			printf("%ld %ld\n",x,y);
 		} while(r>0);
 	}
 	return (x-y)/2;
