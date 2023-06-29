@@ -402,21 +402,21 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}\frametitle{Anwendung: Dijkstra-Algorithmus}
-	\hfill\includegraphics[height=25mm]{images/DijkstraIllustr.pdf}
-	\begin{exampleblock}{Dijkstra-Algorithmus}
-		%\alert{Eingabe:} Graph $G$ mit Kantenl\"angen $\ell(e)\geq0$; Knoten $s,t$\\
-		%\alert{Ausgabe:} Abstand von $s,t$
-		\begin{enumerate}
-			\item Setze anfangs $d(s)=0$, $d(v)=\infty$ f\"ur alle $v\in V\setminus\{s\}$
-			\item F\"uge alle $v\in V$ in eine Fibonaccihalde mit Schl\"ussel $d(v)$
-			\item Solange die Halde nicht leer ist
-			\item $\quad$ entnehme minimales Element $u$
-			\item $\quad$ reduziere $d(v)\leftarrow \min\{d(v),d(u)+\ell(u,v)\}$ f\"ur alle $v\in\partial u$
-			\item Gib $d(t)$ aus
-		\end{enumerate}
-	\end{exampleblock}
-\end{frame}
+%\begin{frame}\frametitle{Anwendung: Dijkstra-Algorithmus}
+%	\hfill\includegraphics[height=25mm]{images/DijkstraIllustr.pdf}
+%	\begin{exampleblock}{Dijkstra-Algorithmus}
+%		%\alert{Eingabe:} Graph $G$ mit Kantenl\"angen $\ell(e)\geq0$; Knoten $s,t$\\
+%		%\alert{Ausgabe:} Abstand von $s,t$
+%		\begin{enumerate}
+%			\item Setze anfangs $d(s)=0$, $d(v)=\infty$ f\"ur alle $v\in V\setminus\{s\}$
+%			\item F\"uge alle $v\in V$ in eine Fibonaccihalde mit Schl\"ussel $d(v)$
+%			\item Solange die Halde nicht leer ist
+%			\item $\quad$ entnehme minimales Element $u$
+%			\item $\quad$ reduziere $d(v)\leftarrow \min\{d(v),d(u)+\ell(u,v)\}$ f\"ur alle $v\in\partial u$
+%			\item Gib $d(t)$ aus
+%		\end{enumerate}
+%	\end{exampleblock}
+%\end{frame}
 
 \begin{frame}\frametitle{Anwendung: Dijkstra-Algorithms}
 	\begin{block}{Satz}
