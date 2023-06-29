@@ -3626,6 +3626,87 @@ Ferner m\"ussen die $g(\nix)$-Werte bei den Rotationen geeignet modifiziert werd
 Das ist kein Problem, da ja die $g(\nix)$-Werte der jeweiligen Teilb\"aume bekannt sind.
 Analog wird die Entfernen-Operation modifiziert.
 
+
+\section{AVL-B\"aume}\label{sec_avl}
+
+\noindent
+Bei AVL-B\"aumen, benannt nach ihren Erfindern Adelson, Velsky und Landis, handelt es sich um eine weitere Variante selbstbalancierender bin\"arer Suchb\"aume.
+Sie stellen somit eine Alternative zu rot-schwarz-B\"aumen dar.
+Allerdings sind AVL-B\"aume strikter balanciert.
+
+\begin{definition}\label{def_avl}
+	Ein AVL-Baum ist ein gewurzelter bin\"arer Suchbaum, in dem sich f\"ur jeden Knoten $v$ die H\"ohe des linken und des rechten Teilbaums um h\"ochstens eins unterscheidet.
+\end{definition}
+
+Alle Operationen f\"ur bin\"are Suchb\"aume haben auch auf AVL-B\"aumen Laufzeit $O(\log n)$.
+Wie im Fall von rot-schwarz-B\"aumen m\"ussen wir uns lediglich \"uber die Operationen zum Einf\"ugen und Entfernen von Elementen Gedanken machen, da die folgende Aussage die H\"ohe von AVL-B\"aumen beschr\"ankt.
+
+\begin{proposition}\label{prop_avl}
+	Ein AVL-Baum mit $n$ Elementen hat H\"ohe $O(\log n)$.
+\end{proposition}
+\begin{proof}
+	Dies folgt mit einer einfachen Induktion aus der Definition.
+\end{proof}
+
+Wie im Fall der rot-schwarz-B\"aume verwenden wir Rotationen, um den Baum nach dem Einf\"ugen oder L\"oschen eines Elements zu rebalancieren.
+Zu diesem Zweck statten wir jeden Knoten $v$ des Baums mit einem zus\"atzlichen Eintrag $\beta(v)$ aus, n\"amlich
+\begin{align*}
+	\beta(v)&=\mbox{H\"ohe des rechten Teilbaums von $v$}-\mbox{H\"ohe des linken Teilbaums von $v$}.
+\end{align*}
+In einem AVL-Baum gilt offenbar $\beta(v)\in\{-1,0,1\}$.
+Im Zuge des Einf\"ugens und Entfernens werden wir diese Eintr\"age entsprechend aktualisieren.
+
+\subsection{Einf\"ugen}\label{sec_avl_insert}
+Wir f\"ugen zun\"achst einen neuen Knoten $z$ wie in einen gew\"ohnlichen bin\"aren Suchbaum ein (Abschnitt~\ref{sec_binary_insert}).
+Dadurch kann nat\"urlich die AVL-Eigenschaft zerst\"ort werden.
+Um diese wiederherzustellen, f\"uhren wir folgende Operation aus.
+Dabei bezieht sich $\beta$ stets auf den Balancewert {\em vor} dem Einf\"ugen des neuen Knotens $z$.
+
+\begin{algorithm}\upshape {\tt InsertRebalance}. {\em Eingabe:} $(T,r)$ und der Knoten $z$.
+	\begin{enumerate}
+		\item falls $z$ die Wurzel ist, halte.
+		\item sei $p$ der Elternknoten von $z$.
+		\item falls $z$ das rechte Kind von $p$ ist
+		\item $\quad$falls $\beta(p)>0$
+		\item $\qquad$falls $\beta(z)<0$
+		\item $\quad\qquad$f\"uhre eine Rechtsrotation um $z$ und anschlie\ss end eine Linksrotation um $p$ aus
+		\item $\qquad$sonst f\"uhre eine Linksrotation um $p$ aus
+		\item $\quad$sonst
+		\item $\qquad$falls $\beta(p)<0$, setze $\beta(p)=0$ und halte
+		\item $\qquad$sonst setze $\beta(p)=1$ %und rufe rekursiv {\tt InsertRebalance}$(T,r,p)$ auf
+		\item sonst verfahre analog wie oben mit links/rechts vertauscht
+	\end{enumerate}
+\end{algorithm}
+
+Bei den Rotationsoperationen m\"ussen jeweils die $\beta$-Eintr\"age der Knoten aktualisiert werden.
+Abgesehen davon sind die Rotationen identisch zu denen, die wir bei den rot-schwarz-B\"aumen kennengelernt haben.
+Die obige Prozedur wird rekursiv auf dem Weg bis zur Wurzel durchgef\"uhrt, wenn die AVL-Eigenschaft verletzt ist.
+
+\subsection{Entfernen}\label{sec_avl_delete}
+Zum Entfernen einens Knotens verfahren wir zun\"achst wiederum wie im Fall gew\"ohnlicher bin\"arer Suchb\"aume.
+Dabei verringert sich die H\"ohe eines Kindes $z$ um eins.
+Uns von diesem Knoten aus auf die Wurzel zubewegend, f\"uhren wir wiederum Rotationen aus, um die AVL-Eigenschaft wiederherzustellen.
+
+\begin{algorithm}\upshape {\tt DeleteRebalance}. {\em Eingabe:} $(T,r)$ und der Knoten $z$.
+	\begin{enumerate}
+		\item falls $z$ die Wurzel ist, halte.
+		\item sei $p$ der Elternknoten von $z$ und $y$ der Schwesterkonten von $z$ (bzw.\ $y=\emptyset$)
+		\item falls $z$ das linke Kind von $p$ ist
+		\item $\quad$falls $\beta(p)>0$
+		\item $\qquad$falls $\beta(y)<0$
+		\item $\quad\qquad$f\"uhre eine Rechtsrotation um $y$ und anschlie\ss end eine Linksrotation um $p$ aus
+		\item $\qquad$sonst f\"uhre eine Linksrotation um $p$ aus
+		\item $\quad$sonst
+		\item $\qquad$falls $\beta(p)=0$, setze $\beta(p)=1$ und halte
+		\item $\qquad$sonst setze $\beta(p)=0$ %und rufe rekursiv {\tt DeleteRebalance}$(T,r,p)$ auf
+		\item sonst verfahre analog wie oben mit links/rechts vertauscht
+	\end{enumerate}
+\end{algorithm}
+
+Wie beim Einf\"ugen sind bei den Rotationsoperationen jeweils die $\beta$-Eintr\"age zu aktualisieren.
+Ferner wird die Prozedur rekursiv entlang des Weges zur Wurzel wiederholt, wenn die AVL-Eigenschaft verletzt ist.
+
+
 \section{Binomial heaps}\label{sec_binomial}
 
 \noindent
@@ -3748,84 +3829,316 @@ Die Laufzeit betr\"agt $O(\log n)$, weil die Tiefe des Baums $O(\log n)$ ist.
 Wir setzen das Gewicht des zu l\"oschenden Elements auf $-\infty$ und entfernen anschlie\ss end das Minimum.
 Damit kommen wir auf Laufzeit $O(\log n)$.
 
-\section{AVL-B\"aume}\label{sec_avl}
+\section{Amortisierte Analyse}\label{sec_amor}
 
-\noindent
-Bei AVL-B\"aumen, benannt nach ihren Erfindern Adelson, Velsky und Landis, handelt es sich um eine weitere Variante selbstbalancierender bin\"arer Suchb\"aume.
-Sie stellen somit eine Alternative zu rot-schwarz-B\"aumen dar.
-Allerdings sind AVL-B\"aume strikter balanciert.
+Nicht immer ist es sinnvoll, die Laufzeit {\em jeder einzelnen} Operation auf einer Datenstruktur abzusch\"atzen.
+Da Datenstrukturen der Algorithmik als Hilfsmittel dienen, kann es der Laufzeitanalyse des Gesamtalgorithmus dienlicher sein, den {\em Gesamtaufwand} aller Operationen auf der Datenstruktur \"uber die Lebenszeit der Datenstruktur (d.h.\ \"uber die gesamte Ausf\"uhrung des Algorithmus' hinweg) zu bestimmen.
+Dies ist die Zielsetzung einer Analysemethode, die als {\em amortisierte Analyse} bekannt ist.
+In diesem Abschnitt lernen wir diese Methode im allgemeinen kennen.
+Im folgenden Abschnitt wird die amortisierte Analyse dann auf Fibonacciheaps angewendet, mit denen wir den Dijkstra-Algorithmus weiter beschleunigen k\"onnen.
 
-\begin{definition}\label{def_avl}
-	Ein AVL-Baum ist ein gewurzelter bin\"arer Suchbaum, in dem sich f\"ur jeden Knoten $v$ die H\"ohe des linken und des rechten Teilbaums um h\"ochstens eins unterscheidet.
+\subsection{Beispiel: Stapel}\label{sec_amor_stack}
+
+Bei der Verwaltung von Datenstrukturen kann es vorkommen, da\ss\ ``die meisten'' Operationen wenig Aufwand erfordern, w\"ahrend gelegentlich eine ``gr\"o\ss ere Aufr\"aumaktion'' notwendig ist\footnote{Ein weiteres bekanntes Beispiel daf\"ur sind {\em splay trees}.}.
+Die amortisierte Anlayse erm\"oglicht es, die Kosten solcher Aufr\"aumaktionen auf alle Operationen ``umzulegen''.
+Wir lernen dieses Prinzip zun\"achst am Beispiel des Stapels kennen.
+
+Bekanntlich soll ein Stapel (stack) die Operationen {\tt push}, {\tt pop} und {\tt empty} bereitstellen; letztere pr\"uft, ob der Stapel aktuell leer ist.
+Dabei ist die Zahl der zu speichernden Eintr\"age in der Regel a priori unbekannt.
+Um den Stapel im Hauptspeicher effizient abzubilden, m\"ochten wir die Stapelemente in einem Array speichern.
+Allerdings wird die Gr\"o\ss e dieses Arrays variieren, um zus\"atzlichen Elementen Platz bieten zu k\"onnen.
+Selbstverst\"andlich m\"ochten wir die Datenstruktur mit m\"oglichst geringem Gesamtaufwand an Speicher und Laufzeit implementieren.
+
+Dies setzen wir um, indem wir f\"ur unseren Stapel ein Array der Gr\"o\ss e $n$ anlegen.
+Anfangs ist $n=1$.
+Immer wenn der aktuelle Speicherplatz voll ausgesch\"oft ist aber ein weiteres Element eingekellert werden soll, verdoppeln wir jeweils die Speichergr\"o\ss e $n$ und kopieren die ``alten'' Elemente in den neuen Speicherblock.
+In der Konsequenz k\"onnen einzelnen {\tt push}-Operationen kostspielig sein, weil {\em alle} im Stapel befindlichen Elemente kopiert werden m\"ussen.
+%Aber wie oft kommt das vor?
+
+Angenommen es werden insgesamt $N=2^k$ {\tt push}-Operationen durchgef\"uhrt.
+Jeweils nach $2^j$ Operationen mu\ss\ der Stapel umkopiert werden, was Zeit $O(2^j)$ in Anspruch nimmt.
+Der maximale Aufwand einer solchen Umkopieraktion liegt bei $\Theta(N)$.
+Wenn wir unbedarft an die Analyse herangehen (``maximale Kosten mal Anzahl Operationen''), kommen wir somit auf eine Laufzeit von
+\begin{align*}
+	N\cdot O(N)=O(N^2).
+\end{align*}
+Diese Absch\"atzung ist aber zu pessimistisch, denn nicht {\em jede} Operation erfordert ja ein Umkopieren.
+Tats\"achlich liegt der Gesamtaufwand nur bei
+\begin{align*}
+	O(N)+O\bc{\sum_{j=1}^k2^j}=O(N).
+\end{align*}
+Die {\em amortisierte Laufzeit} pro Schritt liegt also lediglich bei $O(1)$.
+Damit ist diese Implementation des Stapels asymptotisch bestm\"oglich.
+
+\subsection{Potentialfunktionen}\label{sec_amor_potential}
+
+Ausgangspunkt der amortisierten Analyse ist die folgende Definition.
+
+\begin{definition}\label{def_amor}
+	Angenommen die tats\"achlichen Kosten einer Folge von Operationen sind
+		\begin{align*}
+			c_1,c_2,\ldots,c_N\geq0
+		\end{align*}
+	Sei $c_1',\ldots,c_N'$ eine weitere Folge, so da\ss
+				\begin{align*}
+					c_1+c_2+\cdots+c_i&\leq c_1'+c_2'+\cdots+c_i'&&\mbox{f\"ur alle }1\leq i\leq N.
+				\end{align*}
+	Dann nennt man $c_1',\ldots,c_N'$ eine \emph{Amortisierung} von $c_1,\ldots,c_N$ mit
+			\emph{amortisierten Gesamtkosten} $$c_1'+\cdots+c_N'.$$
 \end{definition}
 
-Alle Operationen f\"ur bin\"are Suchb\"aume haben auch auf AVL-B\"aumen Laufzeit $O(\log n)$.
-Wie im Fall von rot-schwarz-B\"aumen m\"ussen wir uns lediglich \"uber die Operationen zum Einf\"ugen und Entfernen von Elementen Gedanken machen, da die folgende Aussage die H\"ohe von AVL-B\"aumen beschr\"ankt.
+Es stellt sich die Frage, wie eine Amortisierung mit m\"oglichst geringen Gesamtkosten bestimmt werden kann.
+Dies geschieht h\"aufig mithilfe einer sogenannten Potentialfunktion
+	$$\Phi:\mathcal Z\to\mathbb R_{\geq0},$$
+die die Menge $\cZ$ der m\"oglichen Zust\"ande der Datenstruktur in die Menge der nicht-negativen reellen Zahlen abbildet.
+Die Idee ist, da\ss\ der Wert dieser Funktion die `Unordnung' des aktuellen Zustands der Datenstruktur beziffert.
+F\"ur die leere Datenstruktur gelte stets $\Phi(\emptyset)=0$.
+Wenn $z_0,\ldots,z_N$ die Zust\"ande der Datenstruktur sind, definieren wir
+\begin{align}\label{eq_amor}
+		c_i'&=c_i+\Phi(z_i)-\Phi(z_{i-1})
+	\end{align}
+(``reale Kosten plus Potentialdifferenz'').
 
-\begin{proposition}\label{prop_avl}
-	Ein AVL-Baum mit $n$ Elementen hat H\"ohe $O(\log n)$.
-\end{proposition}
+\begin{lemma}\label{lem_amor}
+	F\"ur jede Potentialfunktion $\Phi$ bilden die in \eqref{eq_amor} definierten Werte eine Amortisierung.
+\end{lemma}
 \begin{proof}
-	Dies folgt mit einer einfachen Induktion aus der Definition.
+	Wir berechnen
+	\begin{align*}
+		c_1'+\cdots+c_i'&=(c_1+\Phi(z_1)-\Phi(z_0))+\cdots+(c_i+\Phi(z_i)-\Phi(z_{i-1}))\\
+						&=c_1+\cdots+c_i+(\Phi(z_1)-\Phi(z_0))+\cdots+(\Phi(z_i)-\Phi(z_{i-1}))\\
+						&=c_1+\cdots+c_i+\Phi(z_i)-\Phi(z_0)\\
+						&=c_1+\cdots+c_i+\Phi(z_i)\geq c_1+\cdots+c_i,
+	\end{align*}
+	womit die Bedingung aus Definition~\ref{def_amor} erf\"ullt ist.
 \end{proof}
 
-Wie im Fall der rot-schwarz-B\"aume verwenden wir Rotationen, um den Baum nach dem Einf\"ugen oder L\"oschen eines Elements zu rebalancieren.
-Zu diesem Zweck statten wir jeden Knoten $v$ des Baums mit einem zus\"atzlichen Eintrag $\beta(v)$ aus, n\"amlich
-\begin{align*}
-	\beta(v)&=\mbox{H\"ohe des rechten Teilbaums von $v$}-\mbox{H\"ohe des linken Teilbaums von $v$}.
-\end{align*}
-In einem AVL-Baum gilt offenbar $\beta(v)\in\{-1,0,1\}$.
-Im Zuge des Einf\"ugens und Entfernens werden wir diese Eintr\"age entsprechend aktualisieren.
+\begin{example}[Stapel]
+	Im Fall des Stapels besteht der Zustand $z_i$ aus der aktuellen Zahl $b_i$ belegter Pl\"atzer und der aktuellen Zahl $n_i$ insgesamt reservierter Speicherpl\"atze.
+			Wir definieren eine Potentialfunktion durch
+				\begin{align*}
+					\Phi(z_i)=\max\{0,2b_i-n_i\}
+				\end{align*}
+			Damit ergeben sich die amortisierte Kosten zu
+				\begin{align*}
+					c_i'&=3&&\mbox{f\"ur {\tt push} ohne Vergr\"o\ss ern}\\
+					c_i'&=3&&\mbox{f\"ur {\tt push} mit Vergr\"o\ss ern}\\
+					c_i'&=-1&&\mbox{f\"ur {\tt pop}}
+				\end{align*}
+			Also $c_i'=O(1)$ f\"ur alle $i$ und wir schlie\ss en, da\ss\ $c_1+\cdots+c_N=O(N)$.
+\end{example}
 
-\subsection{Einf\"ugen}\label{sec_avl_insert}
-Wir f\"ugen zun\"achst einen neuen Knoten $z$ wie in einen gew\"ohnlichen bin\"aren Suchbaum ein (Abschnitt~\ref{sec_binary_insert}).
-Dadurch kann nat\"urlich die AVL-Eigenschaft zerst\"ort werden.
-Um diese wiederherzustellen, f\"uhren wir folgende Operation aus.
-Dabei bezieht sich $\beta$ stets auf den Balancewert {\em vor} dem Einf\"ugen des neuen Knotens $z$.
+\section{Fibonacciheaps}\label{sec_fibo}
 
-\begin{algorithm}\upshape {\tt InsertRebalance}. {\em Eingabe:} $(T,r)$ und der Knoten $z$.
-	\begin{enumerate}
-		\item falls $z$ die Wurzel ist, halte.
-		\item sei $p$ der Elternknoten von $z$.
-		\item falls $z$ das rechte Kind von $p$ ist
-		\item $\quad$falls $\beta(p)>0$
-		\item $\qquad$falls $\beta(z)<0$
-		\item $\quad\qquad$f\"uhre eine Rechtsrotation um $z$ und anschlie\ss end eine Linksrotation um $p$ aus
-		\item $\qquad$sonst f\"uhre eine Linksrotation um $p$ aus
-		\item $\quad$sonst
-		\item $\qquad$falls $\beta(p)<0$, setze $\beta(p)=0$ und halte
-		\item $\qquad$sonst setze $\beta(p)=1$ %und rufe rekursiv {\tt InsertRebalance}$(T,r,p)$ auf
-		\item sonst verfahre analog wie oben mit links/rechts vertauscht
-	\end{enumerate}
-\end{algorithm}
+Fibonacciheaps stellen dieselben Operationen zur Verf\"ugung wie binomial heaps.
+Allerdings ist die {\em amortisierte} Laufzeit der Operationen besser als die Laufzeiten, die wir im Fall des binomial heaps kennengelernt haben.
+Mittels des Fibonacciheaps werden die effizientest Laufzeit f\"ur den Dijkstra-Algorithmus erzielen.
+Dieser Abschnitt folgt~\cite{Cormen}.
 
-Bei den Rotationsoperationen m\"ussen jeweils die $\beta$-Eintr\"age der Knoten aktualisiert werden.
-Abgesehen davon sind die Rotationen identisch zu denen, die wir bei den rot-schwarz-B\"aumen kennengelernt haben.
-Die obige Prozedur wird rekursiv auf dem Weg bis zur Wurzel durchgef\"uhrt, wenn die AVL-Eigenschaft verletzt ist.
 
-\subsection{Entfernen}\label{sec_avl_delete}
-Zum Entfernen einens Knotens verfahren wir zun\"achst wiederum wie im Fall gew\"ohnlicher bin\"arer Suchb\"aume.
-Dabei verringert sich die H\"ohe eines Kindes $z$ um eins.
-Uns von diesem Knoten aus auf die Wurzel zubewegend, f\"uhren wir wiederum Rotationen aus, um die AVL-Eigenschaft wiederherzustellen.
+\subsection{Aufbau von Fibonacciheaps}\label{sec_fibo_intro}
 
-\begin{algorithm}\upshape {\tt DeleteRebalance}. {\em Eingabe:} $(T,r)$ und der Knoten $z$.
-	\begin{enumerate}
-		\item falls $z$ die Wurzel ist, halte.
-		\item sei $p$ der Elternknoten von $z$ und $y$ der Schwesterkonten von $z$ (bzw.\ $y=\emptyset$)
-		\item falls $z$ das linke Kind von $p$ ist
-		\item $\quad$falls $\beta(p)>0$
-		\item $\qquad$falls $\beta(y)<0$
-		\item $\quad\qquad$f\"uhre eine Rechtsrotation um $y$ und anschlie\ss end eine Linksrotation um $p$ aus
-		\item $\qquad$sonst f\"uhre eine Linksrotation um $p$ aus
-		\item $\quad$sonst
-		\item $\qquad$falls $\beta(p)=0$, setze $\beta(p)=1$ und halte
-		\item $\qquad$sonst setze $\beta(p)=0$ %und rufe rekursiv {\tt DeleteRebalance}$(T,r,p)$ auf
-		\item sonst verfahre analog wie oben mit links/rechts vertauscht
-	\end{enumerate}
-\end{algorithm}
+\begin{figure}
+	\centering\includegraphics[height=50mm]{images/fibo1.pdf}
+	\caption{Aufbau des Fibonacciheaps.}\label{fig_fibo1}
+\end{figure}
 
-Wie beim Einf\"ugen sind bei den Rotationsoperationen jeweils die $\beta$-Eintr\"age zu aktualisieren.
-Ferner wird die Prozedur rekursiv entlang des Weges zur Wurzel wiederholt, wenn die AVL-Eigenschaft verletzt ist.
+Der Fibonacci-Heap besteht aus gewurzelten B\"aumen, s.\ Abb.~\ref{fig_fibo1}, deren Wurzeln eine doppelt verkettete Liste bilden.
+Daher ist es m\"oglich, Elemente in Zeit $O(1)$ zu l\"oschen l\"oschen oder Listen kombinieren.
+			Der Heap enth\"alt eine Referenz auf das minimale Element, so da\ss\ dieses in Zeit $O(1)$ abgerufen werden kann.
+			Jeder Knoten $v$ des Fibonacciheaps hat ferner eine \alert{Markierung} $\mu(v)\in\cbc{0,1}$.
+Anders als im Fall des binomial heap sind dabei die B\"aume \emph{ungeordnet}.
+Das Gewicht eines Elternknotens ist niemals gr\"o\ss er als das Gewicht eines Kindes.
+			Die B\"aume sind nicht notwendigerweise Binomialb\"aume.
+			Mit $D(n)$ bezeichnen wir den maximalen Knotengrad eines Fibonacci-Heaps mit Gr\"o\ss e $n$; wir werden zeigen, da\ss\ $D(n)=O(\log n)$.
+
+			Der Fibonacciheap stellt die folgenden Operationen bereit:
+		\begin{description}
+			\item[einf\"ugen] neues Element mit gegebenen Gewicht hinzuf\"ugen.
+			\item[Minimum] auffinden des Elements mit minimalen Gewicht.
+			\item[Minimum entnehmen] auffinden und entfernen.
+			\item[Vereinigung] zwei Heaps zu einem vereinigen.
+			\item[verringern] das Gewicht eines Elements verringern.
+			\item[l\"oschen] ein Element aus der Datenstruktur entfernen.
+		\end{description}
+
+		Zur amortisierten Analyse des Fibonacciheaps definieren wir eine Potentialfunktion.
+		Dazu bezeichne $T(\cF)$ die Zahl der B\"aume im Fibonacci-Heap $\cF$.
+		Ferner sei $N(\cF)$ die Zahl aller Knoten in $\cF$.
+		Schlie\ss lich sei $M(\cF)$ die Zahl \emph{markierter Knoten} $v$, d.h.\ $\mu(v)=1$..
+		Das Potential ist nun definiert als
+		\begin{align}\label{eqfibophi}
+					\Phi(\cF)=T(\cF)+2M(\cF)
+				\end{align}
+		Im folgenden wird erl\"autert, wie die obigen Operation durchgef\"uhrt werden.
+		Dabei gehen wir auch jeweils auf die amortisierte Laufzeit ein.
+
+\subsection{Einf\"ugen}\label{sec_fibo_insert}
+
+Das Einf\"ugen eines neuen Eintrags in einen Fibonacciheap geschieht einfach dadurch, da\ss\ das neue Element als neuer gewurzelter Baum, bestehend aus nur einem einzigen Knoten, dem Fibonacciheap hinzugef\"ugt wird.
+Dies f\"uhrt zu einer Potentialdifferenz von $O(1)$.
+
+\subsection{Minimum finden}\label{sec_fibo_min}
+
+Da der Fibonacciheap eine Referenz auf das minimale Element enth\"alt, kann dieses in Zeit $O(1)$ gefunden werden.
+Das Potential \"andert sich bei dieser Operation nicht.
+
+\subsection{Vereinigung}\label{sec_fibo_union}
+
+Wir vereinigen zwei Fibonacciheaps, indem einfach ihre Wurzellisten verschmolzen werden.
+Dies ist in Zeit $O(1)$ druchf\"uhrbar.
+Das Gesamtpotential \"andert sich nicht, d.h.\ das Potential des vereinigten Fibonacciheaps ist einfach die Summe der beiden Einzelpotentiale.
+
+\subsection{Minimum extrahieren}\label{sec_fibo_union}
+
+%\begin{figure}
+%		\includegraphics[height=20mm]{images/fibo3.pdf}\hfill \includegraphics[height=20mm]{images/fibo4.pdf}\\
+%			\includegraphics[height=20mm]{images/fibo4.pdf}\hfill \includegraphics[height=20mm]{images/fibo5.pdf}\\ 
+%			\includegraphics[height=20mm]{images/fibo6.pdf}\hfill \includegraphics[height=20mm]{images/fibo7.pdf}\\
+%		\includegraphics[height=20mm]{images/fibo8.pdf}
+%	\caption{Extraktion des Minimums/Konsolidierung}\label{fig_fibo2}
+%\end{figure}
+
+Zur Extraktion des Minimums finden wir zun\"achst einfach das Element minimalen Gewichtes (auf welches der Fibonacciheap ja eine explizite Referenz speichert) und entfernen dieses.
+Aus jedem Kind dieses Elementes wird eine neue Wurzel des Fibonacciheaps.
+Anschlie\ss end wird eine Hilfsoperation, die sog.\ {\em Konsolisierung}, ausgef\"uhrt, in deren Verlauf auch der Zeiger auf as minimale Element aktualisiert wird.
+
+%\subsection{Konsolidierung}\label{sec_fibo_con}
+
+Zur Konsolidierung iterieren wir \"uber die Wurzelliste, wobei wir ein Paar von Wurzeln gleichen Grades suchen.
+Zu diesem Zweck wird ein Array $A[0,\ldots,D(N(\cF))]$ eingesetzt, dessen Eintrag $A[i]$ jeweils auf eine Wurzel vom Grad $i$ verweist  (oder $\emptyset$, falls keine solche Wurzel existiert).
+Sind zwei Wurzeln gleich Grades gefunden, so wird die Wurzel mit dem gr\"o\ss eren Geweicht zum Kind der anderen Wurzel.
+Das Markierungsfeld $\mu(v)$ der Wurzel $v$, die zum Kind der anderen wird, wird auf $0$ gesetzt.
+Der Grad der anderen Wurzel (zu deren Kind $v$ geworden ist) erh\"oht sich um eins.
+Wir pr\"ufen daraufhin, ob es eine andere Wurzel dieses neuen Grades schon gibt und wiederholen.
+
+\begin{lemma}\label{lem_extract}
+	Die amortisierten Kosten zum Extrahieren des Minimums sind $O(D(N(\cF)))$.
+\end{lemma}	
+\begin{proof}
+	Sei $\cF'$ der Fibonacci-Heap nach der Extraktion.
+	Alle Wurzeln in $\cF'$ haben verschiedene Grade, weshalb $\Phi(\cF')\leq D(N(\cF))+1+2M(\cF)$.
+	Folglich gilt $\Phi(\cF')-\Phi(\cF)=O(D(N(\cF)))$.
+\end{proof}	
+
+\subsection{Gewicht verringern}\label{sec_fibo_reduce}
+
+Wird das Gewicht eines Elements des Fibonacciheaps verringert, so mu\ss\ darauf geachtet werden, dass die Heapeigenschaft (Gewichte der Eltern sind niemals gr\"o\ss er als die Gewichte der Kinder) erhalten bleibt.
+Um dar\"uber hinaus die Knotengrade unter Kontrolle zu halten, trennen wir beim Verringern von Gewichten einen Baum m\"oglicherweise auf.
+Dabei finden die Markierungen verwendeung: eine Markierung $\mu(x)=1$ zeigt an, da\ss\ der Knoten $x$ bereits ein Kind verloren hat.
+
+Zum Verringern des Gewichtes eines Knoten $x$ gehen wir genauer folgenderma\ss en vor:
+			\begin{itemize}
+				\item falls der Knoten $x$, dessen Gewicht reduziert wird, schon eine Wurzel ist, verringern wir einfach das Gewicht, passen ggf.\ das Minimum an und sind fertig.
+				\item wenn allgemeiner das Gewicht von $x$ nicht kleiner wird als das Gewicht des Elternknotens $y$, gehen wir genauso vor.
+				\item andernfalls wende die im folgenden erkl\"arte {\em Trennoperation} auf $x$ an.
+			\end{itemize}
+
+			Die {\em Trennoperation} entfernt $x$ aus der Kinderliste von $y$ und f\"ugt $x$ als Wurzel in den Fibonacciheap ein; dabei ``nimmt $x$ seine Nachkommen mit''.
+			Ferner setzen wir den Wert der Markierung von $x$ auf $\mu(x)=0$, d.h.\ $x$ ist nun nicht mehr markiert.
+Falls das reduzierte Gewicht von $x$ kleiner ist als das bisherige Minimum, wird die Referenz auf das Minimum aktualisiert, d.h.\ auf $x$ gesetzt.
+
+Anschlie\ss end wir eine folgende Operation auf $y$ angewandt, um diesen Knoten zu aktualisieren.
+Falls $y$ eine Wurzel ist (also keinen Elternknoten hat), ist nichts zu tun.
+Andernfalls sei $z$ der Elternknoten von $y$.
+Falls $\mu(z)=0$ setze $\mu(z)=1$; damit ist die Aktualisierung beendet.
+Andernfalls wende die Trennoperation auf $y$ an.
+
+Die amortisierte Laufzeit des Gewichtverringerns k\"onnen wir nun wir folgt absch\"atzen.
+Sei $\cF'$ der Heap nach Beendigung des Gewichtverringerns (nebst ggf.\ notwendiger Trennoperationen/Aktualisierungen).
+Jeder neue Baum, der in die Wurzelliste eingef\"ugt wird, wird durch eine auf Null gesetzte Markierung kompensiert; die einzige Ausnahme ist m\"oglicherweise der Knoten, dessen Gewicht urspr\"unglich reduziert werden sollte.
+Daher gilt f\"ur die Potentialdifferrenz
+\begin{align}\label{eq_fibo_reduce}
+	\Phi(\cF')-\Phi(\cF)&\leq 1+T(\cF)-T(\cF').
+\end{align}
+Dem steht eine Laufzeit von $O(T(\cF)-T(\cF'))$ gegen\"uber.
+Wir erhalten also eine amortisierte Laufzeit von $O(1)$.
+
+
+\subsection{Entfernen eines Knotens}\label{sec_fibo_remove}
+
+Um einen Knoten $x$ zu entfernen, reduzieren wir zun\"achst das Gewicht von $x$ auf einen symbolischen Wert $-\infty$, so da\ss\ das Gewicht von $x$ kleiner ist als das aller anderen Knoten.
+Hinterher extrahieren wir das Element minimalen Gewichts aus dem Heap (welches nat\"urlich $x$ ist).
+Wir erhalten als eine amortisierte Laufzeit von $O(D(N(\cF)))$.
+
+
+\subsection{Der Maximalgrad}\label{sec_fibo_deg}
+
+Nachdem wir nun die einzelnen Operationen kennengelernt haben, k\"onnen wir zeigen, da\ss\ der maximale Grad eines Fibonacciheaps stets h\"ochstens logarithmisch in der Zahl der Elemente ist.
+
+\begin{proposition}\label{prop_fibo}
+	Der maximale Grad eines Fibonacci-Heap $\cF$ ist $D(\cF)=O(\log N(\cF))$.
+\end{proposition}	
+
+Zum Beweis der Proposition erinnern wir an die Fibonacci-Zahlen, die definiert sind durch
+			\begin{align*}
+				F_0&=0& F_1&=1& F_k&=F_{k-1}+F_{k-2} \mbox{ f\"ur $k\geq2$}.
+			\end{align*}
+F\"ur die Fibonaccizahlen gilt die Absch\"atzung
+\begin{align}\label{eq_fibo_bound}
+				F_{\ell+2}&=1+\sum_{i=0}^\ell F_i\geq\bcfr{1+\sqrt 5}2^\ell\qquad\mbox{f\"ur $\ell\geq0$},
+		\end{align}
+vgl.\ \eqref{eq_golden}.
+
+
+Um \Prop~\ref{prop_fibo} zu beweisen, ben\"otigen wir das folgende Lemma.
+
+			\begin{lemma}\label{lem_fibo_child}
+			Angenommen Knoten $x$ des Fibonacci-Heaps $\cF$ hat $k$ Kinder $y_1,\ldots,y_k$, numeriert nach der Reihenfolge, in der sie an $x$ angef\"ugt worden sind.
+			Dann gilt hat $y_i$ mindestens $i-2$ Kinder ($i=2,\ldots,k$).
+		\end{lemma}	
+		\begin{proof}
+Zu dem Zeitpunkt, als $y_i$ an $x$ angef\"ugt wurde, hatte $x$ bereits mindestens $i-1$ Kinder.
+				Ein Knoten wird nur dann als Kind an einen anderen angeh\"angt, wenn beide den gleichen Grad haben.
+Seitdem $y_i$ an $x$ angeh\"angt wurde, hat $y_i$ h\"ochstens ein Kind verloren; dies ist sichergestellt, weil im Fall $\mu(y)=1$ der Knoten $y$ selbst zur Wurzel wird, wenn er noch ein Kind verliert (s.\ die obigen Trennoperation).
+		\end{proof}
+
+Als n\"achstes sch\"atzen wir die Gesamtzahl der Nachkommen eines Knotens ab.
+				
+		\begin{lemma}\label{lem_fibo_succ}
+			F\"ur einen Knoten $x$ in einem Fibonacci-Heap $\cF$ sei $N(x,\cF)$ die Zahl der Nachkommen von $x$, einschlie\ss lich $x$ selbst. Wenn $\ell$ die Zahl der Kinder von $x$ ist, gilt $ N(x,\cF)\geq F_{\ell+2} $.
+		\end{lemma}
+		\begin{proof}
+				Wir f\"uhren induktion nach $\ell$.
+				Sei $s_\ell$ die kleinstm\"ogliche Zahl von Nachkommen eines Knotens mit $\ell$ Kindern.
+				Wir sehen unmittelbar, da\ss\ $s_0=1$ und $s_1=2$.
+				Seien nun allgemeien $y_1,\ldots,y_k$ die Kinder von $x$ in $\cF$.
+				Knoten $y_i$ habe $\ell_i$ Kinder.
+				Dann gilt $\ell_i\geq i-2$
+
+				Ferner gilt $s_{h+1}\geq s_h$.
+				Also erhalten wir mit Induktion und \Lem~\ref{lem_fibo_child} die Absch\"atzung
+					\begin{align*}
+						s_\ell&\geq2+\sum_{i=2}^\ell s_{\ell_i}\geq2+\sum_{i=2}^\ell s_{i-2}\geq2+\sum_{i=2}^\ell F_{i}>F_{\ell+2}.
+					\end{align*}
+				Weil $N(x,\cF)\geq s_\ell$, folgt die Behauptung.
+		\end{proof}
+
+		\begin{proof}[Beweis von \Prop~\ref{prop_fibo}]
+
+			Lemma~\ref{lem_fibo_succ} zeigt zusammen mit \eqref{eq_fibo_bound}, da\ss\ f\"ur jeden Knoten $x$ mit $\ell$ Kindern gilt
+					\begin{align*}
+						N(x,\cF)\geq F_{\ell+2}\geq\bcfr{1+\sqrt 5}2^\ell
+					\end{align*}
+			Also folgt $D(\cF)\leq O(\log N(\cF))$
+		\end{proof}
+
+		Aus \Prop~\ref{prop_fibo} und unserer obigen Analyse ergeben sich die folgenden amortisierten Laufzeiten f\"ur den Fibonacci-Heap mit $n$ Elementen:
+			\begin{description}
+				\item[einf\"ugen] $O(1)$
+				\item[Minimum] $O(1)$
+				\item[Minimum entnehmen] $O(\log n)$
+				\item[Vereinigung] $O(1)$
+				\item[verringern] $O(1)$
+				\item[l\"oschen] $O(\log n)$
+			\end{description}
+
+			\subsection{Anwendung auf Dijkstra}\label{sec_fibo_dijkstra}
+			Wir k\"onnen im Dijkstra-Algorithmus (s.\ Abschnitt~\ref{sec_dijkstra}) den Fibonacciheap als Datenstruktur verwenden, weil dieser alle notwendigen Operationen (insbesondere Extraktion des Minimums und Gewichtsreduktionen) bereitstellt.
+			Mit dieser Datenstruktur ergibt sich dann die Laufzeit des Dijkstra-Algorithmus zu $O(|E(G)|+|V(G)|\log|V(G)|)$, denn jeder Knoten wird nur einmal hinzugef\"ugt/entfernt.
+	Der			Gesamtaufwand f\"ur das einf\"ugen/entfernen ist also $O(|V_G|\log|V_G|)$.
+				Ferner wird f\"ur jede Kante h\"ochstens einmal eine Gewichtsreduktion ausgef\"uhrt.
+				Die Laufzeit daf\"ur $O(|E|)$ betr\"agt.
 
 
 \begin{thebibliography}{99}
