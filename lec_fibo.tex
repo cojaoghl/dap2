@@ -351,7 +351,7 @@
 \end{frame}
 
 \begin{frame}\frametitle{\mytitle}
-		\includegraphics[height=20mm]{images/fibo9.pdf}\hfill \includegraphics[height=20mm]{images/fibo10.pdf}
+		\includegraphics[height=20mm]{images/fibo9.pdf}\hfill \includegraphics[height=20mm]{images/fibo11.pdf}
 	\begin{overprint}
 		\onslide<1>
 		\begin{exampleblock}{Gewicht verringern}
@@ -475,8 +475,8 @@
 				\item sei $s_\ell$ die kleinstm\"ogliche Zahl von Nachkommen eines Knotens mit $\ell$ Kindern
 				\item wir sehen unmittelbar, da\ss\ $s_0=1$ und $s_1=2$
 				\item seien nun allgemeien $y_1,\ldots,y_k$ die Kinder von $x$ in $\cF$
-				\item Knoten $y_i$ habe $\ell_i$ Kinder
-				\item dann gilt $\ell_i\geq i-2$
+				\item Knoten $y_i$ habe $k_i$ Kinder
+				\item dann gilt $k_i\geq i-2$
 			\end{itemize}
 		\end{exampleblock}
 		\onslide<5>
@@ -485,7 +485,7 @@
 				\item ferner gilt $s_{h+1}\geq s_h$
 				\item also erhalten wir mit Induktion und dem vorherigen Lemma
 					\begin{align*}
-						s_\ell&\geq2+\sum_{i=2}^\ell s_{\ell_i}\geq2+\sum_{i=2}^\ell s_{i-2}\\
+						s_\ell&\geq2+\sum_{i=2}^\ell s_{k_i}\geq2+\sum_{i=2}^\ell s_{i-2}\\
 							  &\geq2+\sum_{i=2}^\ell F_{i}>F_{\ell+2}
 					\end{align*}
 				\item weil $N(x,\cF)\geq s_\ell$, folgt die Behauptung
